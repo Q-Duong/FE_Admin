@@ -1,16 +1,17 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainDash from './components/MainDash/MainDash';
-import RightSide from './components/RigtSide/RightSide';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
+import {BrowserRouter} from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
       <div className="AppGlass">
-        <Sidebar/>
-        <MainDash/>
-        {/* <RightSide/> */}
+        <BrowserRouter>
+          <Sidebar/>
+          <MainDash/>
+        </BrowserRouter>  
       </div>
     </div>
   );

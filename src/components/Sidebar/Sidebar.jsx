@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import Logo from "../imgs/logo.png";
+import Logo from "../../imgs/logo.png";
 import { UilSignOutAlt } from "@iconscout/react-unicons";
-import { SidebarData } from "../Data/Data";
+import { SidebarData } from "../../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+import {Link} from 'react-router-dom'
 
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
@@ -45,8 +46,10 @@ const Sidebar = () => {
               key={item.id}
               onClick={() => setSelected(item.id)}
             >
-              <item.icon />
-              <span>{item.heading}</span>
+              <Link to={`/${item.heading}`}>
+                <item.icon />
+                {item.heading}
+              </Link>
             </div>
           );
         })}

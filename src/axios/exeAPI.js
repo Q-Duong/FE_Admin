@@ -6,12 +6,17 @@ const axi =  axios.create({
 
 const brandAPI = {
   getAll: () => axi.get('/brand'),
-  update: (brand) => {
-    return axi.put(`/brand/${brand._id}`,{
-      brandName:brand.brandName,
-      brandImage:brand.brandImage
-    })
-  }
+  update: (brand) => 
+    axi.put(`/brand/${brand.get('_id')}`, 
+      brand,
+      {headers: { 'content-type': `multipart/form-data; boundary=${brand._boundary}` }}
+    ),
+  create: (brand) => 
+    axi.post(`/brand`, 
+      brand,
+      {headers: { 'content-type': `multipart/form-data; boundary=${brand._boundary}` }}
+  ),
+  delete: (id) => axi.delete(`/brand/${id}`)
 }
 
 const categoryAPI = {
