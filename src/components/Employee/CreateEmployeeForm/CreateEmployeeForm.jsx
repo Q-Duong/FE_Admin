@@ -1,42 +1,42 @@
 import React, { useRef } from 'react';
 import { Button, Form, Modal } from "react-bootstrap";
 
-function CreateBrandForm(props) {
-    const {onCreateBrand, isShow, onCloseCreateform} = props;
+function CreateEmployeeForm(props) {
+    const {onCreateEmployee, isShow, onCloseCreateform} = props;
     const formRef = useRef(null);
   
   function handleClose ()  {
     onCloseCreateform()
   };
 
-  function handleCreateBrand() {
-    if(onCreateBrand)
-      onCreateBrand(formRef);
+  function handleCreateEmployee() {
+    if(onCreateEmployee)
+      onCreateEmployee(formRef);
   }
 
     return (
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Brand</Modal.Title>
+                <Modal.Title>Create Employee</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="brandName"
-                            placeholder="Brand Name"
-                            autoFocus
-                        />
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="employeeName"
+                        placeholder="Employee Name"
+                        autoFocus
+                    />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Image</Form.Label>
-                        <Form.Control
-                            type="file"
-                            name="myFile"
-                        />
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                        type="file"
+                        name="myFile"
+                    />
                     </Form.Group>
                 </Form>
                 </Modal.Body>
@@ -44,7 +44,7 @@ function CreateBrandForm(props) {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleCreateBrand}>
+                <Button variant="primary" onClick={handleCreateEmployee}>
                     Create
                 </Button>
                 </Modal.Footer>
@@ -53,4 +53,4 @@ function CreateBrandForm(props) {
     );
 }
 
-export default CreateBrandForm;
+export default CreateEmployeeForm;

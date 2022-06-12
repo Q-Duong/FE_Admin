@@ -21,12 +21,17 @@ const brandAPI = {
 
 const categoryAPI = {
   getAll: () => axi.get('/category'),
-  update: (category) => {
-    return axi.put(`/category/${category._id}`,{
-      categoryName:category.categoryName,
-      categoryImage:category.categoryImage
-    })
-  }
+  update: (category) => 
+    axi.put(`/category/${category.get('_id')}`, 
+      category,
+      {headers: { 'content-type': `multipart/form-data; boundary=${category._boundary}` }}
+    ),
+  create: (category) => 
+    axi.post(`/category`, 
+      category,
+      {headers: { 'content-type': `multipart/form-data; boundary=${category._boundary}` }}
+  ),
+  delete: (id) => axi.delete(`/category/${id}`)
 }
 
 const customerAPI = {
@@ -59,24 +64,33 @@ const employeeAPI = {
 
 const productAPI = {
   getAll: () => axi.get('/product'),
-  update: (product) => {
-    return axi.put(`/product/${product._id}`,{
-      productName:product.productName,
-      productImage:product.productImage,
-      unit:product.unit,
-      productStatus:product.productStatus,
-      categoryId:product.categoryId,
-      brandId:product.brandId})
-  }
+ 
+  update: (product) => 
+    axi.put(`/product/${product.get('_id')}`, 
+      product,
+      {headers: { 'content-type': `multipart/form-data; boundary=${product._boundary}` }}
+    ),
+  create: (product) => 
+    axi.post(`/product`, 
+      product,
+      {headers: { 'content-type': `multipart/form-data; boundary=${product._boundary}` }}
+  ),
+  delete: (id) => axi.delete(`/product/${id}`)
 }
 
 const supplierAPI = {
   getAll: () => axi.get('/supplier'),
-  update: (supplier) => {
-    return axi.put(`/supplier/${supplier._id}`,{
-      supplierName:supplier.supplierName,
-      address:supplier.address,
-      phone:supplier.phone})
-  }
+ 
+  update: (supplier) => 
+    axi.put(`/supplier/${supplier.get('_id')}`, 
+      supplier,
+      {headers: { 'content-type': `multipart/form-data; boundary=${supplier._boundary}` }}
+    ),
+  create: (supplier) => 
+    axi.post(`/supplier`, 
+      supplier,
+      {headers: { 'content-type': `multipart/form-data; boundary=${supplier._boundary}` }}
+  ),
+  delete: (id) => axi.delete(`/supplier/${id}`)
 }
 export {brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI};

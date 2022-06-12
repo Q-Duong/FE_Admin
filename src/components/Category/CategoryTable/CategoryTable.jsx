@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { brandAPI } from '../../../axios/exeAPI';
-import CreateBrandForm from '../CreateBrandForm/CreateBrandForm';
-import DeleteBrandForm from '../DeleteBrandForm/DeleteBrandForm';
-import UpdateBrandForm from '../UpdateBrandForm/UpdateBrandForm';
+import { categoryAPI } from '../../../axios/exeAPI';
+import CreateCategoryForm from '../CreateCategoryForm/CreateCategoryForm';
+import DeleteCategoryForm from '../DeleteCategoryForm/DeleteCategoryForm';
+import UpdateCategoryForm from '../UpdateCategoryForm/UpdateCategoryForm';
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,16 +11,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../../../CSS/Table.css";
+import "./CategoryTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
-import { TablePagination } from '@mui/material';
 
-function BrandTable() {
-    const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
-    const [activeBrand, setactiveBrand] = 
-        useState({_id:"123",brandName:"???",brandImage: "???"});
+function CategoryTable() {
+    const [categories, setCategories] =
+        useState([{_id:"123",categoryName:"???",categoryImage: "???"}]);
+    const [activeCategory, setactiveCategory] = 
+        useState({_id:"123",categoryName:"???",categoryImage: "???"});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -29,8 +28,8 @@ function BrandTable() {
         setShowUpdateForm(false)
       };
 
-    function handleUpdateFormShow(brand) {
-        setactiveBrand(brand)
+    function handleUpdateFormShow(category) {
+        setactiveCategory(category)
         setShowUpdateForm(true)
     };
 
@@ -46,58 +45,58 @@ function BrandTable() {
         setShowDeleteForm(false)
       };
 
-    function handleDeleteFormShow(brand) {
-        setactiveBrand(brand)
+    function handleDeleteFormShow(category) {
+        setactiveCategory(category)
         setShowDeleteForm(true)
     };
         
-    async function handleUpdatedBrand(formRef){
+    async function handleUpdatedCategory(formRef){
         const updateForm = formRef.current
         const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeBrand._id)
-        const response = await brandAPI.update(updateFormData);
-        const updatedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
-        setBrands(tempBrands);
+        updateFormData.append('_id',activeCategory._id)
+        const response = await categoryAPI.update(updateFormData);
+        const updatedCategory = response.data;
+        let tempCategories = [...categories];
+        tempCategories = tempCategories.map(category => category._id === updatedCategory._id ? updatedCategory : category);
+        setCategories(tempCategories);
         setShowUpdateForm(false)
     }
 
-    async function handleCreateBrand(formRef){
+    async function handleCreateCategory(formRef){
         const createForm = formRef.current
         const createFormData = new FormData(createForm)
-        const response = await brandAPI.create(createFormData);
-        const createdBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands.unshift(createdBrand)
-        setBrands(tempBrands);
+        const response = await categoryAPI.create(createFormData);
+        const createdCategory = response.data;
+        let tempCategories = [...categories];
+        tempCategories.unshift(createdCategory)
+        setCategories(tempCategories);
         setShowCreateForm(false)
     }
 
-    async function handleDeleteBrand(id) {
-        const response = await brandAPI.delete(id);
-        const deletedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.filter(brand => brand._id !== deletedBrand._id)
-        setBrands(tempBrands);
+    async function handleDeleteCategory(id) {
+        const response = await categoryAPI.delete(id);
+        const deletedCategory = response.data;
+        let tempCategories = [...categories];
+        tempCategories = tempCategories.filter(category => category._id !== deletedCategory._id)
+        setCategories(tempCategories);
         setShowDeleteForm(false);
     };
 
     useEffect(()=> {
-        async function getBrands() {
-            const brands = await brandAPI.getAll();
-            setBrands(brands.data);
+        async function getCategories() {
+            const categories = await categoryAPI.getAll();
+            setCategories(categories.data);
         }
-        getBrands()
+        getCategories()
         
     },[])
     
     return (
         <>
         <div className="Table">
-            <h3>CURD Brand</h3>
+            <h3>CURD Category</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Brand
+                Create Category
             </Button>
             <TableContainer
                 component={Paper}
@@ -108,22 +107,22 @@ function BrandTable() {
                     <TableHead>
                     <TableRow>
                         <TableCell>Định danh</TableCell>
-                        <TableCell align="left">tên hãng</TableCell>
+                        <TableCell align="left">Tên danh mục</TableCell>
                         <TableCell align="left">Logo</TableCell>
                         <TableCell align="left">Tác động</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
-                        {brands.map((brand) => (
+                        {categories.map((category) => (
                             <TableRow
-                                key={brand._id}
+                                key={category._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                                {brand._id}
+                                {category._id}
                             </TableCell>
-                            <TableCell align="left">{brand.brandName}</TableCell>
-                            <TableCell align="left"><img src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${brand.brandImage}`} /></TableCell>
+                            <TableCell align="left">{category.categoryName}</TableCell>
+                            <TableCell align="left"><img className="imageCategory" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${category.categoryImage}`} /></TableCell>
 
                             <TableCell align="left" className="Details">
                                 <Dropdown>
@@ -133,10 +132,10 @@ function BrandTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
+                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
                                     Update
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -144,30 +143,27 @@ function BrandTable() {
                         ))}
                     </TableBody>
                 </Table>
-                
             </TableContainer>
-            
-
         </div>
-            <CreateBrandForm
+            <CreateCategoryForm
                 isShow={showCreateForm}
-                onCreateBrand={handleCreateBrand}
+                onCreateCategory={handleCreateCategory}
                 onCloseCreateform={handleCreateFormClose}
             />
-            <UpdateBrandForm 
-                activeBrand={activeBrand}
+            <UpdateCategoryForm 
+                activeCategory={activeCategory}
                 isShow={showUpdateForm}
-                onUpdateBrand={handleUpdatedBrand}
+                onUpdatCategory={handleUpdatedCategory}
                 onCloseUpdateform={handleUpdateFormClose}
             />
-            <DeleteBrandForm
-                activeBrand={activeBrand}
+            <DeleteCategoryForm
+                activeCategory={activeCategory}
                 isShow={showDeleteForm}
-                onDeleteBrand={handleDeleteBrand}
+                onDeleteCategory={handleDeleteCategory}
                 onCloseDeleteform={handleDeleteFormClose}
             />
         </>
     );
 }
 
-export default BrandTable;
+export default CategoryTable;
