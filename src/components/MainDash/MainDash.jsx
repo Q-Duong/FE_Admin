@@ -12,9 +12,7 @@ const MainDash = () => {
       <Routes>
         <Route exact path="/" element={< BrandTable />} />
         <Route path="/brand" element={< BrandTable />} />
-        <Route path="/brand" element={< BrandTable />} />
-        <Route path="/brand" element={< BrandTable />} />
-       {/* <Route path="*" element={< BrandTable />} /> */}
+       <Route path="/importProduct" element={< BrandTable />} />
       </Routes>
     </div>
   );
