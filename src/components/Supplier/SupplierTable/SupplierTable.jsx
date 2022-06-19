@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { brandAPI } from '../../../axios/exeAPI';
-import CreateBrandForm from '../CreateBrandForm/CreateBrandForm';
-import DeleteBrandForm from '../DeleteBrandForm/DeleteBrandForm';
-import UpdateBrandForm from '../UpdateBrandForm/UpdateBrandForm';
+import { supplierAPI } from '../../../axios/exeAPI';
+import CreateSupplierForm from '../CreateSupplierForm/CreateSupplierForm';
+import DeleteSupplierForm from '../DeleteSupplierForm/DeleteSupplierForm';
+import UpdateSupplierForm from '../UpdateSupplierForm/UpdateSupplierForm';
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,16 +11,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../../../CSS/Table.css";
+import "./SupplierTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
-import { TablePagination } from '@mui/material';
 
-function BrandTable() {
-    const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
-    const [activeBrand, setactiveBrand] = 
-        useState({_id:"123",brandName:"???",brandImage: "???"});
+function SupplierTable() {
+    const [suppliers, setSuppliers] =
+        useState([{_id:"123",supplierName:"???",address: "???",phone: "???"}]);
+    const [activeSupplier, setactiveSupplier] = 
+        useState([{_id:"123",supplierName:"???",address: "???",phone: "???"}]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -29,8 +28,8 @@ function BrandTable() {
         setShowUpdateForm(false)
       };
 
-    function handleUpdateFormShow(brand) {
-        setactiveBrand(brand)
+    function handleUpdateFormShow(supplier) {
+        setactiveSupplier(supplier)
         setShowUpdateForm(true)
     };
 
@@ -46,58 +45,58 @@ function BrandTable() {
         setShowDeleteForm(false)
       };
 
-    function handleDeleteFormShow(brand) {
-        setactiveBrand(brand)
+    function handleDeleteFormShow(supplier) {
+        setactiveSupplier(supplier)
         setShowDeleteForm(true)
     };
         
-    async function handleUpdatedBrand(formRef){
+    async function handleUpdatedSupplier(formRef){
         const updateForm = formRef.current
         const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeBrand._id)
-        const response = await brandAPI.update(updateFormData);
-        const updatedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
-        setBrands(tempBrands);
+        updateFormData.append('_id',activeSupplier._id)
+        const response = await supplierAPI.update(updateFormData);
+        const updatedSupplier = response.data;
+        let tempSuppliers = [...suppliers];
+        tempSuppliers = tempSuppliers.map(supplier => supplier._id === updatedSupplier._id ? updatedSupplier : supplier);
+        setSuppliers(tempSuppliers);
         setShowUpdateForm(false)
     }
 
-    async function handleCreateBrand(formRef){
+    async function handleCreateSupplier(formRef){
         const createForm = formRef.current
         const createFormData = new FormData(createForm)
-        const response = await brandAPI.create(createFormData);
-        const createdBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands.unshift(createdBrand)
-        setBrands(tempBrands);
+        const response = await supplierAPI.create(createFormData);
+        const createdSupplier = response.data;
+        let tempSuppliers = [...suppliers];
+        tempSuppliers.unshift(createdSupplier)
+        setSuppliers(tempSuppliers);
         setShowCreateForm(false)
     }
 
-    async function handleDeleteBrand(id) {
-        const response = await brandAPI.delete(id);
-        const deletedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.filter(brand => brand._id !== deletedBrand._id)
-        setBrands(tempBrands);
+    async function handleDeleteSupplier(id) {
+        const response = await supplierAPI.delete(id);
+        const deletedSupplier = response.data;
+        let tempSuppliers = [...suppliers];
+        tempSuppliers = tempSuppliers.filter(supplier => supplier._id !== deletedSupplier._id)
+        setSuppliers(tempSuppliers);
         setShowDeleteForm(false);
     };
 
     useEffect(()=> {
-        async function getBrands() {
-            const brands = await brandAPI.getAll();
-            setBrands(brands.data);
+        async function getSuppliers() {
+            const suppliers = await supplierAPI.getAll();
+            setSuppliers(suppliers.data);
         }
-        getBrands()
+        getSuppliers()
         
     },[])
     
     return (
         <>
         <div className="Table">
-            <h3>CURD Brand</h3>
+            <h3>CURD Supplier</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Brand
+                Create Supplier
             </Button>
             <TableContainer
                 component={Paper}
@@ -108,23 +107,23 @@ function BrandTable() {
                     <TableHead>
                     <TableRow>
                         <TableCell>Định danh</TableCell>
-                        <TableCell align="left">tên hãng</TableCell>
-                        <TableCell align="left">Logo</TableCell>
-                        <TableCell align="left">Tác động</TableCell>
+                        <TableCell align="left">Tên nhà cung cấp</TableCell>
+                        <TableCell align="left">Địa chỉ</TableCell>
+                        <TableCell align="left">SĐT</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
-                        {brands.map((brand) => (
+                        {suppliers.map((supplier) => (
                             <TableRow
-                                key={brand._id}
+                                key={supplier._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                                {brand._id}
+                                {supplier._id}
                             </TableCell>
-                            <TableCell align="left">{brand.brandName}</TableCell>
-                            <TableCell align="left"><img src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${brand.brandImage}`} /></TableCell>
-
+                            <TableCell align="left">{supplier.supplierName}</TableCell>
+                            <TableCell align="left">{supplier.address}</TableCell>
+                            <TableCell align="left">{supplier.phone}</TableCell>
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -133,10 +132,10 @@ function BrandTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
+                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(supplier)}}>
                                     Update
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(supplier)}}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -144,30 +143,27 @@ function BrandTable() {
                         ))}
                     </TableBody>
                 </Table>
-                
             </TableContainer>
-            
-
         </div>
-            <CreateBrandForm
+            <CreateSupplierForm
                 isShow={showCreateForm}
-                onCreateBrand={handleCreateBrand}
+                onCreateSupplier={handleCreateSupplier}
                 onCloseCreateform={handleCreateFormClose}
             />
-            <UpdateBrandForm 
-                activeBrand={activeBrand}
+            <UpdateSupplierForm 
+                activeSupplier={activeSupplier}
                 isShow={showUpdateForm}
-                onUpdateBrand={handleUpdatedBrand}
+                onUpdateSupplier={handleUpdatedSupplier}
                 onCloseUpdateform={handleUpdateFormClose}
             />
-            <DeleteBrandForm
-                activeBrand={activeBrand}
+            <DeleteSupplierForm
+                activeSupplier={activeSupplier}
                 isShow={showDeleteForm}
-                onDeleteBrand={handleDeleteBrand}
+                onDeleteSupplier={handleDeleteSupplier}
                 onCloseDeleteform={handleDeleteFormClose}
             />
         </>
     );
 }
 
-export default BrandTable;
+export default SupplierTable;

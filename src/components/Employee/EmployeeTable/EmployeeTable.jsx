@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { brandAPI } from '../../../axios/exeAPI';
-import CreateBrandForm from '../CreateBrandForm/CreateBrandForm';
-import DeleteBrandForm from '../DeleteBrandForm/DeleteBrandForm';
-import UpdateBrandForm from '../UpdateBrandForm/UpdateBrandForm';
+import { employeeAPI } from '../../../axios/exeAPI';
+import CreateEmployeeForm from '../CreateEmployeeForm/CreateEmployeeForm';
+import DeleteEmployeeForm from '../DeleteEmployeeForm/DeleteEmployeeForm';
+import UpdateEmployeeForm from '../UpdateEmployeeForm/UpdateEmployeeForm';
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,16 +11,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../../../CSS/Table.css";
+import "./EmployeeTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
-import { TablePagination } from '@mui/material';
 
-function BrandTable() {
-    const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
-    const [activeBrand, setactiveBrand] = 
-        useState({_id:"123",brandName:"???",brandImage: "???"});
+function EmployeeTable() {
+    const [employees, setEmployees] =
+        useState([{_id:"123",employeeName:"???",employeePhone: "???",employeeEmail: "???",employeeRole: "???",employeeActive: "???",employeePassword: "???"}]);
+    const [activeEmployee, setactiveEmployee] = 
+        useState([{_id:"123",employeeName:"???",employeePhone: "???",employeeEmail: "???",employeeRole: "???",employeeActive: "???",employeePassword: "???"}]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -29,8 +28,8 @@ function BrandTable() {
         setShowUpdateForm(false)
       };
 
-    function handleUpdateFormShow(brand) {
-        setactiveBrand(brand)
+    function handleUpdateFormShow(employee) {
+        setactiveEmployee(employee)
         setShowUpdateForm(true)
     };
 
@@ -46,58 +45,58 @@ function BrandTable() {
         setShowDeleteForm(false)
       };
 
-    function handleDeleteFormShow(brand) {
-        setactiveBrand(brand)
+    function handleDeleteFormShow(employee) {
+        setactiveEmployee(employee)
         setShowDeleteForm(true)
     };
         
-    async function handleUpdatedBrand(formRef){
+    async function handleUpdatedEmployee(formRef){
         const updateForm = formRef.current
         const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeBrand._id)
-        const response = await brandAPI.update(updateFormData);
-        const updatedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
-        setBrands(tempBrands);
+        updateFormData.append('_id',activeEmployee._id)
+        const response = await employeeAPI.update(updateFormData);
+        const updatedEmployee = response.data;
+        let tempEmployees = [...employees];
+        tempEmployees = tempEmployees.map(employee => employee._id === updatedEmployee._id ? updatedEmployee : employee);
+        setEmployees(tempEmployees);
         setShowUpdateForm(false)
     }
 
-    async function handleCreateBrand(formRef){
+    async function handleCreateEmployee(formRef){
         const createForm = formRef.current
         const createFormData = new FormData(createForm)
-        const response = await brandAPI.create(createFormData);
-        const createdBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands.unshift(createdBrand)
-        setBrands(tempBrands);
+        const response = await employeeAPI.create(createFormData);
+        const createdEmployee = response.data;
+        let tempEmployees = [...employees];
+        tempEmployees.unshift(createdEmployee)
+        setEmployees(tempEmployees);
         setShowCreateForm(false)
     }
 
-    async function handleDeleteBrand(id) {
-        const response = await brandAPI.delete(id);
-        const deletedBrand = response.data;
-        let tempBrands = [...brands];
-        tempBrands = tempBrands.filter(brand => brand._id !== deletedBrand._id)
-        setBrands(tempBrands);
+    async function handleDeleteEmployee(id) {
+        const response = await employeeAPI.delete(id);
+        const deletedEmployee = response.data;
+        let tempEmployees = [...employees];
+        tempEmployees = tempEmployees.filter(employee => employee._id !== deletedEmployee._id)
+        setEmployees(tempEmployees);
         setShowDeleteForm(false);
     };
 
     useEffect(()=> {
-        async function getBrands() {
-            const brands = await brandAPI.getAll();
-            setBrands(brands.data);
+        async function getEmployees() {
+            const employees = await employeeAPI.getAll();
+            setEmployees(employees.data);
         }
-        getBrands()
+        getEmployees()
         
     },[])
     
     return (
         <>
         <div className="Table">
-            <h3>CURD Brand</h3>
+            <h3>CURD Employee</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Brand
+                Create Employee
             </Button>
             <TableContainer
                 component={Paper}
@@ -114,16 +113,16 @@ function BrandTable() {
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
-                        {brands.map((brand) => (
+                        {employees.map((employee) => (
                             <TableRow
-                                key={brand._id}
+                                key={employee._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                                {brand._id}
+                                {employee._id}
                             </TableCell>
-                            <TableCell align="left">{brand.brandName}</TableCell>
-                            <TableCell align="left"><img src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${brand.brandImage}`} /></TableCell>
+                            <TableCell align="left">{employee.employeeName}</TableCell>
+                            
 
                             <TableCell align="left" className="Details">
                                 <Dropdown>
@@ -133,10 +132,10 @@ function BrandTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
+                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
                                     Update
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -144,30 +143,27 @@ function BrandTable() {
                         ))}
                     </TableBody>
                 </Table>
-                
             </TableContainer>
-            
-
         </div>
-            <CreateBrandForm
+            <CreateEmployeeForm
                 isShow={showCreateForm}
-                onCreateBrand={handleCreateBrand}
+                onCreateEmployee={handleCreateEmployee}
                 onCloseCreateform={handleCreateFormClose}
             />
-            <UpdateBrandForm 
-                activeBrand={activeBrand}
+            <UpdateEmployeeForm 
+                activeEmployee={activeEmployee}
                 isShow={showUpdateForm}
-                onUpdateBrand={handleUpdatedBrand}
+                onUpdateEmployee={handleUpdatedEmployee}
                 onCloseUpdateform={handleUpdateFormClose}
             />
-            <DeleteBrandForm
-                activeBrand={activeBrand}
+            <DeleteEmployeeForm
+                activeEmployee={activeEmployee}
                 isShow={showDeleteForm}
-                onDeleteBrand={handleDeleteBrand}
+                onDeleteEmployee={handleDeleteEmployee}
                 onCloseDeleteform={handleDeleteFormClose}
             />
         </>
     );
 }
 
-export default BrandTable;
+export default EmployeeTable;

@@ -54,6 +54,11 @@ export const SidebarData = [
     icon: UilChart,
     heading: 'Employee'
   },
+  {
+    id: 8,
+    icon: UilEstate,
+    heading: "importOrder",
+  },
 ];
 
 // Analytics Cards Data
