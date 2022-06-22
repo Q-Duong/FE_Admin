@@ -18,34 +18,54 @@ function CreateCustomerForm(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Customer</Modal.Title>
+                <Modal.Title>Thêm khách hàng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Tên khách hàng</Form.Label>
                     <Form.Control
                         type="text"
-                        name="customerName"
-                        placeholder="Customer Name"
+                        name="name"
+                        placeholder="Tên khách hàng"
                         autoFocus
                     />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Image</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
-                        type="file"
-                        name="myFile"
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        autoFocus
+                    />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Số điện thoại</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="phone"
+                        placeholder="Số điện thoại"
+                        autoFocus
+                    />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Địa chỉ</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="address"
+                        placeholder="Địa chỉ"
+                        autoFocus
                     />
                     </Form.Group>
                 </Form>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateCustomer}>
-                    Create
+                    Thêm
                 </Button>
                 </Modal.Footer>
             </Modal>

@@ -84,18 +84,17 @@ const supplierAPI = {
   update: (supplier) => 
     axi.put(`/supplier/${supplier.get('_id')}`, 
       supplier,
-      {headers: { 'content-type': `multipart/form-data; boundary=${supplier._boundary}` }}
+      {headers: { 'content-type': `application/json` }}
     ),
   create: (supplier) => 
-    axi.post(`/supplier`, 
-      supplier,
-      {headers: { 'content-type': `multipart/form-data; boundary=${supplier._boundary}` }}
+    axi.post(`/supplier`, supplier,
+    {headers: { 'content-type': `application/json` }}
   ),
   delete: (id) => axi.delete(`/supplier/${id}`)
 }
 
 const importOrderAPI = {
-  getAll: () => axi.get('/supplier'),
+  getAll: () => axi.get('/importOrder'),
  
   create: (data) => 
     axi.post(`/importOrder`, data)

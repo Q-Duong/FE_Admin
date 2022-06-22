@@ -4,7 +4,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 const UpdateCategoryForm = (props) => {
   const {activeCategory, onUpdateCategory, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [name, setName] = useState(activeCategory.categoryName);
+  const [name, setName] = useState(activeCategory.name);
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -17,23 +17,23 @@ const UpdateCategoryForm = (props) => {
   }
 
   useEffect(() => {
-    setName(activeCategory.categoryName)
+    setName(activeCategory.name)
   },[activeCategory])
 
   return (
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Category</Modal.Title>
+          <Modal.Title>Cập nhật danh mục</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} enctype="multipart/form-data">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Tên danh mục</Form.Label>
               <Form.Control
                 type="text"
-                name="categoryName"
-                placeholder="Category Name"
+                name="name"
+                placeholder="Tên danh mục"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -42,7 +42,7 @@ const UpdateCategoryForm = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Logo</Form.Label>
               <Form.Control
                 type="file"
                 name="myFile"
@@ -52,10 +52,10 @@ const UpdateCategoryForm = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleUpdatedCategory}>
-            Save Changes
+            Lưu
           </Button>
         </Modal.Footer>
       </Modal>

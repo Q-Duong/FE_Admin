@@ -23,41 +23,49 @@ export const SidebarData = [
     id: 1,
     icon: UilEstate,
     heading: "Dashboard",
+    title:"Thống kê"
   },
   {
     id: 2,
     icon: UilClipboardAlt,
     heading: "Brand",
+    title:"Thương hiệu"
   },
   {
     id: 3,
     icon: UilUsersAlt,
     heading: "Category",
+    title:"Danh mục"
   },
   {
     id: 4,
     icon: UilPackage,
-    heading: 'Supplier'
+    heading: 'Supplier',
+    title:"Nhà cung cấp"
   },
   {
     id: 5,
     icon: UilChart,
-    heading: 'Product'
+    heading: 'Product',
+    title:"Sản phẩm"
   },
   {
     id: 6,
     icon: UilChart,
-    heading: 'Customer'
+    heading: 'Customer',
+    title:"Khách hàng"
   },
   {
     id: 7,
     icon: UilChart,
-    heading: 'Employee'
+    heading: 'Employee',
+    title:"Nhân viên"
   },
   {
     id: 8,
     icon: UilEstate,
     heading: "importOrder",
+    title:"Nhập hàng"
   },
 ];
 

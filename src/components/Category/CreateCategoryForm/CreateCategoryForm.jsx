@@ -18,21 +18,21 @@ function CreateCategoryForm(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Category</Modal.Title>
+                <Modal.Title>Thêm danh mục </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Tên danh mục</Form.Label>
                     <Form.Control
                         type="text"
-                        name="categoryName"
-                        placeholder="Category Name"
+                        name="name"
+                        placeholder="Tên danh mục"
                         autoFocus
                     />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Image</Form.Label>
+                    <Form.Label>Logo</Form.Label>
                     <Form.Control
                         type="file"
                         name="myFile"
@@ -42,10 +42,10 @@ function CreateCategoryForm(props) {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateCategory}>
-                    Create
+                    Thêm
                 </Button>
                 </Modal.Footer>
             </Modal>

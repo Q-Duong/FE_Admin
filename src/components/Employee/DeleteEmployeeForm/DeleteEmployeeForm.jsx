@@ -17,17 +17,17 @@ function DeleteEmployeeForm(props) {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Employee</Modal.Title>
+          <Modal.Title>Xóa nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Employee: {activeEmployee.employeeName}</p>
+          <p>Are you sure to delete Employee: {activeEmployee.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDeletedEmployee}>
-            Delete
+            Xóa
           </Button>
         </Modal.Footer>
       </Modal>

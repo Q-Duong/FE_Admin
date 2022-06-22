@@ -18,9 +18,9 @@ import { TablePagination } from '@mui/material';
 
 function BrandTable() {
     const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
     const [activeBrand, setactiveBrand] = 
-        useState({_id:"123",brandName:"???",brandImage: "???"});
+        useState({_id:"123",name:"???",image: "???"});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -58,6 +58,7 @@ function BrandTable() {
         const response = await brandAPI.update(updateFormData);
         const updatedBrand = response.data;
         let tempBrands = [...brands];
+        console.log(updatedBrand)
         tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
         setBrands(tempBrands);
         setShowUpdateForm(false)
@@ -95,9 +96,9 @@ function BrandTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Brand</h3>
+            <h3>Thương hiệu</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Brand
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -107,8 +108,7 @@ function BrandTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        <TableCell>Định danh</TableCell>
-                        <TableCell align="left">tên hãng</TableCell>
+                        <TableCell align="left">Tên thương hiệu</TableCell>
                         <TableCell align="left">Logo</TableCell>
                         <TableCell align="left">Tác động</TableCell>
                     </TableRow>
@@ -119,24 +119,21 @@ function BrandTable() {
                                 key={brand._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
-                                {brand._id}
-                            </TableCell>
-                            <TableCell align="left">{brand.brandName}</TableCell>
-                            <TableCell align="left"><img src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${brand.brandImage}`} /></TableCell>
+                            <TableCell align="left">{brand.name}</TableCell>
+                            <TableCell align="left"><img src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${brand.image}`} /></TableCell>
 
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Action
+                                   Hành động
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
-                                    Update
+                                    Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

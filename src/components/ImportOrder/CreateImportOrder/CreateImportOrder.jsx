@@ -68,7 +68,7 @@ function CreateImportOrder(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Import Order</Modal.Title>
+                <Modal.Title>Đơn nhập hàng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form>
@@ -103,10 +103,10 @@ function CreateImportOrder(props) {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateImportOrder}>
-                    Create
+                    Tạo đơn nhập
                 </Button>
                 </Modal.Footer>
             </Modal>

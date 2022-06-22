@@ -18,34 +18,63 @@ function CreateEmployeeForm(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Employee</Modal.Title>
+                <Modal.Title>Thêm nhân viên</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Tên nhân viên</Form.Label>
                     <Form.Control
                         type="text"
-                        name="employeeName"
-                        placeholder="Employee Name"
+                        name="name"
+                        placeholder="Tên nhân viên"
                         autoFocus
                     />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Image</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
-                        type="file"
-                        name="myFile"
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        autoFocus
+                    />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>SĐT</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="phone"
+                        placeholder="SĐT"
+                        autoFocus
+                    />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Mật khẩu</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="password"
+                        placeholder="Mật khẩu"
+                        autoFocus
+                    />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Quyền</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="name"
+                        placeholder="Quy"
+                        autoFocus
                     />
                     </Form.Group>
                 </Form>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateEmployee}>
-                    Create
+                    Thêm
                 </Button>
                 </Modal.Footer>
             </Modal>

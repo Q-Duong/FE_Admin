@@ -17,9 +17,9 @@ import { Button, Dropdown } from "react-bootstrap";
 
 function CustomerTable() {
     const [customers, setCustomers] =
-        useState([{_id:"123",customerName:"???",customerPhone: "???",customerAddress: "???",customerEmail: "???",customerPassword: "???",customerActive: "???"}]);
+        useState([{_id:"123",name:"???",phone: "???",address: "???",email: "???",pasword: "???",customerActive: "???"}]);
     const [activeCustomer, setactiveCustomer] = 
-        useState([{_id:"123",customerName:"???",customerPhone: "???",customerAddress: "???",customerEmail: "???",customerPassword: "???",customerActive: "???"}]);
+        useState([{_id:"123",name:"???",phone: "???",address: "???",email: "???",pasword: "???",customerActive: "???"}]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -94,9 +94,9 @@ function CustomerTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Customer</h3>
+            <h3>Khách hàng</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Customer
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -106,7 +106,6 @@ function CustomerTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        <TableCell>Định danh</TableCell>
                         <TableCell align="left">Tên khách hàng</TableCell>
                         <TableCell align="left">Email</TableCell>
                         <TableCell align="left">SĐT</TableCell>
@@ -121,9 +120,6 @@ function CustomerTable() {
                                 key={customer._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
-                                {customer._id}
-                            </TableCell>
                             <TableCell align="left">{customer.name}</TableCell>
                             <TableCell align="left">{customer.email}</TableCell>
                             <TableCell align="left">{customer.phone}</TableCell>
@@ -133,15 +129,15 @@ function CustomerTable() {
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Action
+                                    Hành động
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(customer)}}>
-                                    Update
+                                    Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(customer)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(customer)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

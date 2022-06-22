@@ -17,9 +17,9 @@ import { Button, Dropdown } from "react-bootstrap";
 
 function EmployeeTable() {
     const [employees, setEmployees] =
-        useState([{_id:"123",employeeName:"???",employeePhone: "???",employeeEmail: "???",employeeRole: "???",employeeActive: "???",employeePassword: "???"}]);
+        useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
     const [activeEmployee, setactiveEmployee] = 
-        useState([{_id:"123",employeeName:"???",employeePhone: "???",employeeEmail: "???",employeeRole: "???",employeeActive: "???",employeePassword: "???"}]);
+        useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -94,9 +94,9 @@ function EmployeeTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Employee</h3>
+            <h3>Nhân viên</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Employee
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -106,10 +106,12 @@ function EmployeeTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        <TableCell>Định danh</TableCell>
-                        <TableCell align="left">tên hãng</TableCell>
-                        <TableCell align="left">Logo</TableCell>
-                        <TableCell align="left">Tác động</TableCell>
+                        
+                        <TableCell align="left">Tên nhân viên</TableCell>
+                        <TableCell align="left">Email</TableCell>
+                        <TableCell align="left">SĐT</TableCell>
+                        <TableCell align="left">Mật khẩu</TableCell>
+                        <TableCell align="left">Quyền</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
@@ -118,24 +120,23 @@ function EmployeeTable() {
                                 key={employee._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
-                                {employee._id}
-                            </TableCell>
-                            <TableCell align="left">{employee.employeeName}</TableCell>
-                            
-
+                            <TableCell align="left">{employee.name}</TableCell>
+                            <TableCell align="left">{employee.email}</TableCell>
+                            <TableCell align="left">{employee.phone}</TableCell>
+                            <TableCell align="left">{employee.password}</TableCell>
+                            <TableCell align="left">{employee.role}</TableCell>
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Action
+                                    Hoạt động
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
-                                    Update
+                                    Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

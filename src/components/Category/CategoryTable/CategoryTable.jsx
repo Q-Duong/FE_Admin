@@ -17,9 +17,9 @@ import { Button, Dropdown } from "react-bootstrap";
 
 function CategoryTable() {
     const [categories, setCategories] =
-        useState([{_id:"123",categoryName:"???",categoryImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
     const [activeCategory, setactiveCategory] = 
-        useState({_id:"123",categoryName:"???",categoryImage: "???"});
+        useState({_id:"123",name:"???",image: "???"});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -94,9 +94,9 @@ function CategoryTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Category</h3>
+            <h3>Danh mục sản phẩm</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Category
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -106,7 +106,6 @@ function CategoryTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        <TableCell>Định danh</TableCell>
                         <TableCell align="left">Tên danh mục</TableCell>
                         <TableCell align="left">Logo</TableCell>
                         <TableCell align="left">Tác động</TableCell>
@@ -118,24 +117,21 @@ function CategoryTable() {
                                 key={category._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
-                                {category._id}
-                            </TableCell>
-                            <TableCell align="left">{category.categoryName}</TableCell>
-                            <TableCell align="left"><img className="imageCategory" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${category.categoryImage}`} /></TableCell>
+                            <TableCell align="left">{category.name}</TableCell>
+                            <TableCell align="left"><img className="imageCategory" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${category.image}`} /></TableCell>
 
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Action
+                                    Hành động
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
-                                    Update
+                                    Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

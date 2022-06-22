@@ -30,7 +30,7 @@ function ProductTable() {
     const [products, setProducts] =
         useState([]);
     const [activeProduct, setactiveProduct] = 
-        useState({_id:"123",productName:"???",productImage: "???"});
+        useState({category: "???",brand: "???",_id:"123",name:"???",image: "???",unit: "???",expireNumber: "???",expireUnit: "???",status: "???"});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -89,7 +89,7 @@ function ProductTable() {
         if(response.status === 200) {
             let tempProducts = [...products];
             tempProducts = tempProducts.filter(product => product._id !== activeProduct._id)
-            setactiveProduct({_id:"123",productName:"???",productImage: "???"})
+            setactiveProduct({_id:"123",name:"???",image: "???"})
             setProducts(tempProducts);
             setShowDeleteForm(false);
         }
@@ -108,9 +108,9 @@ function ProductTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Product</h3>
+            <h3>Sản phẩm</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Product
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -121,14 +121,14 @@ function ProductTable() {
                 <Table  responsive="xl" sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                         <TableRow>
-                            <TableCell>Định danh</TableCell>
                             <TableCell align="left">Danh mục</TableCell>
                             <TableCell align="left">Thương hiệu</TableCell>
                             <TableCell align="left">Tên hàng hóa</TableCell>
                             <TableCell align="left">Hình ảnh</TableCell>
                             <TableCell align="left">Đơn vị</TableCell>
                             <TableCell align="left">Tình trạng</TableCell>
-                            <TableCell align="left">Ngày nhập</TableCell>
+                            <TableCell align="left">Hạn dùng</TableCell>
+                            <TableCell align="left">Đơn vị hạn dùng</TableCell>
                             <TableCell align="left">Tác động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -138,28 +138,27 @@ function ProductTable() {
                                 key={product._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {product._id}
-                                </TableCell>
+                               
                                 <TableCell align="left">{product.category.name}</TableCell>
                                 <TableCell align="left">{product.brand.name}</TableCell>
                                 <TableCell align="left">{product.name}</TableCell>
                                 <TableCell align="left"><img className="imageProduct" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${product.image}`} /></TableCell>
                                 <TableCell align="left">{product.unit}</TableCell>
                                 <TableCell align="left">{product.status}</TableCell>
-                                <TableCell align="left">{product.createdAt}</TableCell>
+                                <TableCell align="left">{product.expireNumber}</TableCell>
+                                <TableCell align="left">{product.expireUnit}</TableCell>
                                 <TableCell align="left" className="Details">
                                     <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                        Action
+                                        Hành động
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item ></Dropdown.Item>
                                         <Dropdown.Item onClick={() => {handleUpdateFormShow(product)}}>
-                                        Update
+                                        Cập nhật
                                         </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Delete</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Xóa</Dropdown.Item>
                                     </Dropdown.Menu>
                                     </Dropdown>
                                 </TableCell>

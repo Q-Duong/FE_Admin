@@ -18,21 +18,21 @@ function CreateBrandForm(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Brand</Modal.Title>
+                <Modal.Title>Thêm thương hiệu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Tên thương hiệu</Form.Label>
                         <Form.Control
                             type="text"
-                            name="brandName"
-                            placeholder="Brand Name"
+                            name="name"
+                            placeholder="Tên thương hiệu"
                             autoFocus
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Image</Form.Label>
+                        <Form.Label>Logo</Form.Label>
                         <Form.Control
                             type="file"
                             name="myFile"
@@ -42,10 +42,10 @@ function CreateBrandForm(props) {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateBrand}>
-                    Create
+                    Thêm
                 </Button>
                 </Modal.Footer>
             </Modal>

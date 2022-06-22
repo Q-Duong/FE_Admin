@@ -48,7 +48,7 @@ const Sidebar = () => {
             >
               <Link to={`/${item.heading}`}>
                 <item.icon />
-                {item.heading}
+                {item.title}
               </Link>
             </div>
           );

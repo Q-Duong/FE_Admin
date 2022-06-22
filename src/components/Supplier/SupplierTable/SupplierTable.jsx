@@ -17,9 +17,9 @@ import { Button, Dropdown } from "react-bootstrap";
 
 function SupplierTable() {
     const [suppliers, setSuppliers] =
-        useState([{_id:"123",supplierName:"???",address: "???",phone: "???"}]);
+        useState([{_id:"123",name:"???",address: "???",phone: "???",product: "???"}]);
     const [activeSupplier, setactiveSupplier] = 
-        useState([{_id:"123",supplierName:"???",address: "???",phone: "???"}]);
+        useState([{_id:"123",name:"???",address: "???",phone: "???",product: "???"}]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -32,7 +32,7 @@ function SupplierTable() {
         setactiveSupplier(supplier)
         setShowUpdateForm(true)
     };
-
+    
     function handleCreateFormClose ()  {
         setShowCreateForm(false)
       };
@@ -49,42 +49,73 @@ function SupplierTable() {
         setactiveSupplier(supplier)
         setShowDeleteForm(true)
     };
+
+    async function handleCreateSupplier(formRef) {
+        try {
+            const createSupplierForm = formRef.current
+            const formData = new FormData(createSupplierForm)
+            const formObject =Object.fromEntries(formData)
+            formObject.products = formData.getAll('products')
+            const data = JSON.stringify(formObject)
+            const res = await supplierAPI.create(data)
+            if(res.status === 201){
+                let tempSuppliers = [...suppliers];
+                tempSuppliers.unshift(res.data)
+                setSuppliers(tempSuppliers);
+                setShowCreateForm(false)
+            }
+            else{
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }  
+    }
         
     async function handleUpdatedSupplier(formRef){
-        const updateForm = formRef.current
-        const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeSupplier._id)
-        const response = await supplierAPI.update(updateFormData);
-        const updatedSupplier = response.data;
-        let tempSuppliers = [...suppliers];
-        tempSuppliers = tempSuppliers.map(supplier => supplier._id === updatedSupplier._id ? updatedSupplier : supplier);
-        setSuppliers(tempSuppliers);
-        setShowUpdateForm(false)
+        try {
+            const updateForm = formRef.current
+            const updateFormData = new FormData(updateForm)
+            updateFormData.append('_id',activeSupplier._id)
+            const res = await supplierAPI.update(updateFormData);
+            const updatedSupplier = res.data;
+            if(res.status === 200){
+                let tempSuppliers = [...suppliers];
+                tempSuppliers = tempSuppliers.map(supplier => supplier._id === updatedSupplier._id ? updatedSupplier : supplier);
+                setSuppliers(tempSuppliers);
+                setShowUpdateForm(false)
+            }
+            else{
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }  
     }
 
-    async function handleCreateSupplier(formRef){
-        const createForm = formRef.current
-        const createFormData = new FormData(createForm)
-        const response = await supplierAPI.create(createFormData);
-        const createdSupplier = response.data;
-        let tempSuppliers = [...suppliers];
-        tempSuppliers.unshift(createdSupplier)
-        setSuppliers(tempSuppliers);
-        setShowCreateForm(false)
-    }
 
     async function handleDeleteSupplier(id) {
-        const response = await supplierAPI.delete(id);
-        const deletedSupplier = response.data;
-        let tempSuppliers = [...suppliers];
-        tempSuppliers = tempSuppliers.filter(supplier => supplier._id !== deletedSupplier._id)
-        setSuppliers(tempSuppliers);
-        setShowDeleteForm(false);
+        try {
+            const res = await supplierAPI.delete(id);
+            const deletedSupplier = res.data;
+            if(res.status === 200){
+                let tempSuppliers = [...suppliers];
+                tempSuppliers = tempSuppliers.filter(supplier => supplier._id !== deletedSupplier._id)
+                setSuppliers(tempSuppliers);
+                setShowDeleteForm(false);
+            }
+            else{
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }  
     };
 
     useEffect(()=> {
         async function getSuppliers() {
             const suppliers = await supplierAPI.getAll();
+            console.log(suppliers.data)
             setSuppliers(suppliers.data);
         }
         getSuppliers()
@@ -94,9 +125,9 @@ function SupplierTable() {
     return (
         <>
         <div className="Table">
-            <h3>CURD Supplier</h3>
+            <h3>Nhà cung cấp</h3>
             <Button variant="primary" onClick={handleCreateFormShow}>
-                Create Supplier
+                Thêm
             </Button>
             <TableContainer
                 component={Paper}
@@ -106,10 +137,11 @@ function SupplierTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        <TableCell>Định danh</TableCell>
+                        
                         <TableCell align="left">Tên nhà cung cấp</TableCell>
                         <TableCell align="left">Địa chỉ</TableCell>
                         <TableCell align="left">SĐT</TableCell>
+                        <TableCell align="left">Sản phẩm cung cấp</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
@@ -118,24 +150,27 @@ function SupplierTable() {
                                 key={supplier._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
-                                {supplier._id}
-                            </TableCell>
-                            <TableCell align="left">{supplier.supplierName}</TableCell>
+                           
+                            <TableCell align="left">{supplier.name}</TableCell>
                             <TableCell align="left">{supplier.address}</TableCell>
                             <TableCell align="left">{supplier.phone}</TableCell>
+                            <TableCell align="left">{
+                                supplier.products ?
+                                supplier.products.map((product) =>  (<p>{product.name}</p>))
+                                : <></>
+                            }</TableCell>
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Action
+                                    Hành động
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(supplier)}}>
-                                    Update
+                                    Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(supplier)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(supplier)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

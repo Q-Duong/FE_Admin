@@ -17,17 +17,17 @@ function DeleteProductForm(props) {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Product</Modal.Title>
+          <Modal.Title>Xóa sản phẩm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Product: {activeProduct.productName}</p>
+          <p>Are you sure to delete Product: {activeProduct.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDeletedProduct}>
-            Delete
+            Xóa
           </Button>
         </Modal.Footer>
       </Modal>

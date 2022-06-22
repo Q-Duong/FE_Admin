@@ -17,17 +17,17 @@ function DeleteCategoryForm(props) {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Category</Modal.Title>
+          <Modal.Title>Xóa danh mục</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Category: {activeCategory.categoryName}</p>
+          <p>Are you sure to delete Category: {activeCategory.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDeletedCategory}>
-            Delete
+            Xóa
           </Button>
         </Modal.Footer>
       </Modal>

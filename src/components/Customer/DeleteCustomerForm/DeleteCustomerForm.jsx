@@ -17,17 +17,17 @@ function DeleteCustomerForm(props) {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Customer</Modal.Title>
+          <Modal.Title>Xóa khách hàng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Customer: {activeCustomer.customerName}</p>
+          <p>Are you sure to delete Customer: {activeCustomer.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDeletedCustomer}>
-            Delete
+            Xóa
           </Button>
         </Modal.Footer>
       </Modal>

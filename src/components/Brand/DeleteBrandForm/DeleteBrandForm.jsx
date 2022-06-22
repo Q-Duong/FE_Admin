@@ -17,17 +17,17 @@ function DeleteBrandForm(props) {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Brand</Modal.Title>
+          <Modal.Title>Xóa thương hiệu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Brand: {activeBrand.brandName}</p>
+          <p>Are you sure to delete Brand: {activeBrand.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDeletedBrand}>
-            Delete
+            Xóa
           </Button>
         </Modal.Footer>
       </Modal>

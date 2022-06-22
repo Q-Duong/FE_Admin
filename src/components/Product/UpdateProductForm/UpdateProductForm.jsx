@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { brandAPI, categoryAPI } from '../../../axios/exeAPI';
+import { brandAPI, categoryAPI ,productAPI} from '../../../axios/exeAPI';
 
 const UpdateProductForm = (props) => {
   const {activeProduct, onUpdateProduct, isShow, onCloseUpdateform} = props;
   const [categories, setCategories] =
-        useState([{_id:"123",categoryName:"???",categoryImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
   const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
+  // const [products, setProducts] =
+  //       useState([{_id:"123",name:"???",image: "???"}]);
   const formRef = useRef(null);
   const [category, setCategory] = useState(activeProduct.categoryId);
   const [brand, setBrand] = useState(activeProduct.brandId);
-  const [name, setName] = useState(activeProduct.productName);
+  const [categoryID, setCategoryId] = useState(activeProduct.category);
+  const [name, setName] = useState(activeProduct.name);
   const [unit, setUnit] = useState(activeProduct.unit);
-  const [status, setStatus] = useState(activeProduct.productStatus);
+  const [status, setStatus] = useState(activeProduct.status);
+  const [expireNumber, setExpireNumber] = useState(activeProduct.expireNumber);
+  const [expireUnit, setExpireUnit] = useState(activeProduct.expireUnit);
+  var selected = (categoryID === category) ? 'selected' : 'false';
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -43,16 +49,19 @@ const UpdateProductForm = (props) => {
   useEffect(() => {
     setCategory(activeProduct.categoryId)
     setBrand(activeProduct.brandId)
-    setName(activeProduct.productName)
+    setName(activeProduct.name)
     setUnit(activeProduct.unit)
-    setStatus(activeProduct.productStatus)
+    setStatus(activeProduct.status)
+    setExpireNumber(activeProduct.expireNumber)
+    setExpireUnit(activeProduct.expireUnit)
   },[activeProduct])
 
   return (
+    
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Product</Modal.Title>
+          <Modal.Title>Cập nhật sẩn phẩm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} enctype="multipart/form-data">
@@ -60,7 +69,7 @@ const UpdateProductForm = (props) => {
               <Form.Label>Danh mục</Form.Label>
               <select name="categoryId" class="form-control m-bot15">
                   {categories.map((category) => (
-                      <option value={category._id}>{category.categoryName}</option>
+                      <option value={category._id}>{category.name}</option>
                   ))}
               </select>
             </Form.Group>
@@ -68,16 +77,16 @@ const UpdateProductForm = (props) => {
               <Form.Label>Thương hiệu</Form.Label>
               <select name="brandId" class="form-control m-bot15">
                   {brands.map((brand) => (
-                      <option value={brand._id}>{brand.brandName}</option>
+                      <option value={brand._id}>{brand.name}</option>
                   ))}
               </select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Tên sản phẩm</Form.Label>
               <Form.Control
                 type="text"
-                name="productName"
-                placeholder="Product Name"
+                name="name"
+                placeholder="Tên sản phẩm"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -86,21 +95,21 @@ const UpdateProductForm = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Hình ảnh</Form.Label>
               <Form.Control
                 type="file"
                 name="myFile"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Đơn vị</Form.Label>
+              <Form.Label>Đơn vị tính</Form.Label>
               <Form.Control
                 type="text"
                 name="unit"
-                placeholder="Đơn vị"
+                placeholder="Đơn vị tính"
                 value={unit}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setUnit(e.target.value);
                 }}
                 autoFocus
               />
@@ -109,11 +118,37 @@ const UpdateProductForm = (props) => {
               <Form.Label>Tình trạng</Form.Label>
               <Form.Control
                 type="text"
-                name="productStatus"
-                placeholder="Tinhf trajng"
+                name="status"
+                placeholder="Tình trạng"
                 value={status}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setStatus(e.target.value);
+                }}
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Hạn dùng</Form.Label>
+              <Form.Control
+                type="text"
+                name="expireNumber"
+                placeholder="Hạn dùng"
+                value={expireNumber}
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Đơn vị hạn dùng</Form.Label>
+              <Form.Control
+                type="text"
+                name="expireUnit"
+                placeholder="Đơn vị hạn dùng"
+                value={expireUnit}
+                onChange={(e) => {
+                  setStatus(e.target.value);
                 }}
                 autoFocus
               />

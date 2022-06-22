@@ -4,9 +4,9 @@ import { brandAPI, categoryAPI } from '../../../axios/exeAPI';
 
 function CreateProductForm(props) {
     const [categories, setCategories] =
-        useState([{_id:"123",categoryName:"???",categoryImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
     const [brands, setBrands] =
-        useState([{_id:"123",brandName:"???",brandImage: "???"}]);
+        useState([{_id:"123",name:"???",image: "???"}]);
     const {onCreateProduct, isShow, onCloseCreateform} = props;
     const formRef = useRef(null);
   
@@ -39,23 +39,23 @@ function CreateProductForm(props) {
         <>
             <Modal show={isShow} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Create Product</Modal.Title>
+                <Modal.Title>Thêm sản phẩm</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form ref={formRef} enctype="multipart/form-data">
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Danh mục</Form.Label>
-                        <select name="categoryId" class="form-control m-bot15">
+                        <select name="category" class="form-control m-bot15">
                             {categories.map((category) => (
-                                <option value={category._id}>{category.categoryName}</option>
+                                <option value={category._id}>{category.name}</option>
                             ))}
                         </select>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Thương hiệu</Form.Label>
-                        <select name="brandId" class="form-control m-bot15">
+                        <select name="brand" class="form-control m-bot15">
                             {brands.map((brand) => (
-                                <option value={brand._id}>{brand.brandName}</option>
+                                <option value={brand._id}>{brand.name}</option>
                             ))}
                         </select>
                     </Form.Group>
@@ -63,7 +63,7 @@ function CreateProductForm(props) {
                         <Form.Label>Tên sản phẩm</Form.Label>
                         <Form.Control
                             type="text"
-                            name="productName"
+                            name="name"
                             placeholder="Tên sản phẩm"
                             autoFocus
                         />
@@ -88,8 +88,26 @@ function CreateProductForm(props) {
                         <Form.Label>Tình trạng</Form.Label>
                         <Form.Control
                                 type="text"
-                                name="productStatus"
+                                name="status"
                                 placeholder="Tình trạng"
+                                autoFocus
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Hạn dùng</Form.Label>
+                        <Form.Control
+                                type="text"
+                                name="expireNumber"
+                                placeholder="Hạn dùng"
+                                autoFocus
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Đơn vị hạn dùng</Form.Label>
+                        <Form.Control
+                                type="text"
+                                name="expireUnit"
+                                placeholder="Đơn vị hạn dùng"
                                 autoFocus
                         />
                     </Form.Group>
@@ -97,10 +115,10 @@ function CreateProductForm(props) {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
                 <Button variant="primary" onClick={handleCreateProduct}>
-                    Create
+                    Thêm
                 </Button>
                 </Modal.Footer>
             </Modal>

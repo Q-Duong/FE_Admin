@@ -4,7 +4,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 const UpdateBrandForm = (props) => {
   const {activeBrand, onUpdateBrand, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [name, setName] = useState(activeBrand.brandName);
+  const [name, setName] = useState(activeBrand.name);
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -17,23 +17,23 @@ const UpdateBrandForm = (props) => {
   }
 
   useEffect(() => {
-    setName(activeBrand.brandName)
+    setName(activeBrand.name)
   },[activeBrand])
 
   return (
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Brand</Modal.Title>
+          <Modal.Title>Cập nhật thương hiệu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} enctype="multipart/form-data">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Tên thương hiệu</Form.Label>
               <Form.Control
                 type="text"
-                name="brandName"
-                placeholder="Brand Name"
+                name="name"
+                placeholder="Tên thương hiệu"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -42,7 +42,7 @@ const UpdateBrandForm = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Logo</Form.Label>
               <Form.Control
                 type="file"
                 name="myFile"
@@ -52,10 +52,10 @@ const UpdateBrandForm = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleUpdatedBrand}>
-            Save Changes
+            Lưu
           </Button>
         </Modal.Footer>
       </Modal>
