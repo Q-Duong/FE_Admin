@@ -56,7 +56,7 @@ function CreateImportOrderDetail(props) {
                             onChange={(e) => setActiveProduct(e.target.value)}
                         >
                             {products.map((product) => (
-                                <option value={product._id}>{product.name}</option>
+                                <option key={product._id} value={product._id}>{product.name}</option>
                             ))}
                         </select>
                     </Form.Group>

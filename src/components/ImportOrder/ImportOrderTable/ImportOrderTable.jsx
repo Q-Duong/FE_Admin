@@ -10,6 +10,8 @@ import "./ImportOrderTable.css";
 import { Button, Dropdown } from "react-bootstrap";
 import { importOrderAPI } from '../../../axios/exeAPI';
 import { TableCell } from '@mui/material';
+import numberWithCommas from '../../../utils/numberWithCommas';
+import formatDate from '../../../utils/formatDate';
 
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
@@ -25,11 +27,20 @@ function ImportOrderTable(props) {
     }
 
     useEffect(()=> {
-        async function getCategories() {
-            const importOrders = await importOrderAPI.getAll();
-            setImportOrder(importOrders.data);
+        async function getImportOrder() {
+            try {
+                const res = await importOrderAPI.getAll();
+                if(res.status === 200) {
+                    console.log(res.data)
+                    setImportOrder(res.data);
+                } else{
+                    console.log(res.data.message)
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
-        getCategories()
+        getImportOrder()
         
     },[])
 
@@ -75,8 +86,8 @@ function ImportOrderTable(props) {
                             <TableCell align="left">Ngày nhập</TableCell>
                             <TableCell align="left">Công nợ</TableCell>
                             <TableCell align="left">Kỳ hạn nợ</TableCell>
-                            <TableCell align="left">Tác động</TableCell>
                             <TableCell align="left">Chi tiết hóa đơn</TableCell>
+                            <TableCell align="left">Tác động</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
@@ -86,11 +97,16 @@ function ImportOrderTable(props) {
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell align="left">{importOrder._id}</TableCell>
-                            <TableCell align="left">{importOrder.totalBill}</TableCell>
-                            <TableCell align="left">{importOrder.createdAt}</TableCell>
+                            <TableCell align="left">{numberWithCommas(importOrder.totalBill)}</TableCell>
+                            <TableCell align="left">{formatDate(importOrder.createdAt)}</TableCell>
                             <TableCell align="left">{importOrder.loan}</TableCell>
                             <TableCell align="left">{importOrder.duration}</TableCell>
-                            <TableCell align="left" className="Details">
+                            <TableCell align="left">{
+                                importOrder.details ? 
+                                importOrder.details.map(item => (<p>{item.product.name} - {item.productQuantity} {item.product.unit}</p>)) 
+                                : ''}
+                            </TableCell>
+                            <TableCell align="left" >
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                                     Hành động

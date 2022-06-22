@@ -56,6 +56,7 @@ function SupplierTable() {
             const formData = new FormData(createSupplierForm)
             const formObject =Object.fromEntries(formData)
             formObject.products = formData.getAll('products')
+
             const data = JSON.stringify(formObject)
             const res = await supplierAPI.create(data)
             if(res.status === 201){
@@ -74,13 +75,17 @@ function SupplierTable() {
         
     async function handleUpdatedSupplier(formRef){
         try {
+            const supplierId = activeSupplier._id
             const updateForm = formRef.current
             const updateFormData = new FormData(updateForm)
-            updateFormData.append('_id',activeSupplier._id)
-            const res = await supplierAPI.update(updateFormData);
-            const updatedSupplier = res.data;
+            const updateFormObject = Object.fromEntries(updateFormData)
+            updateFormObject.products =  updateFormData.getAll('products')
+
+            const data = JSON.stringify(updateFormObject)
+            const res = await supplierAPI.update(supplierId, data);
             if(res.status === 200){
                 let tempSuppliers = [...suppliers];
+                const updatedSupplier = res.data;
                 tempSuppliers = tempSuppliers.map(supplier => supplier._id === updatedSupplier._id ? updatedSupplier : supplier);
                 setSuppliers(tempSuppliers);
                 setShowUpdateForm(false)

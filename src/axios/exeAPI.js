@@ -81,8 +81,8 @@ const productAPI = {
 const supplierAPI = {
   getAll: () => axi.get('/supplier'),
  
-  update: (supplier) => 
-    axi.put(`/supplier/${supplier.get('_id')}`, 
+  update: (supplierId, supplier) => 
+    axi.put(`/supplier/${supplierId}`, 
       supplier,
       {headers: { 'content-type': `application/json` }}
     ),

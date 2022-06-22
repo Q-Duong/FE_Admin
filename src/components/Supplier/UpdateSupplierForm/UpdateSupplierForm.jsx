@@ -73,7 +73,7 @@ const UpdateSupplierForm = (props) => {
                 placeholder="Địa chỉ"
                 value={address}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setAddress(e.target.value);
                 }}
                 autoFocus
               />
@@ -86,7 +86,7 @@ const UpdateSupplierForm = (props) => {
                 placeholder="SĐT"
                 value={phone}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setPhone(e.target.value);
                 }}
                 autoFocus
               />
@@ -101,6 +101,11 @@ const UpdateSupplierForm = (props) => {
                           name='products'
                           label={product.name}
                           value={product._id}
+                          defaultChecked={  
+                            activeSupplier.products ? 
+                            activeSupplier.products.find(item => item._id === product._id)
+                            : false
+                          }
                       />
                   ))
               }

@@ -80,7 +80,7 @@ function CreateImportOrder(props) {
                             onChange={(e) => setActiveSupplier(e.target.value)}
                         >
                             {suppliers.map((supplier) => (
-                                <option value={supplier._id}>{supplier.name}</option>
+                                <option key={supplier._id} value={supplier._id}>{supplier.name}</option>
                             ))}
                         </select>
                     </Form.Group>
@@ -89,6 +89,7 @@ function CreateImportOrder(props) {
                         {
                             products.map(product => (
                                 <Form.Check 
+                                    key={product._id}
                                     type={"checkbox"}
                                     id={`${product._id}`}
                                     label={`${product.name } - ${numberWithCommas(product.stockPrice)} - ${product.stockQuantity} ${product.unit}`}
