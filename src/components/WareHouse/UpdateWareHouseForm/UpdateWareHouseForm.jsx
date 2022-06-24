@@ -1,40 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-const UpdateCategoryForm = (props) => {
-  const {activeCategory, onUpdateCategory, isShow, onCloseUpdateform} = props;
+const UpdateWareHouseForm = (props) => {
+  const {activeBrand, onUpdateBrand, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [name, setName] = useState(activeCategory.name);
+  const [name, setName] = useState(activeBrand.name);
   
   function handleClose ()  {
     if(onCloseUpdateform)
       onCloseUpdateform()
   };
 
-  function handleUpdatedCategory() {
-    if(onUpdateCategory)
-      onUpdateCategory(formRef);
+  function handleUpdatedBrand() {
+    if(onUpdateBrand)
+      onUpdateBrand(formRef);
   }
 
   useEffect(() => {
-    setName(activeCategory.name)
-  },[activeCategory])
+    setName(activeBrand.name)
+  },[activeBrand])
 
   return (
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Cập nhật danh mục</Modal.Title>
+          <Modal.Title>Cập nhật thương hiệu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form ref={formRef} enctype="m
-          ">
+          <Form ref={formRef} enctype="multipart/form-data">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Tên danh mục</Form.Label>
+              <Form.Label>Tên thương hiệu</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
-                placeholder="Tên danh mục"
+                placeholder="Tên thương hiệu"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -55,7 +54,7 @@ const UpdateCategoryForm = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Đóng
           </Button>
-          <Button variant="primary" onClick={handleUpdatedCategory}>
+          <Button variant="primary" onClick={handleUpdatedBrand}>
             Lưu
           </Button>
         </Modal.Footer>
@@ -64,4 +63,4 @@ const UpdateCategoryForm = (props) => {
   )
 };
 
-export default UpdateCategoryForm;
+export default UpdateWareHouseForm;

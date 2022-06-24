@@ -51,22 +51,35 @@ export const SidebarData = [
   },
   {
     id: 6,
+    icon: UilEstate,
+    heading: "wareHouse",
+    title:"Kho"
+  },
+  {
+    id: 7,
+    icon: UilEstate,
+    heading: "importOrder",
+    title:"Nhập hàng"
+  },
+  {
+    id: 8,
+    icon: UilEstate,
+    heading: "exportOrder",
+    title:"Đơn hàng"
+  },
+  {
+    id: 9,
     icon: UilChart,
     heading: 'Customer',
     title:"Khách hàng"
   },
   {
-    id: 7,
+    id: 10,
     icon: UilChart,
     heading: 'Employee',
     title:"Nhân viên"
   },
-  {
-    id: 8,
-    icon: UilEstate,
-    heading: "importOrder",
-    title:"Nhập hàng"
-  },
+  
 ];
 
 // Analytics Cards Data

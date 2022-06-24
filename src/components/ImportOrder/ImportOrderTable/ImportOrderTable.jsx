@@ -13,6 +13,9 @@ import { TableCell } from '@mui/material';
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [importOrders, setImportOrder] =
@@ -101,11 +104,12 @@ function ImportOrderTable(props) {
                             <TableCell align="left">{formatDate(importOrder.createdAt)}</TableCell>
                             <TableCell align="left">{importOrder.loan}</TableCell>
                             <TableCell align="left">{importOrder.duration}</TableCell>
-                            <TableCell align="left">{
+                            <TableCell align="left"><FontAwesomeIcon icon={faCircleInfo} /> Chi tiết</TableCell>
+                            {/* <TableCell align="left">{
                                 importOrder.details ? 
                                 importOrder.details.map(item => (<p>{item.product.name} - {item.productQuantity} {item.product.unit}</p>)) 
                                 : ''}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="left" >
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
