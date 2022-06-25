@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import DashBoard from "../DashBoard/DashBoard";
 import Login from "../Login/Login"
 import BrandTable from "../Brand/BrandTable/BrandTable";
 import CategoryTable from "../Category/CategoryTable/CategoryTable";
@@ -20,6 +21,7 @@ const MainDash = () => {
   return (
     <div className="MainDash">
       <Routes>
+      <Route path="/dashBoard" element={< DashBoard />} />
         <Route exact path="/login" element={< Login />} />
         <Route path="/brand" element={< BrandTable />} />
         <Route path="/category" element={< CategoryTable />} />
