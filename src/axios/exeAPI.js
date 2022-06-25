@@ -93,10 +93,23 @@ const supplierAPI = {
   delete: (id) => axi.delete(`/supplier/${id}`)
 }
 
+const wareHouseAPI = {
+  getAll: () => axi.get(`/wareHouse`),
+  search: (searchTerm) => axi.get(`/warehouse?searchTerm=${searchTerm}`),
+  getById: (id) => axi.get(`/warehouse/${id}`)
+}
+
 const importOrderAPI = {
   getAll: () => axi.get('/importOrder'),
  
   create: (data) => 
     axi.post(`/importOrder`, data)
 }
-export {brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI};
+
+const exportOrderAPI = {
+  getAll: () => axi.get('/exportOrder'),
+ 
+  create: (data) => 
+    axi.post(`/exportOrder`, data)
+}
+export {brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI, exportOrderAPI, wareHouseAPI};
