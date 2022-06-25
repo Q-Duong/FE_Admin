@@ -149,7 +149,7 @@ function CategoryTable() {
             <UpdateCategoryForm 
                 activeCategory={activeCategory}
                 isShow={showUpdateForm}
-                onUpdatCategory={handleUpdatedCategory}
+                onUpdateCategory={handleUpdatedCategory}
                 onCloseUpdateform={handleUpdateFormClose}
             />
             <DeleteCategoryForm
