@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import CreateImportOrder from '../CreateImportOrder/CreateImportOrder'
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -7,7 +6,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./ExportOrderTable.css";
-import { Button, Dropdown } from "react-bootstrap";
 import { exportOrderAPI } from '../../../axios/exeAPI';
 import { TableCell } from '@mui/material';
 import numberWithCommas from '../../../utils/numberWithCommas';
@@ -15,18 +13,21 @@ import formatDate from '../../../utils/formatDate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { Dropdown } from 'react-bootstrap';
+import ExportOrderDetailTable from '../ExportOrderDetailTable/ExportOrderDetailTable'
 
 function ExportOrderTable(props) {
-    const [showCreateForm, setShowCreateForm] = useState(false);
-    const [exportOrders, setExportOrder] =
-        useState([]);
+    const [exportOrders, setExportOrder] = useState([]);
+    const [showTableForm, setShowTableForm] = useState(false);
+    const [activeExportOrderDetail, setactiveExportOrderDetail] = useState(null);
 
-    function handleCreateFormClose() {
-        setShowCreateForm(false)
+    function handleTableFormClose() {
+        setShowTableForm(false)
     }
 
-    function handleCreateFormShow() {
-        setShowCreateForm(true)
+    function handleTableFormShow(detail) {
+        setactiveExportOrderDetail(detail)
+        setShowTableForm(true)
     }
 
     useEffect(()=> {
@@ -47,27 +48,6 @@ function ExportOrderTable(props) {
         
     },[])
 
-    // async function handleCreateImportOrder(data) {
-    //    try {
-    //         const createImportOrderData = {
-    //             importOrderData: {
-    //                 totalBill: data.total,
-    //                 importOrderStatus: "Paid",
-    //                 supplierId: data.supplierId
-    //             },
-    //             purchasedProducts: data.products
-    //         }
-    //         const res = await importOrderAPI.create(createImportOrderData)
-    //         if(res.status === 201) {
-    //             const resData = res.data
-    //             console.log(resData)
-    //         } else {
-    //             console.log(res)
-    //         }
-    //    } catch (error) {
-    //         console.log(error)
-    //    }
-    // }
     return (
         <>
         <div className="Table">
@@ -88,7 +68,7 @@ function ExportOrderTable(props) {
                             <TableCell align="left">Địa chỉ giao hàng</TableCell>
                             <TableCell align="left">Ngày giao</TableCell>
                             <TableCell align="left">Trạng thái</TableCell>
-                            <TableCell align="left">Xem đơn hàng</TableCell>
+                            <TableCell align="left">Xem chi tiết đơn hàng</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
@@ -103,13 +83,20 @@ function ExportOrderTable(props) {
                             <TableCell align="left">{exportOrder.shipAddress}</TableCell>
                             <TableCell align="left">{formatDate(exportOrder.shippedDate)}</TableCell>
                             <TableCell align="left">{exportOrder.status}</TableCell>
-                            {/* <TableCell align="left">{
-                                exportOrder.details ? 
-                                exportOrder.details.map(item => (<p>{item.product.name} - {item.productQuantity} {item.product.unit}</p>)) 
-                                : ''}
-                            </TableCell> */}
-                            <TableCell align="left" >
-                                <FontAwesomeIcon icon={faCircleInfo} /> Chi tiết
+                            <TableCell align="left">
+                                <Dropdown>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    <FontAwesomeIcon icon={faCircleInfo} /> Chi tiết
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    {
+                                        exportOrder.details.map(detail => (
+                                            <Dropdown.Item onClick={() => handleTableFormShow(detail)}>{detail.product.name}</Dropdown.Item>
+                                        ))
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
                             </TableCell>
                             </TableRow>
                         ))}
@@ -117,11 +104,11 @@ function ExportOrderTable(props) {
                 </Table>
             </TableContainer>
         </div>
-            {/* <CreateImportOrder
-                isShow={showCreateForm}
-                onCreateImportOrder={handleCreateImportOrder}
-                onCloseCreateform={handleCreateFormClose}
-            /> */}
+        <ExportOrderDetailTable
+            isShow={showTableForm}
+            onTableFormClose={handleTableFormClose}
+            activeExportOrderDetail={activeExportOrderDetail}
+        />
         </>
     );
 }

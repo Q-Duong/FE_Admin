@@ -120,7 +120,7 @@ function WareHouseTable() {
                         <TableCell align="left">Giá nhập</TableCell>
                         <TableCell align="left">Giá bán</TableCell>
                         <TableCell align="left">SL nhập</TableCell>
-                        <TableCell align="left">SL bán</TableCell>
+                        <TableCell align="left">SL đã bán</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
