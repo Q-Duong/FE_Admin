@@ -21,8 +21,8 @@ const MainDash = () => {
   return (
     <div className="MainDash">
       <Routes>
-      <Route path="/dashBoard" element={< DashBoard />} />
         <Route exact path="/login" element={< Login />} />
+        <Route path="/dashBoard" element={< DashBoard />} />
         <Route path="/brand" element={< BrandTable />} />
         <Route path="/category" element={< CategoryTable />} />
         <Route path="/supplier" element={< SupplierTable />} />
@@ -34,7 +34,7 @@ const MainDash = () => {
         <Route path="/customer" element={< CustomerTable  />} />
         
 
-       {/* <Route path="*" element={< BrandTable />} /> */}
+       <Route path="*" element={< Login />} />
       </Routes>
     </div>
   );

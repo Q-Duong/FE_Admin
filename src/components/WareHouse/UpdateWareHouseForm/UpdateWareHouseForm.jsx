@@ -4,8 +4,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 const UpdateWareHouseForm = (props) => {
   const {activeWareHouse, onUpdateWareHouse, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [soldPrice, setSoldPrice] = useState(activeWareHouse.soldPrice);
-  const [active, setActive] = useState(activeWareHouse.active);
+  const [soldPrice, setSoldPrice] = useState(activeWareHouse);
+  const [active, setActive] = useState(activeWareHouse);
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -18,11 +18,12 @@ const UpdateWareHouseForm = (props) => {
   }
 
   useEffect(() => {
-    setSoldPrice(activeWareHouse.soldPrice)
-    setActive(activeWareHouse.active)
+    setSoldPrice(activeWareHouse)
+    setActive(activeWareHouse)
   },[activeWareHouse])
 
   return (
+    activeWareHouse ?
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -34,9 +35,9 @@ const UpdateWareHouseForm = (props) => {
               <Form.Label>Giá bán</Form.Label>
               <Form.Control
                 type="text"
-                name="name"
-                placeholder="Tên thương hiệu"
-                value={active}
+                name="soldPrice"
+                placeholder="Giá bán"
+                value={soldPrice}
                 onChange={(e) => {
                   setSoldPrice(e.target.value);
                 }}
@@ -47,11 +48,11 @@ const UpdateWareHouseForm = (props) => {
               <Form.Label>Hiển thị</Form.Label>
               <Form.Control
                 type="text"
-                name="name"
-                placeholder="Tên thương hiệu"
-                value={soldPrice}
+                name="active"
+                placeholder="Hiển thị"
+                value={active}
                 onChange={(e) => {
-                  setSoldPrice(e.target.value);
+                  setActive(e.target.value);
                 }}
                 autoFocus
               />
@@ -68,6 +69,7 @@ const UpdateWareHouseForm = (props) => {
         </Modal.Footer>
       </Modal>
     </>
+    :<></>
   )
 };
 

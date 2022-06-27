@@ -29,6 +29,7 @@ function WareHouseTable() {
 
     function handleUpdateFormShow(wareHouse) {
         setactiveWareHouse(wareHouse)
+        console.log(wareHouse)
         setShowUpdateForm(true)
     };
     
@@ -161,7 +162,7 @@ function WareHouseTable() {
         </div>
            
             <UpdateWareHouseForm 
-                activeSupplier={activeWareHouse}
+                activeWareHouse={activeWareHouse}
                 isShow={showUpdateForm}
                 onUpdateWareHouse={handleUpdatedWareHouse}
                 onCloseUpdateform={handleUpdateFormClose}

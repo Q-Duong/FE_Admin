@@ -50,16 +50,12 @@ const customerAPI = {
 
 const employeeAPI = {
   getAll: () => axi.get('/employee'),
-  update: (employee) => {
-    return axi.put(`/employee/${employee._id}`,{
-      employeeName:employee.employeeName,
-      employeePhone:employee.employeePhone,
-      employeeEmail:employee.employeeEmail,
-      employeeRole:employee.employeeRole,
-      employeeActive:employee.employeeActive,
-      employeePassword:employee.employeePassword,
-    })
-  }
+  update: (employeeId, employee) => 
+    axi.put(`/employee/${employee._id}`, 
+    employee,
+    {headers: { 'content-type': `application/json` }}
+  ),
+  login: (inputLogin) => axi.post('/employee/login',inputLogin),
 }
 
 const productAPI = {
