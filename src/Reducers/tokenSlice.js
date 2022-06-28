@@ -7,17 +7,16 @@ const initialState = {
 
 const tokenSlice = (state = initialState, action) => {
     switch (action.type) {
-        case 'addToken': {
+        case 'ADD_TOKEN': {
             localStorage.setItem('token',action.payload)
-           return state.value = action.payload
+           return action.payload
            
         }
-        case 'romoveToken': {
-            localStorage.setItem('token',null)
-            return state.value = null
+        case 'REMOVE_TOKEN': {
+            localStorage.remove('token')
+            return null
          }
         default: return state
     }
 }
-
 export default tokenSlice

@@ -15,28 +15,32 @@ import CustomerTable from "../Customer/CustomerTable/CustomerTable";
 import ImportOrderTable from "../ImportOrder/ImportOrderTable/ImportOrderTable";
 import ExportOrderTable from "../ExportOrder/ExportOrderTable/ExportOrderTable";
 import WareHouseTable from "../WareHouse/WareHouseTable/WareHouseTable";
+import Sidebar from '../Sidebar/Sidebar'
+import Navbar from "../Navbar/Navbar";
 
 const MainDash = () => {
-
   return (
-    <div className="MainDash">
-      <Routes>
-        <Route exact path="/login" element={< Login />} />
-        <Route path="/dashBoard" element={< DashBoard />} />
-        <Route path="/brand" element={< BrandTable />} />
-        <Route path="/category" element={< CategoryTable />} />
-        <Route path="/supplier" element={< SupplierTable />} />
-        <Route path="/product" element={< ProductTable />} />
-        <Route path="/wareHouse" element={< WareHouseTable />} />
-        <Route path="/importOrder" element={< ImportOrderTable  />} />
-        <Route path="/exportOrder" element={< ExportOrderTable  />} />
-        <Route path="/employee" element={< EmployeeTable />} />
-        <Route path="/customer" element={< CustomerTable  />} />
-        
+    <>
+      <Navbar/>
+      <Sidebar/>
+      <div className="MainDash">
+        <Routes>
 
-       <Route path="*" element={< Login />} />
-      </Routes>
-    </div>
+          <Route path="/login" element={< Login />} />
+          <Route path="/dashBoard" element={< DashBoard />} />
+          <Route path="/brand" element={< BrandTable />} />
+          <Route path="/category" element={< CategoryTable />} />
+          <Route path="/supplier" element={< SupplierTable />} />
+          <Route path="/product" element={< ProductTable />} />
+          <Route path="/wareHouse" element={< WareHouseTable />} />
+          <Route path="/importOrder" element={< ImportOrderTable  />} />
+          <Route path="/exportOrder" element={< ExportOrderTable  />} />
+          <Route path="/employee" element={< EmployeeTable />} />
+          <Route path="/customer" element={< CustomerTable  />} />
+          
+        </Routes>
+      </div>
+    </>
   );
 };
 

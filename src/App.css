@@ -23,7 +23,7 @@
   /* height: 100vh; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   font-family: 'Inter', sans-serif;
   
 }
@@ -36,7 +36,7 @@
   border-radius: 2rem;
   gap: 16px;
   grid-template-columns: 15rem auto 0rem;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: "Poppins", sans-serif;
 }
 

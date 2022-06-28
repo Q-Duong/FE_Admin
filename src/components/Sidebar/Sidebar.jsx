@@ -23,39 +23,23 @@ const Sidebar = () => {
   console.log(window.innerWidth)
   return (
     <>
-      <div className="bars" style={expanded?{left: '60%'}:{left: '5%'}} onClick={()=>setExpaned(!expanded)}>
-        <UilBars />
-      </div>
-    <motion.div className='sidebar'
-    variants={sidebarVariants}
-    animate={window.innerWidth<=768?`${expanded}`:''}
-    >
-      {/* logo */}
-      <div className="logo">
-        <img src={Logo} alt="logo" />
-        <span>
-          Sh<span>o</span>ps
-        </span>
-      </div>
-
-      <div className="menu">
-        {SidebarData.map((item) => {
-          return (
-            <div
-              className={selected === item.id ? "menuItem active" : "menuItem"}
-              key={item.id}
-              onClick={() => setSelected(item.id)}
-            >
-              <Link to={`/${item.heading}`}>
-                <item.icon />
-                {item.title}
-              </Link>
-            </div>
-          );
-        })}
-        
-      </div>
-    </motion.div>
+      <aside>
+        <div id="sidebar" class="nav-collapse">
+          <div class="leftside-navigation" >
+            <ul class="sidebar-menu" id="nav-accordion">
+            {SidebarData.map((item) =>(
+                <li >
+                  <Link to={`/${item.heading}`}>
+                    <item.icon />
+                    {item.title}
+                  </Link>
+                    
+                </li>))}
+            </ul>
+          </div>
+        </div>
+      </aside>
+    
     </>
   );
 };

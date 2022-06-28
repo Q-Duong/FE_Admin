@@ -79,7 +79,18 @@ export const SidebarData = [
     heading: 'Employee',
     title:"Nhân viên"
   },
-  
+  {
+    id: 11,
+    icon: UilChart,
+    heading: 'Employee',
+    title:"Nhân viên"
+  },
+  {
+    id: 12,
+    icon: UilChart,
+    heading: 'Employee',
+    title:"Nhân viên"
+  },
 ];
 
 // Analytics Cards Data
