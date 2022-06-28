@@ -2,50 +2,58 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 const UpdateWareHouseForm = (props) => {
-  const {activeBrand, onUpdateBrand, isShow, onCloseUpdateform} = props;
+  const {activeWareHouse, onUpdateWareHouse, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [name, setName] = useState(activeBrand.name);
+  const [soldPrice, setSoldPrice] = useState(activeWareHouse.soldPrice);
+  const [active, setActive] = useState(activeWareHouse.active);
   
   function handleClose ()  {
     if(onCloseUpdateform)
       onCloseUpdateform()
   };
 
-  function handleUpdatedBrand() {
-    if(onUpdateBrand)
-      onUpdateBrand(formRef);
+  function handleUpdatedWareHouse() {
+    if(onUpdateWareHouse)
+    onUpdateWareHouse(formRef);
   }
 
   useEffect(() => {
-    setName(activeBrand.name)
-  },[activeBrand])
+    setSoldPrice(activeWareHouse.soldPrice)
+    setActive(activeWareHouse.active)
+  },[activeWareHouse])
 
   return (
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Cập nhật thương hiệu</Modal.Title>
+          <Modal.Title>Cập nhật sản phẩm kho</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form ref={formRef} enctype="multipart/form-data">
+          <Form ref={formRef} >
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Tên thương hiệu</Form.Label>
+              <Form.Label>Giá bán</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
                 placeholder="Tên thương hiệu"
-                value={name}
+                value={active}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setSoldPrice(e.target.value);
                 }}
                 autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Logo</Form.Label>
+              <Form.Label>Hiển thị</Form.Label>
               <Form.Control
-                type="file"
-                name="myFile"
+                type="text"
+                name="name"
+                placeholder="Tên thương hiệu"
+                value={soldPrice}
+                onChange={(e) => {
+                  setSoldPrice(e.target.value);
+                }}
+                autoFocus
               />
             </Form.Group>
           </Form>
@@ -54,7 +62,7 @@ const UpdateWareHouseForm = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Đóng
           </Button>
-          <Button variant="primary" onClick={handleUpdatedBrand}>
+          <Button variant="primary" onClick={handleUpdatedWareHouse}>
             Lưu
           </Button>
         </Modal.Footer>

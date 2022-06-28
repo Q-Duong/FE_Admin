@@ -2,36 +2,38 @@ import React from 'react';
 import { Button, Modal } from "react-bootstrap";
 
 function DeleteWareHouseForm(props) {
-    const {activeBrand, onDeleteBrand, isShow, onCloseDeleteform} = props;
+    const {activeWareHouse, onDeleteWareHouse, isShow, onCloseDeleteform} = props;
     
     function handleClose ()  {
         onCloseDeleteform()
     };
   
-    function handleDeletedBrand() {
-      if(onDeleteBrand)
-         onDeleteBrand(activeBrand._id);
+    function handleDeletedWareHouse() {
+      if(onDeleteWareHouse)
+      onDeleteWareHouse(activeWareHouse._id);
     }
 
     return (
+      activeWareHouse ?
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Xóa thương hiệu</Modal.Title>
+          <Modal.Title>Xóa sản phẩm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Brand: {activeBrand.name}</p>
+          <p>Bạn có chắc chắn muốn xóa sản phẩm: {activeWareHouse.product.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Đóng
           </Button>
-          <Button variant="primary" onClick={handleDeletedBrand}>
+          <Button variant="primary" onClick={handleDeletedWareHouse}>
             Xóa
           </Button>
         </Modal.Footer>
       </Modal>
     </>
+    :<></>
     );
 }
 

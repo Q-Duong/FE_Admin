@@ -15,80 +15,79 @@ import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
 
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 function WareHouseTable() {
-    const [wareHouses, setWareHouses] =
-        useState([]);
-    const [activeSupplier, setactiveSupplier] = 
-        useState([]);
-    // const [showUpdateForm, setShowUpdateForm] = useState(false);
-    // const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [wareHouses, setWareHouses] =useState([]);
+    const [activeWareHouse, setactiveWareHouse] = useState(null);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-    // function handleUpdateFormClose ()  {
-    //     setShowUpdateForm(false)
-    //   };
+    function handleUpdateFormClose ()  {
+        setShowUpdateForm(false)
+      };
 
-    // function handleUpdateFormShow(supplier) {
-    //     setactiveSupplier(supplier)
-    //     setShowUpdateForm(true)
-    // };
+    function handleUpdateFormShow(wareHouse) {
+        setactiveWareHouse(wareHouse)
+        setShowUpdateForm(true)
+    };
     
 
-    // function handleDeleteFormClose ()  {
-    //     setShowDeleteForm(false)
-    //   };
+    function handleDeleteFormClose ()  {
+        setShowDeleteForm(false)
+      };
 
-    // function handleDeleteFormShow(supplier) {
-    //     setactiveSupplier(supplier)
-    //     setShowDeleteForm(true)
-    // };
+    function handleDeleteFormShow(wareHouse) {
+        setactiveWareHouse(wareHouse)
+        console.log(wareHouse)
+        setShowDeleteForm(true)
+    };
 
     
         
-    // async function handleUpdatedSupplier(formRef){
-    //     try {
-    //         const supplierId = activeSupplier._id
-    //         const updateForm = formRef.current
-    //         const updateFormData = new FormData(updateForm)
-    //         const updateFormObject = Object.fromEntries(updateFormData)
-    //         updateFormObject.products =  updateFormData.getAll('products')
+    async function handleUpdatedWareHouse(formRef){
+        try {
+            const wareHouseId = activeWareHouse._id
+            const updateForm = formRef.current
+            const updateFormData = new FormData(updateForm)
+            const updateFormObject = Object.fromEntries(updateFormData)
+            // updateFormObject.products =  updateFormData.getAll('products')
 
-    //         const data = JSON.stringify(updateFormObject)
-    //         const res = await wareHouseAPI.update(supplierId, data);
-    //         if(res.status === 200){
-    //             let tempSuppliers = [...wareHouses];
-    //             const updatedSupplier = res.data;
-    //             tempSuppliers = tempSuppliers.map(supplier => supplier._id === updatedSupplier._id ? updatedSupplier : supplier);
-    //             setWareHouses(tempSuppliers);
-    //             setShowUpdateForm(false)
-    //         }
-    //         else{
-    //             console.log(res.data.message)
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }  
-    // }
+            const data = JSON.stringify(updateFormObject)
+            const res = await wareHouseAPI.update(wareHouseId, data);
+            if(res.status === 200){
+                let tempWareHouses = [...wareHouses];
+                const updatedWareHouse = res.data;
+                tempWareHouses = tempWareHouses.map(wareHouse => wareHouse._id === updatedWareHouse._id ? updatedWareHouse : wareHouse);
+                setWareHouses(tempWareHouses);
+                setShowUpdateForm(false)
+            }
+            else{
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }  
+    }
 
 
-    // async function handleDeleteSupplier(id) {
-    //     try {
-    //         const res = await wareHouseAPI.delete(id);
-    //         const deletedSupplier = res.data;
-    //         if(res.status === 200){
-    //             let tempSuppliers = [...wareHouses];
-    //             tempSuppliers = tempSuppliers.filter(supplier => supplier._id !== deletedSupplier._id)
-    //             setWareHouses(tempSuppliers);
-    //             setShowDeleteForm(false);
-    //         }
-    //         else{
-    //             console.log(res.data.message)
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }  
-    // };
+    async function handleDeleteWareHouse(id) {
+        try {
+            const res = await wareHouseAPI.delete(id);
+            const deletedWareHouse = res.data;
+            if(res.status === 200){
+                let tempWareHouses = [...wareHouses];
+                tempWareHouses = tempWareHouses.filter(wareHouse => wareHouse._id !== deletedWareHouse._id)
+                setWareHouses(tempWareHouses);
+                setShowDeleteForm(false);
+            }
+            else{
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }  
+    };
 
     useEffect(()=> {
         async function getWareHouses() {
@@ -113,14 +112,15 @@ function WareHouseTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
-                        
                         <TableCell align="left">Tên sản phẩm</TableCell>
                         <TableCell align="left">Ngày nhập</TableCell>
                         <TableCell align="left">Ngày hết hạn</TableCell>
                         <TableCell align="left">Giá nhập</TableCell>
                         <TableCell align="left">Giá bán</TableCell>
                         <TableCell align="left">SL nhập</TableCell>
-                        <TableCell align="left">SL đã bán</TableCell>
+                        <TableCell align="left">SL bán</TableCell>
+                        <TableCell align="left">Hiển thị</TableCell>
+                        <TableCell align="left">Tác động</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
@@ -137,6 +137,7 @@ function WareHouseTable() {
                             <TableCell align="left">{numberWithCommas(wareHouse.soldPrice)}</TableCell>
                             <TableCell align="left">{wareHouse.stockQuantity}</TableCell>
                             <TableCell align="left">{wareHouse.soldQuantity}</TableCell>
+                            <TableCell align="left">{wareHouse.active}</TableCell>
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -144,11 +145,11 @@ function WareHouseTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    {/* <Dropdown.Item ></Dropdown.Item>
+                                    <Dropdown.Item ></Dropdown.Item>
                                     <Dropdown.Item onClick={() => {handleUpdateFormShow(wareHouse)}}>
                                     Cập nhật
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(wareHouse)}}>Xóa</Dropdown.Item> */}
+                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(wareHouse)}}>Xóa</Dropdown.Item>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -159,18 +160,18 @@ function WareHouseTable() {
             </TableContainer>
         </div>
            
-            {/* <UpdateWareHouseForm 
-                activeSupplier={activeSupplier}
+            <UpdateWareHouseForm 
+                activeSupplier={activeWareHouse}
                 isShow={showUpdateForm}
-                onUpdateSupplier={handleUpdatedSupplier}
+                onUpdateWareHouse={handleUpdatedWareHouse}
                 onCloseUpdateform={handleUpdateFormClose}
             />
             <DeleteWareHouseForm
-                activeSupplier={activeSupplier}
+                activeWareHouse={activeWareHouse}
                 isShow={showDeleteForm}
-                onDeleteSupplier={handleDeleteSupplier}
+                onDeleteWareHouse={handleDeleteWareHouse}
                 onCloseDeleteform={handleDeleteFormClose}
-            /> */}
+            />
         </>
     );
 }

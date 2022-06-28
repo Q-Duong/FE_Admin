@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import DashBoard from "../DashBoard/DashBoard";
 import Login from "../Login/Login"
 import BrandTable from "../Brand/BrandTable/BrandTable";
 import CategoryTable from "../Category/CategoryTable/CategoryTable";
@@ -30,7 +31,7 @@ const MainDash = () => {
         <Route path="/exportOrder" element={< ExportOrderTable  />} />
         <Route path="/employee" element={< EmployeeTable />} />
         <Route path="/customer" element={< CustomerTable  />} />
-        
+        <Route path="/dashBoard" element={< DashBoard />} />
 
        {/* <Route path="*" element={< BrandTable />} /> */}
       </Routes>
