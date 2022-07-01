@@ -4,8 +4,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 const UpdateWareHouseForm = (props) => {
   const {activeWareHouse, onUpdateWareHouse, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [soldPrice, setSoldPrice] = useState(activeWareHouse);
-  const [active, setActive] = useState(activeWareHouse);
+  const [soldPrice, setSoldPrice] = useState(null);
+  const [active, setActive] = useState(null);
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -18,8 +18,12 @@ const UpdateWareHouseForm = (props) => {
   }
 
   useEffect(() => {
-    setSoldPrice(activeWareHouse)
-    setActive(activeWareHouse)
+    if(activeWareHouse) {
+      setSoldPrice(activeWareHouse.soldPrice)
+      setActive(activeWareHouse.active)
+      console.log(activeWareHouse)
+    }
+
   },[activeWareHouse])
 
   return (
@@ -46,16 +50,19 @@ const UpdateWareHouseForm = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Hiển thị</Form.Label>
-              <Form.Control
-                type="text"
-                name="active"
-                placeholder="Hiển thị"
-                value={active}
-                onChange={(e) => {
-                  setActive(e.target.value);
-                }}
-                autoFocus
-              />
+              <select name="active" class="form-control m-bot15">
+                {
+                  <>
+                    <option selected={active} value={true}>
+                    Dang ban
+                    </option>
+                    <option selected={!active} value={false}>
+                    Ngung ban
+                    </option>
+                  </>
+                }
+              </select>
+              
             </Form.Group>
           </Form>
         </Modal.Body>

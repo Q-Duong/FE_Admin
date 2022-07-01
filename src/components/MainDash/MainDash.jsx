@@ -3,6 +3,7 @@ import "./MainDash.css";
 import {
   Route,
   Routes,
+  useNavigate
 } from "react-router-dom";
 import DashBoard from "../DashBoard/DashBoard";
 import Login from "../Login/Login"
@@ -17,15 +18,24 @@ import ExportOrderTable from "../ExportOrder/ExportOrderTable/ExportOrderTable";
 import WareHouseTable from "../WareHouse/WareHouseTable/WareHouseTable";
 import Sidebar from '../Sidebar/Sidebar'
 import Navbar from "../Navbar/Navbar";
+import { removeToken } from "../../Actions/tokenAction";
+import {useDispatch} from 'react-redux'
 
 const MainDash = () => {
+  const dispatch = useDispatch()
+  const navigate  = useNavigate()
+
+  function handleLogout (){
+    dispatch(removeToken())
+    navigate('/')
+}
   return (
     <>
-      <Navbar/>
+      <Navbar onLogout={handleLogout}/>
       <Sidebar/>
       <div className="MainDash">
         <Routes>
-
+          <Route exec path="/" element={< DashBoard />} />
           <Route path="/login" element={< Login />} />
           <Route path="/dashBoard" element={< DashBoard />} />
           <Route path="/brand" element={< BrandTable />} />

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import "./Login.css"
 import { employeeAPI } from '../../axios/exeAPI';
 import {useDispatch} from 'react-redux'
-import { addToken } from '../../Actions/tokenAction';
+import { addToken,removeToken } from '../../Actions/tokenAction';
 
-function Login() {
+function Login(props) {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    
+
     async function handleLoginSubmit(e) {
         e.preventDefault()
             try {     
@@ -25,6 +27,8 @@ function Login() {
                 console.log(err)
             }
     }
+
+    
     return (
         <div className="log-w3">
             <div className="w3layouts-main">

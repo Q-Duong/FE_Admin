@@ -15,11 +15,13 @@ import formatDate from '../../../utils/formatDate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import ImportOrderDetailTable from '../ImportOrderDetailTable/ImportOrderDetailTable';
 
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
-    const [importOrders, setImportOrder] =
-        useState([]);
+    const [showTableForm, setShowTableForm] = useState(false);
+    const [importOrders, setImportOrder] = useState([]);
+    const [activeImportOrderDetail, setActiveImportOrderDetail] = useState(null);
 
     function handleCreateFormClose() {
         setShowCreateForm(false)
@@ -27,6 +29,15 @@ function ImportOrderTable(props) {
 
     function handleCreateFormShow() {
         setShowCreateForm(true)
+    }
+
+    function handleTableFormClose() {
+        setShowTableForm(false)
+    }
+
+    function handleTableFormShow(detail) {
+        setActiveImportOrderDetail(detail)
+        setShowTableForm(true)
     }
 
     useEffect(()=> {
@@ -60,6 +71,10 @@ function ImportOrderTable(props) {
             const res = await importOrderAPI.create(createImportOrderData)
             if(res.status === 201) {
                 const resData = res.data
+                let tempImportOrders = [...importOrders];
+                tempImportOrders.unshift(res.data)
+                setImportOrder(tempImportOrders);
+                setShowCreateForm(false)
                 console.log(resData)
             } else {
                 console.log(res)
@@ -104,12 +119,21 @@ function ImportOrderTable(props) {
                             <TableCell align="left">{formatDate(importOrder.createdAt)}</TableCell>
                             <TableCell align="left">{importOrder.loan}</TableCell>
                             <TableCell align="left">{importOrder.duration}</TableCell>
-                            <TableCell align="left"><FontAwesomeIcon icon={faCircleInfo} /> Chi tiết</TableCell>
-                            {/* <TableCell align="left">{
-                                importOrder.details ? 
-                                importOrder.details.map(item => (<p>{item.product.name} - {item.productQuantity} {item.product.unit}</p>)) 
-                                : ''}
-                            </TableCell> */}
+                            <TableCell align="left">
+                                <Dropdown>
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                        <FontAwesomeIcon icon={faCircleInfo} /> Chi tiết
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                        {
+                                            importOrder.details.map(detail => (
+                                                <Dropdown.Item onClick={() => handleTableFormShow(detail)}>{detail.product.name}</Dropdown.Item>
+                                            ))
+                                        }
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </TableCell>
                             <TableCell align="left" >
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -135,6 +159,11 @@ function ImportOrderTable(props) {
                 isShow={showCreateForm}
                 onCreateImportOrder={handleCreateImportOrder}
                 onCloseCreateform={handleCreateFormClose}
+            />
+            <ImportOrderDetailTable
+                isShow={showTableForm}
+                onTableFormClose={handleTableFormClose}
+                activeImportOrderDetail={activeImportOrderDetail}
             />
         </>
     );

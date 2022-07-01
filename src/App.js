@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import Login from './components/Login/Login';
 
 function App() {
-  const token = useSelector(state => state.token.value)
+  const token = useSelector(state => state.token)
   return (
-    token !== null ?
+    token && token !== '' ?
       <div className="App">
         <div className="AppGlass">
           <BrowserRouter>

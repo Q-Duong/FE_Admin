@@ -95,6 +95,7 @@ function WareHouseTable() {
             const wareHouses = await wareHouseAPI.getAll();
             console.log(wareHouses.data)
             setWareHouses(wareHouses.data);
+            setactiveWareHouse(wareHouses.data[0])
         }
         getWareHouses()
         

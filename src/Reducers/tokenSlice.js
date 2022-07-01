@@ -1,8 +1,6 @@
-const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : null
+const token = localStorage.getItem('token') ? localStorage.getItem('token') : ''
 
-const initialState = {
-    value: token,
-}
+const initialState = token
 
 
 const tokenSlice = (state = initialState, action) => {
@@ -13,8 +11,8 @@ const tokenSlice = (state = initialState, action) => {
            
         }
         case 'REMOVE_TOKEN': {
-            localStorage.remove('token')
-            return null
+            localStorage.setItem('token','')
+            return ''
          }
         default: return state
     }
