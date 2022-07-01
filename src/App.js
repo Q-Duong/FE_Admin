@@ -8,7 +8,7 @@ import Login from './components/Login/Login';
 function App() {
   const token = useSelector(state => state.token)
   return (
-    token && token !== '' ?
+    //token && token !== '' ?
       <div className="App">
         <div className="AppGlass">
           <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
           </BrowserRouter>  
         </div>
       </div>  
-    : <Login />
+    //: <Login />
   );
 }
 

@@ -70,12 +70,10 @@ function ImportOrderTable(props) {
             }
             const res = await importOrderAPI.create(createImportOrderData)
             if(res.status === 201) {
-                const resData = res.data
-                let tempImportOrders = [...importOrders];
+                const tempImportOrders = [...importOrders];
                 tempImportOrders.unshift(res.data)
                 setImportOrder(tempImportOrders);
                 setShowCreateForm(false)
-                console.log(resData)
             } else {
                 console.log(res)
             }
