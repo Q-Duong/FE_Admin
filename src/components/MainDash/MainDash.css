@@ -320,7 +320,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 }
 .notify-row .badge {
     position:absolute;
-    right:-10px;
+    
     top:-10px;
     z-index:100;
 }
@@ -3298,3 +3298,53 @@ table.table.table-bordered.table-dark {
 table.table.table-bordered.table-dark tr th {
     color: #111111;
 }
+
+.buttomNoti{
+    border: 0px solid;
+    margin: 0px 0px 8px -25px;
+    background-color: transparent !important;
+}
+
+.buttomOpiton{
+    margin: 0 30px;
+    background-color: #8b5c7e;
+    border: 0;
+    border-radius: 50%;
+    width: 39px;
+}
+
+
+.buttomOpiton:hover{
+ background-color: #fa9fa4 !important;
+ border: 0 !important;
+}
+
+/* .buttomOpiton:focus{
+    box-shadow: none !important;
+} */
+.dropdown-toggle::after {
+    display: none;
+}
+
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #fa9fa4;
+    border-color: #fa9fa4;
+}
+
+.dropdown-menu{
+    min-width:12rem;
+    margin-top: 14px;
+    border-radius: 10px;
+    border: 1px solid #d2d2d7;
+}
+
+  .dropdown-item{
+    width: 80%;
+    border-top: 1px solid #d2d2d7;
+    padding: 0.8rem 10rem 0.8rem 0;
+    margin: 0 auto;
+  }
+  .dropdown-item:hover{
+        border-radius: 10px;
+  }
