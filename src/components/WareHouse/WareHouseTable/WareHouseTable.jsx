@@ -14,14 +14,14 @@ import Paper from "@mui/material/Paper";
 import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
-
-import { Dropdown } from "react-bootstrap";
+import { Dropdown } from 'react-bootstrap';
 
 function WareHouseTable() {
     const [wareHouses, setWareHouses] =useState([]);
     const [activeWareHouse, setactiveWareHouse] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -49,25 +49,21 @@ function WareHouseTable() {
     async function handleUpdatedWareHouse(formRef){
         try {
             const wareHouseId = activeWareHouse._id
+            const productId = activeWareHouse.product._id
             const updateForm = formRef.current
             const updateFormData = new FormData(updateForm)
             const updateFormObject = Object.fromEntries(updateFormData)
             // updateFormObject.products =  updateFormData.getAll('products')
 
             const data = JSON.stringify(updateFormObject)
-            const res = await wareHouseAPI.update(wareHouseId, data);
-            if(res.status === 200){
-                let tempWareHouses = [...wareHouses];
-                const updatedWareHouse = res.data;
-                tempWareHouses = tempWareHouses.map(wareHouse => wareHouse._id === updatedWareHouse._id ? updatedWareHouse : wareHouse);
-                setWareHouses(tempWareHouses);
-                setShowUpdateForm(false)
-            }
-            else{
-                console.log(res.data.message)
-            }
+            const res = await wareHouseAPI.update({wareHouseId,productId, wareHouse: data});
+            let tempWareHouses = [...wareHouses];
+            const updatedWareHouse = res.data;
+            tempWareHouses = tempWareHouses.map(wareHouse => wareHouse._id === updatedWareHouse._id ? updatedWareHouse : wareHouse);
+            setWareHouses(tempWareHouses);
+            setShowUpdateForm(false)
         } catch (error) {
-            console.log(error)
+            alert(error.response.data.message)
         }  
     }
 
@@ -105,7 +101,6 @@ function WareHouseTable() {
         <>
         <div className="Table">
             <h3>Kho hàng</h3>
-            
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -114,6 +109,7 @@ function WareHouseTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
+                        <TableCell align="left">Mã lô</TableCell>
                         <TableCell align="left">Tên sản phẩm</TableCell>
                         <TableCell align="left">Ngày nhập</TableCell>
                         <TableCell align="left">Ngày hết hạn</TableCell>
@@ -121,7 +117,7 @@ function WareHouseTable() {
                         <TableCell align="left">Giá bán</TableCell>
                         <TableCell align="left">SL nhập</TableCell>
                         <TableCell align="left">SL bán</TableCell>
-                        <TableCell align="left">Hiển thị</TableCell>
+                        <TableCell align="left">Trạng thái</TableCell>
                         <TableCell align="left">Tác động</TableCell>
                     </TableRow>
                     </TableHead>
@@ -131,15 +127,15 @@ function WareHouseTable() {
                                 key={wareHouse._id}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
-                           
+                            <TableCell align="left">{wareHouse._id}</TableCell>
                            <TableCell align="left">{wareHouse.product.name}</TableCell>
                             <TableCell align="left">{formatDate(wareHouse.createdAt)}</TableCell>
                             <TableCell align="left">{formatDate(wareHouse.expireIn)}</TableCell>
                             <TableCell align="left">{numberWithCommas(wareHouse.stockPrice)}</TableCell>
-                            <TableCell align="left">{numberWithCommas(wareHouse.soldPrice)}</TableCell>
+                            <TableCell align="left">{wareHouse.soldPrice > 0 ? numberWithCommas(wareHouse.soldPrice) : 'chưa có giá bán'}</TableCell>
                             <TableCell align="left">{wareHouse.stockQuantity}</TableCell>
                             <TableCell align="left">{wareHouse.soldQuantity}</TableCell>
-                            <TableCell align="left">{wareHouse.active}</TableCell>
+                            <TableCell align="left">{wareHouse.active ? 'đã được bán' : 'chưa được bán'}</TableCell>
                             <TableCell align="left" className="Details">
                                 <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
