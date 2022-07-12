@@ -127,19 +127,7 @@ const UpdateProductForm = (props) => {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Hạn dùng</Form.Label>
-              <Form.Control
-                type="text"
-                name="expireNumber"
-                placeholder="Hạn dùng"
-                value={expireNumber}
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
+            
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Đơn vị hạn dùng</Form.Label>
               <Form.Control
