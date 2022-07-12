@@ -90,12 +90,12 @@ const supplierAPI = {
 }
 
 const wareHouseAPI = {
-  getAll: () => axi.get(`/wareHouse`),
+  getAll: () => axi.get(`/wareHouse/admin`),
   search: (searchTerm) => axi.get(`/warehouse?searchTerm=${searchTerm}`),
   getById: (id) => axi.get(`/warehouse/${id}`),
   delete: (id) => axi.delete(`/warehouse/${id}`),
-  update: (wareHouseId, wareHouse) => 
-    axi.put(`/wareHouse/${wareHouseId}`, 
+  update: ({wareHouseId, productId, wareHouse}) => 
+    axi.put(`/wareHouse/${wareHouseId}?productId=${productId}`, 
     wareHouse,
       {headers: { 'content-type': `application/json` }}
     ),

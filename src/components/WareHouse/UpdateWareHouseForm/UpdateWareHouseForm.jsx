@@ -49,15 +49,15 @@ const UpdateWareHouseForm = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Hiển thị</Form.Label>
+              <Form.Label>Trạng thái</Form.Label>
               <select name="active" class="form-control m-bot15">
                 {
                   <>
                     <option selected={active} value={true}>
-                    Dang ban
+                      Bán hàng
                     </option>
                     <option selected={!active} value={false}>
-                    Ngung ban
+                      Ngưng bán
                     </option>
                   </>
                 }
