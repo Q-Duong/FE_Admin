@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { brandAPI, categoryAPI ,productAPI} from '../../../axios/exeAPI';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const UpdateProductForm = (props) => {
   const {activeProduct, onUpdateProduct, isShow, onCloseUpdateform} = props;
@@ -17,8 +19,8 @@ const UpdateProductForm = (props) => {
   const [name, setName] = useState(activeProduct.name);
   const [unit, setUnit] = useState(activeProduct.unit);
   const [status, setStatus] = useState(activeProduct.status);
-  const [expireNumber, setExpireNumber] = useState(activeProduct.expireNumber);
-  const [expireUnit, setExpireUnit] = useState(activeProduct.expireUnit);
+  const [description, setDescription] = useState(activeProduct.description);
+
   var selected = (categoryID === category) ? 'selected' : 'false';
   
   function handleClose ()  {
@@ -52,8 +54,8 @@ const UpdateProductForm = (props) => {
     setName(activeProduct.name)
     setUnit(activeProduct.unit)
     setStatus(activeProduct.status)
-    setExpireNumber(activeProduct.expireNumber)
-    setExpireUnit(activeProduct.expireUnit)
+    setDescription(activeProduct.description)
+    
   },[activeProduct])
 
   return (
@@ -127,22 +129,10 @@ const UpdateProductForm = (props) => {
                 autoFocus
               />
             </Form.Group>
+            
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Hạn dùng</Form.Label>
-              <Form.Control
-                type="text"
-                name="expireNumber"
-                placeholder="Hạn dùng"
-                value={expireNumber}
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Đơn vị hạn dùng</Form.Label>
-              <Form.Control
+              <Form.Label>Mô tả sản phẩm</Form.Label>
+              {/* <Form.Control
                 type="text"
                 name="expireUnit"
                 placeholder="Đơn vị hạn dùng"
@@ -151,6 +141,29 @@ const UpdateProductForm = (props) => {
                   setStatus(e.target.value);
                 }}
                 autoFocus
+              /> */}
+              <input type="text" name="description" value={description}  style={{display:"none"}} id="a" onChange={(e) => {
+                  setDescription(e.target.value);}} />
+              <CKEditor
+                  editor={ ClassicEditor }
+                  
+                  
+                  // onReady={ editor => {
+                  //     // You can store the "editor" and use when it is needed.
+                  //     console.log( 'Editor is ready to use!', editor );
+                  // } }
+                  onChange={ ( event, editor ) => {
+                      const data = editor.getData();
+                      document.getElementById("a").setAttribute("value",data);
+                      
+                      console.log( { event, editor, data } );
+                  } }
+                  onBlur={ ( event, editor ) => {
+                      console.log( 'Blur.', editor );
+                  } }
+                  onFocus={ ( event, editor ) => {
+                      console.log( 'Focus.', editor );
+                  } }
               />
             </Form.Group>
           </Form>

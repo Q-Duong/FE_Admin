@@ -79,6 +79,7 @@ function ProductTable() {
         const createFormData = new FormData(createForm)
         const response = await productAPI.create(createFormData);
         const createdProduct = response.data;
+        console.log(response.data)
         let tempProducts = [...products];
         tempProducts.unshift(createdProduct)
         setProducts(tempProducts);
@@ -131,7 +132,7 @@ function ProductTable() {
                             <TableCell align="left">Đơn vị</TableCell>
                             <TableCell align="left">Tình trạng</TableCell>
                             <TableCell align="left">Hạn dùng</TableCell>
-                            <TableCell align="left">Đơn vị hạn dùng</TableCell>
+                            
                             <TableCell align="left">Tác động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -149,7 +150,7 @@ function ProductTable() {
                                 <TableCell align="left">{product.unit}</TableCell>
                                 <TableCell align="left">{product.status}</TableCell>
                                 <TableCell align="left">{product.expireNumber}</TableCell>
-                                <TableCell align="left">{product.expireUnit}</TableCell>
+                                
                                 <TableCell align="left" className="Details">
                                     <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">

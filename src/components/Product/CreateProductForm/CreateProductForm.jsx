@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from "react-bootstrap";
 import { brandAPI, categoryAPI } from '../../../axios/exeAPI';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 function CreateProductForm(props) {
     const [categories, setCategories] =
@@ -94,23 +96,32 @@ function CreateProductForm(props) {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Hạn dùng</Form.Label>
-                        <Form.Control
-                                type="text"
-                                name="expireNumber"
-                                placeholder="Hạn dùng"
-                                autoFocus
+                        <Form.Label>Mô tả sản phẩm</Form.Label>
+                        <input type="text" name="description" style={{display:"none"}} id="a"/>
+                        <CKEditor
+                            editor={ ClassicEditor }
+                            
+                            
+                            // onReady={ editor => {
+                            //     // You can store the "editor" and use when it is needed.
+                            //     console.log( 'Editor is ready to use!', editor );
+                            // } }
+                            onChange={ ( event, editor ) => {
+                                const data = editor.getData();
+                                document.getElementById("a").setAttribute("value",data);
+                                
+                                console.log( { event, editor, data } );
+                            } }
+                            onBlur={ ( event, editor ) => {
+                                console.log( 'Blur.', editor );
+                            } }
+                            onFocus={ ( event, editor ) => {
+                                console.log( 'Focus.', editor );
+                            } }
                         />
+                    
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Đơn vị hạn dùng</Form.Label>
-                        <Form.Control
-                                type="text"
-                                name="expireUnit"
-                                placeholder="Đơn vị hạn dùng"
-                                autoFocus
-                        />
-                    </Form.Group>
+                    
                 </Form>
                 </Modal.Body>
                 <Modal.Footer>
