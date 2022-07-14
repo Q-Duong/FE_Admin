@@ -1,3 +1,4 @@
+import { queryAllByAltText } from '@testing-library/react';
 import axios from 'axios';
 
 const axi =  axios.create({
@@ -114,4 +115,17 @@ const exportOrderAPI = {
   create: (data) => 
     axi.post(`/exportOrder`, data)
 }
-export {brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI, exportOrderAPI, wareHouseAPI};
+
+const protectedAPI = {
+  getAllLinkRoute: (token) => axi.get('/protected/linkroute',{
+    headers: {
+      "x-access-token": token
+    }
+  }),
+  checkRoute: (token,permission) => axi.get(`/protected/checkroute?permission=${permission}`,{
+    headers: {
+      "x-access-token": token
+    }
+  })
+}
+export {protectedAPI, brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI, exportOrderAPI, wareHouseAPI};

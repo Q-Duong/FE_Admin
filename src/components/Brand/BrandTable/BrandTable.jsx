@@ -15,6 +15,7 @@ import "../../../CSS/Table.css";
 
 import { Button, Dropdown } from "react-bootstrap";
 import { TablePagination } from '@mui/material';
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function BrandTable() {
     const [brands, setBrands] =
@@ -97,9 +98,11 @@ function BrandTable() {
         <>
         <div className="Table">
             <h3>Thương hiệu</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission="create_brands">
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}

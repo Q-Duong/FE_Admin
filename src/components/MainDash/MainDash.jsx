@@ -20,6 +20,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import Navbar from "../Navbar/Navbar";
 import { removeToken } from "../../Actions/tokenAction";
 import {useDispatch} from 'react-redux'
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const MainDash = () => {
   const dispatch = useDispatch()
@@ -37,16 +38,28 @@ const MainDash = () => {
         <Routes>
           <Route exec path="/" element={< DashBoard />} />
           <Route path="/login" element={< Login />} />
-          <Route path="/dashBoard" element={< DashBoard />} />
-          <Route path="/brand" element={< BrandTable />} />
-          <Route path="/category" element={< CategoryTable />} />
-          <Route path="/supplier" element={< SupplierTable />} />
-          <Route path="/product" element={< ProductTable />} />
-          <Route path="/wareHouse" element={< WareHouseTable />} />
-          <Route path="/importOrder" element={< ImportOrderTable  />} />
-          <Route path="/exportOrder" element={< ExportOrderTable  />} />
-          <Route path="/employee" element={< EmployeeTable />} />
-          <Route path="/customer" element={< CustomerTable  />} />
+          <Route path="/dashboard" element={
+            < ProtectedRoute  permission={'read_dashboard'}>
+              <DashBoard />
+            </ProtectedRoute>
+          }/>
+          <Route path="/brands" element={
+            < ProtectedRoute  permission={'read_brands'}>
+              < BrandTable />
+            </ProtectedRoute>
+          }/>
+          <Route path="/categories" element={
+            < ProtectedRoute  permission={'read_categories'}>
+              < CategoryTable />
+            </ProtectedRoute>
+          }/>
+          <Route path="/suppliers" element={< SupplierTable />} />
+          <Route path="/products" element={< ProductTable />} />
+          <Route path="/wareHouses" element={< WareHouseTable />} />
+          <Route path="/importorders" element={< ImportOrderTable  />} />
+          <Route path="/exportorders" element={< ExportOrderTable  />} />
+          <Route path="/employees" element={< EmployeeTable />} />
+          <Route path="/customers" element={< CustomerTable  />} />
           
         </Routes>
       </div>
