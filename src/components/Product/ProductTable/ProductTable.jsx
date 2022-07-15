@@ -128,7 +128,7 @@ function ProductTable() {
                             <TableCell align="left">Hình ảnh</TableCell>
                             <TableCell align="left">Đơn vị</TableCell>
                             <TableCell align="left">Tình trạng</TableCell>
-                            <TableCell align="left">Hạn dùng</TableCell>
+                            <TableCell align="left">Mô tả sản phẩm</TableCell>
                             
                             <TableCell align="left">Tác động</TableCell>
                         </TableRow>
