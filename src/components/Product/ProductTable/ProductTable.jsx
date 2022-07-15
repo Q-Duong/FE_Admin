@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./ProductTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 const styles = theme => ({
     root: {
@@ -110,9 +111,11 @@ function ProductTable() {
         <>
         <div className="Table">
             <h3>Sản phẩm</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission={"create_products"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029"}}

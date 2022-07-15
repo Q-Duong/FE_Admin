@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
-import Logo from "../../imgs/logo.png";
-import { UilSignOutAlt } from "@iconscout/react-unicons";
-import { SidebarData } from "../../Data/Data";
-import { UilBars } from "@iconscout/react-unicons";
-import { motion } from "framer-motion";
 import {Link} from 'react-router-dom'
-
+import { protectedAPI } from "../../axios/exeAPI";
+import {
+  UilEstate,
+} from "@iconscout/react-unicons";
+import {useSelector} from 'react-redux'
 const Sidebar = () => {
-  const [selected, setSelected] = useState(0);
-
-  const [expanded, setExpaned] = useState(true)
-
+  const [collections, setCollections] = useState([])
+  const token = useSelector(state => state.token)
+  useEffect(() => {
+    async function getCollections(){
+      try {
+        const res = await protectedAPI.getAllLinkRoute(token)
+        const data = res.data
+        setCollections(data)
+      } catch (error) {
+        alert(error)
+      }
+    }
+    getCollections()
+  },[])
   const sidebarVariants = {
     true: {
       left : '0'
@@ -26,13 +35,12 @@ const Sidebar = () => {
         <div id="sidebar" class="nav-collapse">
           <div class="leftside-navigation" >
             <ul class="sidebar-menu" id="nav-accordion">
-            {SidebarData.map((item) =>(
+            {collections.map((collection) =>(
                 <li >
-                  <Link to={`/${item.heading}`}>
-                    <item.icon />
-                    {item.title}
+                  <Link to={`/${collection.heading}`}>
+                    <UilEstate />
+                    {collection.title}
                   </Link>
-                    
                 </li>))}
             </ul>
           </div>

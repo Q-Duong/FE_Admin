@@ -1,6 +1,6 @@
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import './App.css'
 
 import MainDash from './components/MainDash/MainDash';
 import {BrowserRouter} from 'react-router-dom';
@@ -10,7 +10,7 @@ import Login from './components/Login/Login';
 function App() {
   const token = useSelector(state => state.token)
   return (
-    //token && token !== '' ?
+    token && token !== '' ?
       <div className="App">
         <div className="AppGlass">
           <BrowserRouter>
@@ -18,7 +18,7 @@ function App() {
           </BrowserRouter>  
         </div>
       </div>  
-    //: <Login />
+    : <Login />
   );
 }
 
