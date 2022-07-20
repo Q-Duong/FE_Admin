@@ -131,8 +131,6 @@ function ProductTable() {
                             <TableCell align="left">Hình ảnh</TableCell>
                             <TableCell align="left">Đơn vị</TableCell>
                             <TableCell align="left">Tình trạng</TableCell>
-                            <TableCell align="left">Mô tả sản phẩm</TableCell>
-                            
                             <TableCell align="left">Tác động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -148,9 +146,7 @@ function ProductTable() {
                                 <TableCell align="left">{product.name}</TableCell>
                                 <TableCell align="left"><img className="imageProduct" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${product.image}`} /></TableCell>
                                 <TableCell align="left">{product.unit}</TableCell>
-                                <TableCell align="left">{product.status}</TableCell>
-                                <TableCell align="left">{product.expireNumber}</TableCell>
-                                
+                                <TableCell align="left">{product.status}</TableCell>                       
                                 <TableCell align="left" className="Details">
                                     <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">

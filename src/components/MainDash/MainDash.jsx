@@ -53,13 +53,41 @@ const MainDash = () => {
               < CategoryTable />
             </ProtectedRoute>
           }/>
-          <Route path="/suppliers" element={< SupplierTable />} />
-          <Route path="/products" element={< ProductTable />} />
-          <Route path="/wareHouses" element={< WareHouseTable />} />
-          <Route path="/importorders" element={< ImportOrderTable  />} />
-          <Route path="/exportorders" element={< ExportOrderTable  />} />
-          <Route path="/employees" element={< EmployeeTable />} />
-          <Route path="/customers" element={< CustomerTable  />} />
+          <Route path="/suppliers" element={
+            < ProtectedRoute  permission={'read_suppliers'}>
+              < SupplierTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/products" element={
+            < ProtectedRoute  permission={'read_products'}>
+              < ProductTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/wareHouses" element={
+            < ProtectedRoute  permission={'read_warehouses'}>
+              < WareHouseTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/importorders" element={
+            < ProtectedRoute  permission={'read_importorders'}>
+              < ImportOrderTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/exportorders" element={
+            < ProtectedRoute  permission={'read_exportorders'}>
+              < ExportOrderTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/employees" element={
+            < ProtectedRoute  permission={'read_employees'}>
+              < EmployeeTable />
+            </ProtectedRoute>
+          } />
+          <Route path="/customers" element={
+            < ProtectedRoute  permission={'read_customers'}>
+              < CustomerTable />
+            </ProtectedRoute>
+          } />
           
         </Routes>
       </div>

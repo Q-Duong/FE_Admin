@@ -67,7 +67,7 @@ body a:hover{
 #sidebar {
     width:240px;
     height:100%;
-    position:fixed;
+    /* position:fixed; */
     background:rgba(52, 48, 48, 0.78);
     -webkit-transition:all .3s ease-in-out;
     -moz-transition:all .3s ease-in-out;
