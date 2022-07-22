@@ -14,7 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
-import { Dropdown } from 'react-bootstrap';
+import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 
 function WareHouseTable() {
     const [wareHouses, setWareHouses] =useState([]);
@@ -101,11 +101,53 @@ function WareHouseTable() {
         <>
         <div className="Table">
             <h3>Kho hàng</h3>
+                <Row>
+                    <Col lg="12" xs="12">
+                        <div className="filter_tit">Bộ lọc</div>
+                    </Col>
+                    <Col lg="4" xs="12">
+                        <div className="filter-name">
+                            
+                            <input type="text"  name="" placeholder="Tên sản phẩm" className="input_name" />
+                        </div>
+                    </Col>
+                    <Col lg="2" xs="6">
+                        <div className="filter-date">
+                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
+                        </div>
+                    </Col>
+                    <Col lg="2" xs="6">
+                        <div className="filter-date">
+                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
+                        </div>
+                    </Col>
+                    <Col lg="3" xs="12">
+                        <div className="filter-active">
+                            <div class='py'>
+                                <label className="label-left">
+                                    <input type="radio" class="option-input radio" name="example" checked />
+                                    Đang bán
+                                </label>
+                                <label>
+                                    <input type="radio" class="option-input radio" name="example" />
+                                    Chưa bán
+                                </label>
+                                
+                            </div>
+                        </div>
+                    </Col>
+                    <Col lg="1" xs="12">
+                        <div className="filter-button">
+                           <Button>Lọc</Button>
+                        </div>
+                    </Col>
+                </Row>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
                 className="a"
             >
+                
                 <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                     <TableHead>
                     <TableRow>
