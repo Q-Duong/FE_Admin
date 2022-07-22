@@ -128,4 +128,12 @@ const protectedAPI = {
     }
   })
 }
-export {protectedAPI, brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI, exportOrderAPI, wareHouseAPI};
+
+const notificationAPI = {
+  getAll: (token) => axi.get(`/notification`,{
+    headers: {
+      "x-access-token": token
+    }
+  })
+}
+export {notificationAPI, protectedAPI, brandAPI, categoryAPI, customerAPI, employeeAPI, productAPI, supplierAPI, importOrderAPI, exportOrderAPI, wareHouseAPI};
