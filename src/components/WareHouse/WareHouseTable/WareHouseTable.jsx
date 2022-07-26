@@ -15,13 +15,15 @@ import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
+import MyPagination from '../../Pagination/Pagination';
 
 function WareHouseTable() {
     const [wareHouses, setWareHouses] =useState([]);
+    const [paginationOptions, setPaginationOptions] = useState({})
     const [activeWareHouse, setactiveWareHouse] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
-
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -86,16 +88,21 @@ function WareHouseTable() {
         }  
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getWareHouses() {
-            const wareHouses = await wareHouseAPI.getAll();
-            console.log(wareHouses.data)
-            setWareHouses(wareHouses.data);
-            setactiveWareHouse(wareHouses.data[0])
+            const wareHouses = await wareHouseAPI.getAll(activePage);
+            setWareHouses(wareHouses.data.docs);
+            setactiveWareHouse(wareHouses.data.docs[0])
+            setPaginationOptions({...wareHouses.data})
         }
         getWareHouses()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -107,8 +114,7 @@ function WareHouseTable() {
                     </Col>
                     <Col lg="4" xs="12">
                         <div className="filter-name">
-                            
-                            <input type="text"  name="" placeholder="Tên sản phẩm" className="input_name" />
+                            <input type="text"  name="name" placeholder="Tên sản phẩm" className="input_name" />
                         </div>
                     </Col>
                     <Col lg="2" xs="6">
@@ -197,6 +203,7 @@ function WareHouseTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
            
