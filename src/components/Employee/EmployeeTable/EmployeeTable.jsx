@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./EmployeeTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function EmployeeTable() {
     const [employees, setEmployees] =
@@ -95,9 +96,11 @@ function EmployeeTable() {
         <>
         <div className="Table">
             <h3>Nhân viên</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission={"create_employees"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -133,10 +136,16 @@ function EmployeeTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_employees"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_employees"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

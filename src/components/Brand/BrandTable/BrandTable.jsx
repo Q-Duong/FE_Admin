@@ -133,10 +133,16 @@ function BrandTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_brands"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_brands"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(brand)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

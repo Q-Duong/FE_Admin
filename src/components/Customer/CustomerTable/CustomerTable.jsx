@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./CustomerTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function CustomerTable() {
     const [customers, setCustomers] =
@@ -95,9 +96,7 @@ function CustomerTable() {
         <>
         <div className="Table">
             <h3>Khách hàng</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+           
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -134,10 +133,16 @@ function CustomerTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(customer)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(customer)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_cutomers"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(customer)}}>
+                                        Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_cutomers"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(customer)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

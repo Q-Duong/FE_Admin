@@ -15,6 +15,7 @@ import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function WareHouseTable() {
     const [wareHouses, setWareHouses] =useState([]);
@@ -101,47 +102,49 @@ function WareHouseTable() {
         <>
         <div className="Table">
             <h3>Kho hàng</h3>
-                <Row>
-                    <Col lg="12" xs="12">
-                        <div className="filter_tit">Bộ lọc</div>
-                    </Col>
-                    <Col lg="4" xs="12">
-                        <div className="filter-name">
-                            
-                            <input type="text"  name="" placeholder="Tên sản phẩm" className="input_name" />
-                        </div>
-                    </Col>
-                    <Col lg="2" xs="6">
-                        <div className="filter-date">
-                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
-                        </div>
-                    </Col>
-                    <Col lg="2" xs="6">
-                        <div className="filter-date">
-                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
-                        </div>
-                    </Col>
-                    <Col lg="3" xs="12">
-                        <div className="filter-active">
-                            <div class='py'>
-                                <label className="label-left">
-                                    <input type="radio" class="option-input radio" name="example" checked />
-                                    Đang bán
-                                </label>
-                                <label>
-                                    <input type="radio" class="option-input radio" name="example" />
-                                    Chưa bán
-                                </label>
+                <div className="filter">
+                    <Row>
+                        <Col lg="12" xs="12">
+                            <div className="filter_title">Bộ lọc</div>
+                        </Col>
+                        <Col lg="4" xs="12">
+                            <div className="filter-name">
                                 
+                                <input type="text"  name="" placeholder="Tên sản phẩm" className="input_name" />
                             </div>
-                        </div>
-                    </Col>
-                    <Col lg="1" xs="12">
-                        <div className="filter-button">
-                           <Button>Lọc</Button>
-                        </div>
-                    </Col>
-                </Row>
+                        </Col>
+                        <Col lg="2" xs="6">
+                            <div className="filter-date">
+                                <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
+                            </div>
+                        </Col>
+                        <Col lg="2" xs="6">
+                            <div className="filter-date">
+                                <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
+                            </div>
+                        </Col>
+                        <Col lg="3" xs="12">
+                            <div className="filter-active">
+                                <div class='py'>
+                                    <label className="label-left">
+                                        <input type="radio" class="option-input radio" name="example" checked />
+                                        Đang bán
+                                    </label>
+                                    <label>
+                                        <input type="radio" class="option-input radio" name="example" />
+                                        Chưa bán
+                                    </label>
+                                    
+                                </div>
+                            </div>
+                        </Col>
+                        <Col lg="1" xs="12">
+                            <div className="filter-button">
+                            <Button className="continue__btn">Lọc</Button>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -185,11 +188,16 @@ function WareHouseTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(wareHouse)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(wareHouse)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_warehouses"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(wareHouse)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_warehouses"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(wareHouse)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

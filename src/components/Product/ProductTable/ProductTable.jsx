@@ -155,10 +155,14 @@ function ProductTable() {
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item ></Dropdown.Item>
-                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(product)}}>
-                                        Cập nhật
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Xóa</Dropdown.Item>
+                                        <ProtectedRoute permission={"update_products"}>
+                                            <Dropdown.Item onClick={() => {handleUpdateFormShow(product)}}>
+                                            Cập nhật
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                        <ProtectedRoute permission={"delete_products"}>
+                                            <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Xóa</Dropdown.Item>
+                                        </ProtectedRoute>
                                     </Dropdown.Menu>
                                     </Dropdown>
                                 </TableCell>

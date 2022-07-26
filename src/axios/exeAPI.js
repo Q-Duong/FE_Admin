@@ -122,7 +122,7 @@ const supplierAPI = {
 }
 
 const wareHouseAPI = {
-  getAll: () => axi.get(`/wareHouse/admin`),
+  getAll: () => axi.get(`/wareHouse`),
   search: (searchTerm) => axi.get(`/warehouse?searchTerm=${searchTerm}`),
   getById: (id) => axi.get(`/warehouse/${id}`),
   delete: (id) => axi.delete(`/warehouse/${id}`),

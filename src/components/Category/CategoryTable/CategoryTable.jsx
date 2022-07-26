@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./CategoryTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function CategoryTable() {
     const [categories, setCategories] =
@@ -95,9 +96,11 @@ function CategoryTable() {
         <>
         <div className="Table">
             <h3>Danh mục sản phẩm</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission={"create_categories"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -128,10 +131,16 @@ function CategoryTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_categories"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_categories"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>

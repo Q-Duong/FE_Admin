@@ -16,6 +16,7 @@ import formatDate from '../../../utils/formatDate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import ImportOrderDetailTable from '../ImportOrderDetailTable/ImportOrderDetailTable';
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
@@ -85,9 +86,11 @@ function ImportOrderTable(props) {
         <>
         <div className="Table">
             <h3>Đơn nhập hàng</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Tạo đơn nhập
-            </Button>
+            <ProtectedRoute permission={"create_importorders"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Tạo đơn nhập
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029"}}
@@ -134,17 +137,22 @@ function ImportOrderTable(props) {
                             </TableCell>
                             <TableCell align="left" >
                                 <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Hành động
-                                </Dropdown.Toggle>
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                        Hành động
+                                    </Dropdown.Toggle>
 
-                                <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {}}>Xóa</Dropdown.Item>
-                                </Dropdown.Menu>
+                                    <Dropdown.Menu>
+                                        <ProtectedRoute permission={"update_importorders"}>
+                                            <Dropdown.Item onClick={() => {}}>
+                                            Cập nhật
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                        <ProtectedRoute permission={"delete_importorders"}>
+                                            <Dropdown.Item onClick={() => {}}>
+                                                Xóa
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                    </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
                             </TableRow>
