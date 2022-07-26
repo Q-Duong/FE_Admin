@@ -1,7 +1,5 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 import NotifiInfo from "../NotifiInfo/NotifiInfo";
 const Navbar = (props) => {
 
@@ -24,18 +22,7 @@ const Navbar = (props) => {
                     </div>
                 </div>
                 <div className="nav notify-row" id="top_menu">
-                    <Dropdown className="buttomNoti">
-                        <Dropdown.Toggle className="buttomOpiton"  id="dropdown-custom-components">
-                           
-                        <FontAwesomeIcon icon={faBell} />
-                       
-                            <span className="badge bg-warning">8</span>
-                            
-                        
-                        </Dropdown.Toggle>
-                        <NotifiInfo   />
-                    </Dropdown>
-                    
+                    <NotifiInfo />
                 </div>
                 <div className="top-nav clearfix">
                     

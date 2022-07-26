@@ -7,6 +7,8 @@ import './NotifiInfo.css'
 
 import { useSelector } from 'react-redux';
 import { notificationAPI } from '../../axios/exeAPI';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 NotifiInfo.propTypes = {
     onLogout: PropTypes.func,
@@ -27,20 +29,29 @@ function NotifiInfo(props) {
             }
         }
         getNotifications()
-    })
+    },[])
 
     return (
-        <Dropdown.Menu>
-             <span className="caret"></span>
-            {   
-                notifications.map(notification => (
-                    <Dropdown.Item key={notification._id} className="cartDetails-top" href="/cart">
-                        {notification.content}
-                    </Dropdown.Item>  
-                ))       
-            }
-        </Dropdown.Menu>
+        <Dropdown className="buttomNoti">
+            <Dropdown.Toggle className="buttomOpiton" id="dropdown-custom-components">
 
+                <FontAwesomeIcon icon={faBell} />
+
+                <span className="badge bg-warning">{notifications.filter(noti => !noti.isRead).length}</span>
+
+
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <span className="caret"></span>
+                {
+                    notifications.map(notification => (
+                        <Dropdown.Item key={notification._id} className="cartDetails-top" href="/cart">
+                            {notification.content}
+                        </Dropdown.Item>
+                    ))
+                }
+            </Dropdown.Menu>
+        </Dropdown>
     );
 }
 

@@ -122,7 +122,11 @@ const supplierAPI = {
 }
 
 const wareHouseAPI = {
+<<<<<<< HEAD
   getAll: () => axi.get(`/wareHouse`),
+=======
+  getAll: (activePage) => axi.get(`/wareHouse/admin?reqPage=${activePage}&reqLimit=${6}`),
+>>>>>>> 2109e7ab6732c0433ddd7fa6b9d0daaa808da5fd
   search: (searchTerm) => axi.get(`/warehouse?searchTerm=${searchTerm}`),
   getById: (id) => axi.get(`/warehouse/${id}`),
   delete: (id) => axi.delete(`/warehouse/${id}`),
