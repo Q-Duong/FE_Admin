@@ -122,7 +122,7 @@ const supplierAPI = {
 }
 
 const wareHouseAPI = {
-  getAll: (activePage) => axi.get(`/wareHouse/admin?reqPage=${activePage}&reqLimit=${6}`),
+  getAll: (activePage, filterOptions) => axi.get(`/wareHouse/admin?reqPage=${activePage}&reqLimit=${6}&name=${filterOptions.name}&fromDate=${filterOptions.fromDate}&toDate=${filterOptions.toDate}&active=${filterOptions.active}`),
   search: (searchTerm) => axi.get(`/warehouse?searchTerm=${searchTerm}`),
   getById: (id) => axi.get(`/warehouse/${id}`),
   delete: (id) => axi.delete(`/warehouse/${id}`),
@@ -144,7 +144,9 @@ const exportOrderAPI = {
   getAll: () => axi.get('/exportOrder'),
 
   create: (data) =>
-    axi.post(`/exportOrder`, data)
+    axi.post(`/exportOrder`, data),
+  getRevenue: () => axi.get('/exportOrder/revenue')
+
 }
 
 const protectedAPI = {

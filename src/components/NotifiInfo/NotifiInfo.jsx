@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { notificationAPI } from '../../axios/exeAPI';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import countRangeTime from '../../utils/countRangeTime';
 
 NotifiInfo.propTypes = {
     onLogout: PropTypes.func,
@@ -46,7 +47,7 @@ function NotifiInfo(props) {
                 {
                     notifications.map(notification => (
                         <Dropdown.Item key={notification._id} className="cartDetails-top" href="/cart">
-                            {notification.content}
+                            {notification.content} - {countRangeTime(notification.createdAt)}
                         </Dropdown.Item>
                     ))
                 }

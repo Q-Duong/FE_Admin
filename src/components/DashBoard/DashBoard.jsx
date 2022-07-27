@@ -1,89 +1,167 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
+  Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Chart } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+import { exportOrderAPI, wareHouseAPI } from '../../axios/exeAPI';
+import { Dropdown } from 'react-bootstrap';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
+  Title,
   Tooltip,
   Legend
 );
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-const colors = [
-  'red',
-  'orange',
-  'yellow',
-  'lime',
-  'green',
-  'teal',
-  'blue',
-  'purple',
-];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => 500),
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
     },
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => 500),
+    title: {
+      display: true,
+      text: 'Doanh thu',
     },
-  ],
+  },
 };
 
-function createGradient(ctx, area) {
-  const colorStart = colors[0];
-  const colorMid = colors[1]
-  const colorEnd = colors[2]
-
-  const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
-
-  gradient.addColorStop(0, colorStart);
-  gradient.addColorStop(0.5, colorMid);
-  gradient.addColorStop(1, colorEnd);
-
-  return gradient;
-}
-
 function DashBoard() {
-  const chartRef = useRef(null);
-  const [chartData, setChartData] = useState({
-    datasets: [],
-  });
+  const [chartData, setChartData] = useState(null)
+  const [years, setYears] = useState([])
+  const [activeYear, setActiveYear] = useState('2022')
+  const [months, setMonths] = useState([])
+  const [activeMonth, setActiveMonth] = useState('6')
+  const [statisticData, setStatisticData] = useState([])
+  const chartRef = useRef(null)
 
   useEffect(() => {
-    const chart = chartRef.current;
+    async function getStatisticData() {
+      try {
+        const res = await exportOrderAPI.getRevenue()
+        const statistic = res.data
+        const arrYear = Object.keys(statistic)
+        const year = arrYear[0]
+        const arrMonth = Object.keys(statistic[year])
+        const month = arrMonth[0]
+        const arrDay = Object.keys(statistic[year][month])
 
-    if (!chart) {
-      return;
+        setYears(arrYear)
+        setActiveYear(year)
+        setMonths(arrMonth)
+        setActiveMonth(month)
+        setStatisticData(statistic)
+        setChartData({
+          labels: arrDay,
+          datasets: [
+            {
+              label: 'doanh thu',
+              data: arrDay.map(day => statistic[year][month][day].income),
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+              label: 'lợi nhuận',
+              data: arrDay.map(day => statistic[year][month][day].increment),
+              backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+          ],
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
-
-    const chartData = {
-      ...data,
-      datasets: data.datasets.map(dataset => ({
-        ...dataset,
-        borderColor: createGradient(chart.ctx, chart.chartArea),
-      })),
-    };
-
-    setChartData(chartData);
+    getStatisticData()
   }, []);
 
-  return <Chart ref={chartRef} type='line' data={chartData} />;
+  useEffect(() => {
+    if (!chartRef.current)
+      return
+  
+    const arrMonth = Object.keys(statisticData[activeYear])
+    const month = arrMonth[0]
+    const arrDay = Object.keys(statisticData[activeYear][month])
+    setMonths(arrMonth)
+    setActiveMonth(month)
+    chartRef.current.data = {
+      labels:arrDay ,
+      datasets: [
+        {
+          label: 'doanh thu',
+          data: arrDay.map(day => statisticData[activeYear][month][day].income),
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+          label: 'lợi nhuận',
+          data: arrDay.map(day => statisticData[activeYear][month][day].increment),
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+      ]
+    }
+    chartRef.current.update()
+  }, [activeYear])
+
+  useEffect(() => {
+    if (!chartRef.current)
+      return
+
+    const arrDay = Object.keys(statisticData[activeYear][activeMonth])
+    chartRef.current.data = {
+      labels:arrDay ,
+      datasets: [
+        {
+          label: 'doanh thu',
+          data: arrDay.map(day => statisticData[activeYear][activeMonth][day].income),
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+          label: 'lợi nhuận',
+          data: arrDay.map(day => statisticData[activeYear][activeMonth][day].increment),
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+      ]
+    }
+    chartRef.current.update()
+  }, [activeMonth])
+
+
+  return chartData ?
+    <>
+      <Dropdown style={{ marginTop: "100px" }}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          năm hiện tại {activeYear}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {
+            years.map(year => (
+              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setActiveYear(year) }}>{year}</Dropdown.Item>
+            ))
+          }
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown style={{ marginTop: "100px" }}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          tháng hiện tại {activeMonth}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {
+            months.map(month => (
+              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setActiveMonth(month) }}>{month}</Dropdown.Item>
+            ))
+          }
+        </Dropdown.Menu>
+      </Dropdown>
+      <Bar ref={chartRef} style={{ marginTop: "50px" }} options={options} data={chartData} />
+    </> :
+    <></>;
 }
 
 export default DashBoard
