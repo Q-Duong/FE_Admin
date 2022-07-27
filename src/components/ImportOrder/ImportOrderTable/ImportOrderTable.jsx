@@ -17,12 +17,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import ImportOrderDetailTable from '../ImportOrderDetailTable/ImportOrderDetailTable';
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showTableForm, setShowTableForm] = useState(false);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [importOrders, setImportOrder] = useState([]);
     const [activeImportOrderDetail, setActiveImportOrderDetail] = useState(null);
+    const [activePage, setActivePage] = useState(1)
 
     function handleCreateFormClose() {
         setShowCreateForm(false)
@@ -41,13 +44,19 @@ function ImportOrderTable(props) {
         setShowTableForm(true)
     }
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getImportOrder() {
             try {
-                const res = await importOrderAPI.getAll();
+                const res = await importOrderAPI.getAll(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
-                    setImportOrder(res.data);
+                    setImportOrder(res.data.docs);
+                    setPaginationOptions({...res.data})
                 } else{
                     console.log(res.data.message)
                 }
@@ -57,7 +66,7 @@ function ImportOrderTable(props) {
         }
         getImportOrder()
         
-    },[])
+    },[activePage])
 
     async function handleCreateImportOrder(data) {
        try {
@@ -159,6 +168,7 @@ function ImportOrderTable(props) {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateImportOrder

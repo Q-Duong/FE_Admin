@@ -15,15 +15,18 @@ import "./CustomerTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function CustomerTable() {
     const [customers, setCustomers] =
         useState([{_id:"123",name:"???",phone: "???",address: "???",email: "???",pasword: "???",customerActive: "???"}]);
     const [activeCustomer, setactiveCustomer] = 
         useState([{_id:"123",name:"???",phone: "???",address: "???",email: "???",pasword: "???",customerActive: "???"}]);
+    const [paginationOptions, setPaginationOptions] = useState({})
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -83,14 +86,20 @@ function CustomerTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getCustomers() {
-            const customers = await customerAPI.getAll();
-            setCustomers(customers.data);
+            const customers = await customerAPI.getAll(activePage);
+            setCustomers(customers.data.docs);
+            setPaginationOptions({...customers.data})
         }
         getCustomers()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -132,13 +141,12 @@ function CustomerTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
-                                    <ProtectedRoute permission={"update_cutomers"}>
+                                    <ProtectedRoute permission={"update_customers"}>
                                         <Dropdown.Item onClick={() => {handleUpdateFormShow(customer)}}>
                                         Cập nhật
                                         </Dropdown.Item>
                                     </ProtectedRoute>
-                                    <ProtectedRoute permission={"delete_cutomers"}>
+                                    <ProtectedRoute permission={"delete_customers"}>
                                         <Dropdown.Item onClick={() => {handleDeleteFormShow(customer)}}>
                                             Xóa
                                         </Dropdown.Item>
@@ -150,6 +158,7 @@ function CustomerTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateCustomerForm

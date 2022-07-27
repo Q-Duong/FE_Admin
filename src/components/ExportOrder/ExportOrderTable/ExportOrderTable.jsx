@@ -15,11 +15,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { Dropdown } from 'react-bootstrap';
 import ExportOrderDetailTable from '../ExportOrderDetailTable/ExportOrderDetailTable'
+import MyPagination from '../../Pagination/Pagination';
 
 function ExportOrderTable(props) {
     const [exportOrders, setExportOrder] = useState([]);
     const [showTableForm, setShowTableForm] = useState(false);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [activeExportOrderDetail, setactiveExportOrderDetail] = useState(null);
+    const [activePage, setActivePage] = useState(1)
 
     function handleTableFormClose() {
         setShowTableForm(false)
@@ -30,13 +33,19 @@ function ExportOrderTable(props) {
         setShowTableForm(true)
     }
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getExportOrder() {
             try {
-                const res = await exportOrderAPI.getAll();
+                const res = await exportOrderAPI.getAll(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
-                    setExportOrder(res.data);
+                    setExportOrder(res.data.docs);
+                    setPaginationOptions({...res.data})
                 } else{
                     console.log(res.data.message)
                 }
@@ -46,7 +55,7 @@ function ExportOrderTable(props) {
         }
         getExportOrder()
         
-    },[])
+    },[activePage])
 
     return (
         <>
@@ -102,6 +111,7 @@ function ExportOrderTable(props) {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
         <ExportOrderDetailTable

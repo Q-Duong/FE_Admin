@@ -2560,9 +2560,7 @@ canvas.canvasjs-chart-canvas {
 .w3-res-tb {
     padding: 2em 1em 0;
 }
-.pagination {
-    margin: 0 !important;
-}
+
 div#graph10,div#graph11 {
     width: 100%;
 }

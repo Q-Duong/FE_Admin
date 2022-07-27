@@ -15,15 +15,18 @@ import "./EmployeeTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function EmployeeTable() {
     const [employees, setEmployees] =
         useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
     const [activeEmployee, setactiveEmployee] = 
         useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -83,14 +86,20 @@ function EmployeeTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getEmployees() {
-            const employees = await employeeAPI.getAll();
-            setEmployees(employees.data);
+            const employees = await employeeAPI.getAll(activePage);
+            setEmployees(employees.data.docs);
+            setPaginationOptions({...employees.data})
         }
         getEmployees()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -153,6 +162,7 @@ function EmployeeTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateEmployeeForm

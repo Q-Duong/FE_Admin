@@ -15,11 +15,8 @@ import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
-<<<<<<< HEAD
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
-=======
 import MyPagination from '../../Pagination/Pagination';
->>>>>>> 2109e7ab6732c0433ddd7fa6b9d0daaa808da5fd
 
 function WareHouseTable() {
     const [wareHouses, setWareHouses] =useState([]);
@@ -112,7 +109,6 @@ function WareHouseTable() {
         <>
         <div className="Table">
             <h3>Kho hàng</h3>
-<<<<<<< HEAD
                 <div className="filter">
                     <Row>
                         <Col lg="12" xs="12">
@@ -120,38 +116,6 @@ function WareHouseTable() {
                         </Col>
                         <Col lg="4" xs="12">
                             <div className="filter-name">
-=======
-                <Row>
-                    <Col lg="12" xs="12">
-                        <div className="filter_tit">Bộ lọc</div>
-                    </Col>
-                    <Col lg="4" xs="12">
-                        <div className="filter-name">
-                            <input type="text"  name="name" placeholder="Tên sản phẩm" className="input_name" />
-                        </div>
-                    </Col>
-                    <Col lg="2" xs="6">
-                        <div className="filter-date">
-                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
-                        </div>
-                    </Col>
-                    <Col lg="2" xs="6">
-                        <div className="filter-date">
-                            <input type="date" name="manufacturingDate" placeholder="Tên sản phẩm" className="input_date" />
-                        </div>
-                    </Col>
-                    <Col lg="3" xs="12">
-                        <div className="filter-active">
-                            <div class='py'>
-                                <label className="label-left">
-                                    <input type="radio" class="option-input radio" name="example" checked />
-                                    Đang bán
-                                </label>
-                                <label>
-                                    <input type="radio" class="option-input radio" name="example" />
-                                    Chưa bán
-                                </label>
->>>>>>> 2109e7ab6732c0433ddd7fa6b9d0daaa808da5fd
                                 
                                 <input type="text"  name="" placeholder="Tên sản phẩm" className="input_name" />
                             </div>

@@ -16,15 +16,18 @@ import "../../../CSS/Table.css";
 import { Button, Dropdown } from "react-bootstrap";
 import { TablePagination } from '@mui/material';
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function BrandTable() {
     const [brands, setBrands] =
         useState([{_id:"123",name:"???",image: "???"}]);
     const [activeBrand, setactiveBrand] = 
         useState({_id:"123",name:"???",image: "???"});
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -85,14 +88,20 @@ function BrandTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getBrands() {
-            const brands = await brandAPI.getAll();
-            setBrands(brands.data);
+            const brands = await brandAPI.getAll(activePage);
+            setBrands(brands.data.docs);
+            setPaginationOptions({...brands.data})
         }
         getBrands()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -132,7 +141,6 @@ function BrandTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
                                     <ProtectedRoute permission={"update_brands"}>
                                         <Dropdown.Item onClick={() => {handleUpdateFormShow(brand)}}>
                                             Cập nhật
@@ -150,7 +158,7 @@ function BrandTable() {
                         ))}
                     </TableBody>
                 </Table>
-                
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
             
 

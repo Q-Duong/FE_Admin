@@ -15,15 +15,18 @@ import "./CategoryTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function CategoryTable() {
     const [categories, setCategories] =
         useState([{_id:"123",name:"???",image: "???"}]);
     const [activeCategory, setactiveCategory] = 
         useState({_id:"123",name:"???",image: "???"});
+    const [paginationOptions, setPaginationOptions] = useState({})
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -83,14 +86,20 @@ function CategoryTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getCategories() {
-            const categories = await categoryAPI.getAll();
-            setCategories(categories.data);
+            const categories = await categoryAPI.getAll(activePage);
+            setCategories(categories.data.docs);
+            setPaginationOptions({...categories.data})
         }
         getCategories()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -130,7 +139,6 @@ function CategoryTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
                                     <ProtectedRoute permission={"update_categories"}>
                                         <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
                                             Cập nhật
@@ -148,6 +156,7 @@ function CategoryTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateCategoryForm
