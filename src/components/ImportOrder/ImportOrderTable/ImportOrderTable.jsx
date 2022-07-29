@@ -16,12 +16,16 @@ import formatDate from '../../../utils/formatDate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import ImportOrderDetailTable from '../ImportOrderDetailTable/ImportOrderDetailTable';
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function ImportOrderTable(props) {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showTableForm, setShowTableForm] = useState(false);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [importOrders, setImportOrder] = useState([]);
     const [activeImportOrderDetail, setActiveImportOrderDetail] = useState(null);
+    const [activePage, setActivePage] = useState(1)
 
     function handleCreateFormClose() {
         setShowCreateForm(false)
@@ -40,13 +44,19 @@ function ImportOrderTable(props) {
         setShowTableForm(true)
     }
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getImportOrder() {
             try {
-                const res = await importOrderAPI.getAll();
+                const res = await importOrderAPI.getAllPaginate(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
-                    setImportOrder(res.data);
+                    setImportOrder(res.data.docs);
+                    setPaginationOptions({...res.data})
                 } else{
                     console.log(res.data.message)
                 }
@@ -56,7 +66,7 @@ function ImportOrderTable(props) {
         }
         getImportOrder()
         
-    },[])
+    },[activePage])
 
     async function handleCreateImportOrder(data) {
        try {
@@ -64,7 +74,7 @@ function ImportOrderTable(props) {
                 importOrderData: {
                     totalBill: data.total,
                     importOrderStatus: "Paid",
-                    supplierId: data.supplierId
+                    supplierId: data.activeSupplier
                 },
                 purchasedProducts: data.products
             }
@@ -85,9 +95,11 @@ function ImportOrderTable(props) {
         <>
         <div className="Table">
             <h3>Đơn nhập hàng</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Tạo đơn nhập
-            </Button>
+            <ProtectedRoute permission={"create_importorders"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Tạo đơn nhập
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029"}}
@@ -98,6 +110,7 @@ function ImportOrderTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Mã đơn nhập</TableCell>
+                            <TableCell align="left">Nhà cung cấp</TableCell>
                             <TableCell align="left">Tổng tiền</TableCell>
                             <TableCell align="left">Ngày nhập</TableCell>
                             <TableCell align="left">Công nợ</TableCell>
@@ -113,6 +126,7 @@ function ImportOrderTable(props) {
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell align="left">{importOrder._id}</TableCell>
+                            <TableCell align="left">{importOrder.supplier.name}</TableCell>
                             <TableCell align="left">{numberWithCommas(importOrder.totalBill)}</TableCell>
                             <TableCell align="left">{formatDate(importOrder.createdAt)}</TableCell>
                             <TableCell align="left">{importOrder.loan}</TableCell>
@@ -134,23 +148,29 @@ function ImportOrderTable(props) {
                             </TableCell>
                             <TableCell align="left" >
                                 <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Hành động
-                                </Dropdown.Toggle>
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                        Hành động
+                                    </Dropdown.Toggle>
 
-                                <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {}}>Xóa</Dropdown.Item>
-                                </Dropdown.Menu>
+                                    <Dropdown.Menu>
+                                        <ProtectedRoute permission={"update_importorders"}>
+                                            <Dropdown.Item onClick={() => {}}>
+                                            Cập nhật
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                        <ProtectedRoute permission={"delete_importorders"}>
+                                            <Dropdown.Item onClick={() => {}}>
+                                                Xóa
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                    </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateImportOrder

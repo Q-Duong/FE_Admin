@@ -15,11 +15,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { Dropdown } from 'react-bootstrap';
 import ExportOrderDetailTable from '../ExportOrderDetailTable/ExportOrderDetailTable'
+import MyPagination from '../../Pagination/Pagination';
 
 function ExportOrderTable(props) {
     const [exportOrders, setExportOrder] = useState([]);
     const [showTableForm, setShowTableForm] = useState(false);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [activeExportOrderDetail, setactiveExportOrderDetail] = useState(null);
+    const [activePage, setActivePage] = useState(1)
 
     function handleTableFormClose() {
         setShowTableForm(false)
@@ -30,13 +33,19 @@ function ExportOrderTable(props) {
         setShowTableForm(true)
     }
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getExportOrder() {
             try {
-                const res = await exportOrderAPI.getAll();
+                const res = await exportOrderAPI.getAllPaginate(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
-                    setExportOrder(res.data);
+                    setExportOrder(res.data.docs);
+                    setPaginationOptions({...res.data})
                 } else{
                     console.log(res.data.message)
                 }
@@ -46,7 +55,7 @@ function ExportOrderTable(props) {
         }
         getExportOrder()
         
-    },[])
+    },[activePage])
 
     return (
         <>
@@ -63,9 +72,10 @@ function ExportOrderTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Mã đơn hàng</TableCell>
-                            <TableCell align="left">Tổng tiền</TableCell>
-                            <TableCell align="left">Thời gian đặt hàng</TableCell>
+                            <TableCell align="left">Tên khách hàng</TableCell>
                             <TableCell align="left">Địa chỉ giao hàng</TableCell>
+                            <TableCell align="left">Tổng tiền</TableCell>
+                            <TableCell align="left">Thời gian đặt hàng</TableCell>  
                             <TableCell align="left">Ngày giao</TableCell>
                             <TableCell align="left">Trạng thái</TableCell>
                             <TableCell align="left">Xem chi tiết đơn hàng</TableCell>
@@ -78,9 +88,10 @@ function ExportOrderTable(props) {
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell align="left">{exportOrder._id}</TableCell>
+                            <TableCell align="left">{exportOrder.customer.name}</TableCell>
+                            <TableCell align="left">{exportOrder.shipAddress}</TableCell>
                             <TableCell align="left">{numberWithCommas(exportOrder.totalBill)}</TableCell>
                             <TableCell align="left">{formatDate(exportOrder.createdAt)}</TableCell>
-                            <TableCell align="left">{exportOrder.shipAddress}</TableCell>
                             <TableCell align="left">{formatDate(exportOrder.shippedDate)}</TableCell>
                             <TableCell align="left">{exportOrder.status}</TableCell>
                             <TableCell align="left">
@@ -102,6 +113,7 @@ function ExportOrderTable(props) {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
         <ExportOrderDetailTable

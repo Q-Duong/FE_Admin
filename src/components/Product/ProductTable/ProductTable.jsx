@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./ProductTable.css";
+import MyPagination from '../../Pagination/Pagination';
 
 import { Button, Dropdown } from "react-bootstrap";
 import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
@@ -32,9 +33,11 @@ function ProductTable() {
         useState([]);
     const [activeProduct, setactiveProduct] = 
         useState({category: "???",brand: "???",_id:"123",name:"???",image: "???",unit: "???",expireNumber: "???",expireUnit: "???",status: "???"});
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -97,15 +100,21 @@ function ProductTable() {
         }
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getProducts() {
-            const res = await productAPI.getAll();
-            console.log(res.data)
-            setProducts(res.data);
+            const products = await productAPI.getAllPaginate(activePage);
+            console.log(products.data)
+            setProducts(products.data.docs);
+            setPaginationOptions({...products.data})
         }
         getProducts()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -155,10 +164,14 @@ function ProductTable() {
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item ></Dropdown.Item>
-                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(product)}}>
-                                        Cập nhật
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Xóa</Dropdown.Item>
+                                        <ProtectedRoute permission={"update_products"}>
+                                            <Dropdown.Item onClick={() => {handleUpdateFormShow(product)}}>
+                                            Cập nhật
+                                            </Dropdown.Item>
+                                        </ProtectedRoute>
+                                        <ProtectedRoute permission={"delete_products"}>
+                                            <Dropdown.Item onClick={() => {handleDeleteFormShow(product)}}>Xóa</Dropdown.Item>
+                                        </ProtectedRoute>
                                     </Dropdown.Menu>
                                     </Dropdown>
                                 </TableCell>
@@ -166,6 +179,7 @@ function ProductTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateProductForm

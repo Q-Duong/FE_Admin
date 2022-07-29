@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 import PropTypes from 'prop-types'
+import './Pagination.css'
 
 MyPagination.propsType = {
   paginationOptions: PropTypes.object,
@@ -25,9 +26,9 @@ function MyPagination(props) {
   }
 
   return (
-    <Pagination size="lg">
-      <Pagination.First disabled={!hasPrevPage} />
-      <Pagination.Prev disabled={!hasPrevPage} />
+    <Pagination size="md">
+      <Pagination.First disabled={!hasPrevPage} onClick={() => handlePageChange(1)}/>
+      <Pagination.Prev disabled={!hasPrevPage} onClick={() => handlePageChange(page-1)}/>
       {
         Array.from({ length: endPage - startPage + 1 }, (_, myPage) =>
           myPage + startPage
@@ -35,8 +36,8 @@ function MyPagination(props) {
           <Pagination.Item active={myPage === page} onClick={() => handlePageChange(myPage)}>{myPage}</Pagination.Item>
         ))
       }
-      <Pagination.Next disabled={!hasNextPage} />
-      <Pagination.Last disabled={!hasNextPage} />
+      <Pagination.Next disabled={!hasNextPage}  onClick={() => handlePageChange(page+1)}/>
+      <Pagination.Last disabled={!hasNextPage} onClick={() => handlePageChange(totalPages)}/>
     </Pagination>
   );
 }
