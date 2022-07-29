@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./SupplierTable.css";
+import MyPagination from '../../Pagination/Pagination';
 
 import { Button, Dropdown } from "react-bootstrap";
 
@@ -20,9 +21,11 @@ function SupplierTable() {
         useState([{_id:"123",name:"???",address: "???",phone: "???",product: "???"}]);
     const [activeSupplier, setactiveSupplier] = 
         useState([{_id:"123",name:"???",address: "???",phone: "???",product: "???"}]);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -117,15 +120,21 @@ function SupplierTable() {
         }  
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getSuppliers() {
-            const suppliers = await supplierAPI.getAll();
+            const suppliers = await supplierAPI.getAllPaginate(activePage);
             console.log(suppliers.data)
-            setSuppliers(suppliers.data);
+            setSuppliers(suppliers.data.docs);
+            setPaginationOptions({...suppliers.data})
         }
         getSuppliers()
         
-    },[])
+    },[activePage])
     
     return (
         <>
@@ -183,6 +192,7 @@ function SupplierTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateSupplierForm

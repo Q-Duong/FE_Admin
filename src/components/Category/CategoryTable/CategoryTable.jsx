@@ -14,15 +14,19 @@ import Paper from "@mui/material/Paper";
 import "./CategoryTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function CategoryTable() {
     const [categories, setCategories] =
         useState([{_id:"123",name:"???",image: "???"}]);
     const [activeCategory, setactiveCategory] = 
         useState({_id:"123",name:"???",image: "???"});
+    const [paginationOptions, setPaginationOptions] = useState({})
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -82,22 +86,30 @@ function CategoryTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getCategories() {
-            const categories = await categoryAPI.getAll();
-            setCategories(categories.data);
+            const categories = await categoryAPI.getPaginate(activePage);
+            setCategories(categories.data.docs);
+            setPaginationOptions({...categories.data})
         }
         getCategories()
         
-    },[])
+    },[activePage])
     
     return (
         <>
         <div className="Table">
             <h3>Danh mục sản phẩm</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission={"create_categories"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -127,11 +139,16 @@ function CategoryTable() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_categories"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_categories"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -139,6 +156,7 @@ function CategoryTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateCategoryForm

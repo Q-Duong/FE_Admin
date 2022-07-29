@@ -7,6 +7,7 @@ const axi = axios.create({
 
 const brandAPI = {
   getAll: () => axi.get('/brand'),
+  getPaginate: (activePage) => axi.get(`/brand/admin?reqPage=${activePage}&reqLimit=${6}`),
   update: (brand) =>
     axi.put(`/brand/${brand.get('_id')}`,
       brand,
@@ -37,6 +38,7 @@ const newsCategoryAPI = {
 
 const categoryAPI = {
   getAll: () => axi.get('/category'),
+  getPaginate: (activePage) => axi.get(`/category/admin?reqPage=${activePage}&reqLimit=${6}`),
   update: (category) =>
     axi.put(`/category/${category.get('_id')}`,
       category,
@@ -52,20 +54,17 @@ const categoryAPI = {
 
 const customerAPI = {
   getAll: () => axi.get('/customer'),
-  update: (customer) => {
-    return axi.put(`/customer/${customer._id}`, {
-      customerName: customer.customerName,
-      customerPhone: customer.customerPhone,
-      customerAddress: customer.customerAddress,
-      customerEmail: customer.customerEmail,
-      customerPassword: customer.customerPassword,
-      customerActive: customer.customerActive
-    })
-  }
+  getPaginate: (activePage) => axi.get(`/customer/admin?reqPage=${activePage}&reqLimit=${6}`),
+  update: (customerId, customer) =>
+    axi.put(`/customer/${customer._id}`,
+      customer,
+      { headers: { 'content-type': `application/json` } }
+    )
 }
 
 const employeeAPI = {
   getAll: () => axi.get('/employee'),
+  getPaginate: (activePage) => axi.get(`/employee/admin?reqPage=${activePage}&reqLimit=${6}`),
   update: (employeeId, employee) =>
     axi.put(`/employee/${employee._id}`,
       employee,
@@ -76,6 +75,7 @@ const employeeAPI = {
 
 const productAPI = {
   getAll: () => axi.get('/product'),
+  getAllPaginate: (activePage) => axi.get(`/product/admin?reqPage=${activePage}&reqLimit=${6}`),
   getBySupplier: (supplierId) => axi.get(`/product/supplier/${supplierId}`),
   update: (product) =>
     axi.put(`/product/${product.get('_id')}`,
@@ -108,7 +108,7 @@ const newsAPI = {
 
 const supplierAPI = {
   getAll: () => axi.get('/supplier'),
-
+  getAllPaginate: (activePage) => axi.get(`/supplier/admin?reqPage=${activePage}&reqLimit=${3}`),
   update: (supplierId, supplier) =>
     axi.put(`/supplier/${supplierId}`,
       supplier,
@@ -135,6 +135,7 @@ const wareHouseAPI = {
 
 const importOrderAPI = {
   getAll: () => axi.get('/importOrder'),
+  getAllPaginate: (activePage) => axi.get(`/importOrder/admin?reqPage=${activePage}&reqLimit=${6}`),
 
   create: (data) =>
     axi.post(`/importOrder`, data)
@@ -142,6 +143,7 @@ const importOrderAPI = {
 
 const exportOrderAPI = {
   getAll: () => axi.get('/exportOrder'),
+  getAllPaginate: (activePage) => axi.get(`/exportOrder/admin?reqPage=${activePage}&reqLimit=${6}`),
 
   create: (data) =>
     axi.post(`/exportOrder`, data),

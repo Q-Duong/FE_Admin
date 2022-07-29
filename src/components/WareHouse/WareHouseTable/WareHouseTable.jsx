@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 import { Button, Col, Dropdown, Row, Form } from 'react-bootstrap';
 import MyPagination from '../../Pagination/Pagination';
 
@@ -124,26 +125,28 @@ function WareHouseTable() {
             <div className="Table">
                 <h3>Kho hàng</h3>
                 <Row>
-                    <Form onSubmit={(e) => handleFilterSubmit(e)}>
+                    <Form className="FormFilter" onSubmit={(e) => handleFilterSubmit(e)}>
                         <Col lg="12" xs="12">
-                            <div className="filter_tit">Bộ lọc</div>
+                            <div className="filter_title">Bộ lọc</div>
                         </Col>
                         <Col lg="4" xs="12">
                             <div className="filter-name">
                                 <input type="text" name="name" placeholder="Tên sản phẩm" className="input_name" />
                             </div>
                         </Col>
-                        <Col lg="2" xs="6">
-                            <div className="filter-date">
-                                <input type="date" name="fromDate" placeholder="Tên sản phẩm" className="input_date" />
-                            </div>
-                        </Col>
-                        <Col lg="2" xs="6">
-                            <div className="filter-date">
-                                <input type="date" name="toDate" placeholder="Tên sản phẩm" className="input_date" />
-                            </div>
-                        </Col>
                         <Col lg="3" xs="12">
+                            <Col lg="6" xs="6" className="display">
+                                <div className="filter-date">
+                                    <input type="date" name="fromDate" placeholder="Tên sản phẩm" className="input_date" />
+                                </div>
+                            </Col>
+                            <Col lg="6" xs="6" className="display">
+                                <div className="filter-date">
+                                    <input type="date" name="toDate" placeholder="Tên sản phẩm" className="input_date" />
+                                </div>
+                            </Col>
+                        </Col>
+                        <Col lg="4" xs="12">
                             <div className="filter-active">
                                 <div class='py'>
                                     <label className="label-left">
@@ -154,7 +157,7 @@ function WareHouseTable() {
                                         <input type="radio" class="option-input radio" name="active" value={true}/>
                                         Đang bán
                                     </label>
-                                    <label>
+                                    <label className="label-left">
                                         <input type="radio" class="option-input radio" name="active" value={false} />
                                         Chưa bán
                                     </label>
@@ -164,7 +167,7 @@ function WareHouseTable() {
                         </Col>
                         <Col lg="1" xs="12">
                             <div className="filter-button">
-                                <Button type="submit">Lọc</Button>
+                                <Button type="submit" className="fil-button">Lọc</Button>
                             </div>
                         </Col>
                     </Form>

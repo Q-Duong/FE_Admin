@@ -2560,9 +2560,7 @@ canvas.canvasjs-chart-canvas {
 .w3-res-tb {
     padding: 2em 1em 0;
 }
-.pagination {
-    margin: 0 !important;
-}
+
 div#graph10,div#graph11 {
     width: 100%;
 }
@@ -3333,7 +3331,7 @@ table.table.table-bordered.table-dark tr th {
 }
 
 .dropdown-menu{
-    min-width:12rem;
+    min-width:16rem;
     margin-top: 14px;
     border-radius: 10px;
     border: 1px solid #d2d2d7;
@@ -3342,7 +3340,7 @@ table.table.table-bordered.table-dark tr th {
   .dropdown-item{
     width: 80%;
     border-top: 1px solid #d2d2d7;
-    padding: 0.8rem 10rem 0.8rem 0;
+    padding: 0.8rem 0rem 0.8rem 0;
     margin: 0 auto;
   }
   .dropdown-item:hover{

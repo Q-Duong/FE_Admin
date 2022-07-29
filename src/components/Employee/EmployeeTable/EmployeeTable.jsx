@@ -14,15 +14,19 @@ import Paper from "@mui/material/Paper";
 import "./EmployeeTable.css";
 
 import { Button, Dropdown } from "react-bootstrap";
+import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
+import MyPagination from '../../Pagination/Pagination';
 
 function EmployeeTable() {
     const [employees, setEmployees] =
         useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
     const [activeEmployee, setactiveEmployee] = 
         useState([{_id:"123",name:"???",phone: "???",email: "???",role: "???",active: "???",password: "???"}]);
+    const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [activePage, setActivePage] = useState(1)
 
     function handleUpdateFormClose ()  {
         setShowUpdateForm(false)
@@ -82,22 +86,30 @@ function EmployeeTable() {
         setShowDeleteForm(false);
     };
 
+    function handlePageChange(newPage) {
+        if(newPage > 0)
+            setActivePage(newPage)
+    }
+
     useEffect(()=> {
         async function getEmployees() {
-            const employees = await employeeAPI.getAll();
-            setEmployees(employees.data);
+            const employees = await employeeAPI.getPaginate(activePage);
+            setEmployees(employees.data.docs);
+            setPaginationOptions({...employees.data})
         }
         getEmployees()
         
-    },[])
+    },[activePage])
     
     return (
         <>
         <div className="Table">
             <h3>Nhân viên</h3>
-            <Button variant="primary" onClick={handleCreateFormShow}>
-                Thêm
-            </Button>
+            <ProtectedRoute permission={"create_employees"}>
+                <Button variant="primary" onClick={handleCreateFormShow}>
+                    Thêm
+                </Button>
+            </ProtectedRoute>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -133,10 +145,16 @@ function EmployeeTable() {
 
                                 <Dropdown.Menu>
                                     <Dropdown.Item ></Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
-                                    Cập nhật
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>Xóa</Dropdown.Item>
+                                    <ProtectedRoute permission={"update_employees"}>
+                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(employee)}}>
+                                            Cập nhật
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
+                                    <ProtectedRoute permission={"delete_employees"}>
+                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(employee)}}>
+                                            Xóa
+                                        </Dropdown.Item>
+                                    </ProtectedRoute>
                                 </Dropdown.Menu>
                                 </Dropdown>
                             </TableCell>
@@ -144,6 +162,7 @@ function EmployeeTable() {
                         ))}
                     </TableBody>
                 </Table>
+                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
             </TableContainer>
         </div>
             <CreateEmployeeForm
