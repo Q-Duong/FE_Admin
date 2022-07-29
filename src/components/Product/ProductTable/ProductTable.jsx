@@ -107,10 +107,10 @@ function ProductTable() {
 
     useEffect(()=> {
         async function getProducts() {
-            const res = await productAPI.getAll(activePage);
-            console.log(res.data)
-            setProducts(res.data.docs);
-            setPaginationOptions({...res.data})
+            const products = await productAPI.getAllPaginate(activePage);
+            console.log(products.data)
+            setProducts(products.data.docs);
+            setPaginationOptions({...products.data})
         }
         getProducts()
         

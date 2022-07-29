@@ -3,6 +3,12 @@ import { brandAPI } from '../../../axios/exeAPI';
 import CreateBrandForm from '../CreateBrandForm/CreateBrandForm';
 import DeleteBrandForm from '../DeleteBrandForm/DeleteBrandForm';
 import UpdateBrandForm from '../UpdateBrandForm/UpdateBrandForm';
+import RestoreBrandForm from '../RestoreBrandForm/RestoreBrandForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot, faPhone, faMotorcycle } from '@fortawesome/free-solid-svg-icons';
+import {
+    Route
+} from "react-router-dom";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,6 +31,7 @@ function BrandTable() {
         useState({_id:"123",name:"???",image: "???"});
     const [paginationOptions, setPaginationOptions] = useState({});
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [showRestoreForm, setShowRestoreForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
     const [activePage, setActivePage] = useState(1)
@@ -37,6 +44,14 @@ function BrandTable() {
         setactiveBrand(brand)
         setShowUpdateForm(true)
     };
+
+    function handleRestoreFormShow() {
+        setShowRestoreForm(true)
+    };
+
+    function handleRestoreFormClose ()  {
+        setShowUpdateForm(false)
+      };
 
     function handleCreateFormClose ()  {
         setShowCreateForm(false)
@@ -56,6 +71,19 @@ function BrandTable() {
     };
         
     async function handleUpdatedBrand(formRef){
+        const updateForm = formRef.current
+        const updateFormData = new FormData(updateForm)
+        updateFormData.append('_id',activeBrand._id)
+        const response = await brandAPI.update(updateFormData);
+        const updatedBrand = response.data;
+        let tempBrands = [...brands];
+        console.log(updatedBrand)
+        tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
+        setBrands(tempBrands);
+        setShowUpdateForm(false)
+    }
+
+    async function handleRestoreBrand(formRef){
         const updateForm = formRef.current
         const updateFormData = new FormData(updateForm)
         updateFormData.append('_id',activeBrand._id)
@@ -95,7 +123,7 @@ function BrandTable() {
 
     useEffect(()=> {
         async function getBrands() {
-            const brands = await brandAPI.getAll(activePage);
+            const brands = await brandAPI.getPaginate(activePage);
             setBrands(brands.data.docs);
             setPaginationOptions({...brands.data})
         }
@@ -107,11 +135,18 @@ function BrandTable() {
         <>
         <div className="Table">
             <h3>Thương hiệu</h3>
-            <ProtectedRoute permission="create_brands">
-                <Button variant="primary" onClick={handleCreateFormShow}>
-                    Thêm
-                </Button>
-            </ProtectedRoute>
+            <div className="navbarOption">
+                <ProtectedRoute permission="create_brands">
+                    <Button variant="primary" onClick={handleCreateFormShow}>
+                        Thêm
+                    </Button>
+                </ProtectedRoute>
+                <div className="navbarOptionDel">
+                
+                    <FontAwesomeIcon icon={faLocationDot} onClick={handleRestoreFormShow} />
+                </div>
+            </div>
+            
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -173,6 +208,12 @@ function BrandTable() {
                 isShow={showUpdateForm}
                 onUpdateBrand={handleUpdatedBrand}
                 onCloseUpdateform={handleUpdateFormClose}
+            />
+            <RestoreBrandForm 
+                activeBrand={activeBrand}
+                isShow={showRestoreForm}
+                onRestoreBrand={handleRestoreBrand}
+                onCloseRestoreform={handleRestoreFormClose}
             />
             <DeleteBrandForm
                 activeBrand={activeBrand}

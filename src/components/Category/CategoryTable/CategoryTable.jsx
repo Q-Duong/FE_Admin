@@ -93,7 +93,7 @@ function CategoryTable() {
 
     useEffect(()=> {
         async function getCategories() {
-            const categories = await categoryAPI.getAll(activePage);
+            const categories = await categoryAPI.getPaginate(activePage);
             setCategories(categories.data.docs);
             setPaginationOptions({...categories.data})
         }

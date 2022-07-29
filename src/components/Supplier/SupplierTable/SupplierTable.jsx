@@ -127,7 +127,7 @@ function SupplierTable() {
 
     useEffect(()=> {
         async function getSuppliers() {
-            const suppliers = await supplierAPI.getAll(activePage);
+            const suppliers = await supplierAPI.getAllPaginate(activePage);
             console.log(suppliers.data)
             setSuppliers(suppliers.data.docs);
             setPaginationOptions({...suppliers.data})

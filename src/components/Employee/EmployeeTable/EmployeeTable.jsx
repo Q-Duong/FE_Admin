@@ -93,7 +93,7 @@ function EmployeeTable() {
 
     useEffect(()=> {
         async function getEmployees() {
-            const employees = await employeeAPI.getAll(activePage);
+            const employees = await employeeAPI.getPaginate(activePage);
             setEmployees(employees.data.docs);
             setPaginationOptions({...employees.data})
         }

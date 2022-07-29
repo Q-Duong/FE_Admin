@@ -57,7 +57,9 @@
 .Table{
   margin-top: 100px;
 }
-
+.FormFilter{
+  display: contents;
+}
 .filter_title{
   font-size: 20px;
   margin: 10px 0;
@@ -80,6 +82,9 @@
   outline: none;
   padding-left: 15px;
 }
+.display{
+  display: inline-block;
+}
 
 .filter-date{
   width: 100%;
@@ -101,6 +106,12 @@
   
 }
 
+.fil-button{
+  width: 100%;
+  background-color: rgb(240, 188, 180);
+  border: 1px solid rgb(240, 188, 180);
+  color: #111111;
+}
 
 
 
@@ -114,11 +125,11 @@ h1{
   line-height:28px;
   margin-bottom:15px;
 }
-label{
+/* label{
   margin-top: 6px;
-}
+} */
 .label-left{
-  margin-right: 22px;
+  margin: 6px 12px 0 12px;
 }
 .option-input {
   -webkit-appearance: none;
@@ -201,3 +212,5 @@ label{
   border-radius: 10px;
   padding: 5px 25px;
   }
+
+ 

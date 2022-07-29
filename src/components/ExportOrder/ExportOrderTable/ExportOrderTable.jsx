@@ -41,7 +41,7 @@ function ExportOrderTable(props) {
     useEffect(()=> {
         async function getExportOrder() {
             try {
-                const res = await exportOrderAPI.getAll(activePage);
+                const res = await exportOrderAPI.getAllPaginate(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
                     setExportOrder(res.data.docs);
@@ -72,9 +72,10 @@ function ExportOrderTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Mã đơn hàng</TableCell>
-                            <TableCell align="left">Tổng tiền</TableCell>
-                            <TableCell align="left">Thời gian đặt hàng</TableCell>
+                            <TableCell align="left">Tên khách hàng</TableCell>
                             <TableCell align="left">Địa chỉ giao hàng</TableCell>
+                            <TableCell align="left">Tổng tiền</TableCell>
+                            <TableCell align="left">Thời gian đặt hàng</TableCell>  
                             <TableCell align="left">Ngày giao</TableCell>
                             <TableCell align="left">Trạng thái</TableCell>
                             <TableCell align="left">Xem chi tiết đơn hàng</TableCell>
@@ -87,9 +88,10 @@ function ExportOrderTable(props) {
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell align="left">{exportOrder._id}</TableCell>
+                            <TableCell align="left">{exportOrder.customer.name}</TableCell>
+                            <TableCell align="left">{exportOrder.shipAddress}</TableCell>
                             <TableCell align="left">{numberWithCommas(exportOrder.totalBill)}</TableCell>
                             <TableCell align="left">{formatDate(exportOrder.createdAt)}</TableCell>
-                            <TableCell align="left">{exportOrder.shipAddress}</TableCell>
                             <TableCell align="left">{formatDate(exportOrder.shippedDate)}</TableCell>
                             <TableCell align="left">{exportOrder.status}</TableCell>
                             <TableCell align="left">

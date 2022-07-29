@@ -93,7 +93,7 @@ function CustomerTable() {
 
     useEffect(()=> {
         async function getCustomers() {
-            const customers = await customerAPI.getAll(activePage);
+            const customers = await customerAPI.getPaginate(activePage);
             setCustomers(customers.data.docs);
             setPaginationOptions({...customers.data})
         }

@@ -52,7 +52,7 @@ function ImportOrderTable(props) {
     useEffect(()=> {
         async function getImportOrder() {
             try {
-                const res = await importOrderAPI.getAll(activePage);
+                const res = await importOrderAPI.getAllPaginate(activePage);
                 if(res.status === 200) {
                     console.log(res.data)
                     setImportOrder(res.data.docs);
@@ -74,7 +74,7 @@ function ImportOrderTable(props) {
                 importOrderData: {
                     totalBill: data.total,
                     importOrderStatus: "Paid",
-                    supplierId: data.supplierId
+                    supplierId: data.activeSupplier
                 },
                 purchasedProducts: data.products
             }
@@ -110,6 +110,7 @@ function ImportOrderTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Mã đơn nhập</TableCell>
+                            <TableCell align="left">Nhà cung cấp</TableCell>
                             <TableCell align="left">Tổng tiền</TableCell>
                             <TableCell align="left">Ngày nhập</TableCell>
                             <TableCell align="left">Công nợ</TableCell>
@@ -125,6 +126,7 @@ function ImportOrderTable(props) {
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                             <TableCell align="left">{importOrder._id}</TableCell>
+                            <TableCell align="left">{importOrder.supplier.name}</TableCell>
                             <TableCell align="left">{numberWithCommas(importOrder.totalBill)}</TableCell>
                             <TableCell align="left">{formatDate(importOrder.createdAt)}</TableCell>
                             <TableCell align="left">{importOrder.loan}</TableCell>
