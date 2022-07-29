@@ -20,7 +20,7 @@ function DeleteProductForm(props) {
           <Modal.Title>Xóa sản phẩm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Product: {activeProduct.name}</p>
+          <p>Bạn có chắc muốn xóa sản phẩm: {activeProduct.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
