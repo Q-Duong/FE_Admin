@@ -3,7 +3,7 @@ import { brandAPI } from '../../../axios/exeAPI';
 import CreateBrandForm from '../CreateBrandForm/CreateBrandForm';
 import DeleteBrandForm from '../DeleteBrandForm/DeleteBrandForm';
 import UpdateBrandForm from '../UpdateBrandForm/UpdateBrandForm';
-import RestoreBrandForm from '../RestoreBrandForm/RestoreBrandForm';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faPhone, faMotorcycle } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -45,13 +45,7 @@ function BrandTable() {
         setShowUpdateForm(true)
     };
 
-    function handleRestoreFormShow() {
-        setShowRestoreForm(true)
-    };
-
-    function handleRestoreFormClose ()  {
-        setShowUpdateForm(false)
-      };
+    
 
     function handleCreateFormClose ()  {
         setShowCreateForm(false)
@@ -83,18 +77,7 @@ function BrandTable() {
         setShowUpdateForm(false)
     }
 
-    async function handleRestoreBrand(formRef){
-        const updateForm = formRef.current
-        const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeBrand._id)
-        const response = await brandAPI.update(updateFormData);
-        const updatedBrand = response.data;
-        let tempBrands = [...brands];
-        console.log(updatedBrand)
-        tempBrands = tempBrands.map(brand => brand._id === updatedBrand._id ? updatedBrand : brand);
-        setBrands(tempBrands);
-        setShowUpdateForm(false)
-    }
+    
 
     async function handleCreateBrand(formRef){
         const createForm = formRef.current
@@ -141,10 +124,6 @@ function BrandTable() {
                         Thêm
                     </Button>
                 </ProtectedRoute>
-                <div className="navbarOptionDel">
-                
-                    <FontAwesomeIcon icon={faLocationDot} onClick={handleRestoreFormShow} />
-                </div>
             </div>
             
             <TableContainer
@@ -209,12 +188,7 @@ function BrandTable() {
                 onUpdateBrand={handleUpdatedBrand}
                 onCloseUpdateform={handleUpdateFormClose}
             />
-            <RestoreBrandForm 
-                activeBrand={activeBrand}
-                isShow={showRestoreForm}
-                onRestoreBrand={handleRestoreBrand}
-                onCloseRestoreform={handleRestoreFormClose}
-            />
+            
             <DeleteBrandForm
                 activeBrand={activeBrand}
                 isShow={showDeleteForm}
