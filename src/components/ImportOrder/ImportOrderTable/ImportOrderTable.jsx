@@ -64,7 +64,7 @@ function ImportOrderTable(props) {
                 importOrderData: {
                     totalBill: data.total,
                     importOrderStatus: "Paid",
-                    supplierId: data.supplierId
+                    supplierId: data.activeSupplier
                 },
                 purchasedProducts: data.products
             }
