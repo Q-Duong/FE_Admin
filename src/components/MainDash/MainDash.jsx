@@ -21,6 +21,7 @@ import Navbar from "../Navbar/Navbar";
 import { removeToken } from "../../Actions/tokenAction";
 import {useDispatch} from 'react-redux'
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import InventoryDashBoard from "../DashBoard/InventoryDashBoard";
 
 const MainDash = () => {
   const dispatch = useDispatch()
@@ -38,9 +39,14 @@ const MainDash = () => {
         <Routes>
           <Route exec path="/" element={< DashBoard />} />
           <Route path="/login" element={< Login />} />
-          <Route path="/dashboard" element={
+          <Route path="/revenue" element={
             < ProtectedRoute  permission={'read_dashboard'}>
               <DashBoard />
+            </ProtectedRoute>
+          }/>
+          <Route path="/inventory" element={
+            < ProtectedRoute  permission={'read_dashboard'}>
+              <InventoryDashBoard />
             </ProtectedRoute>
           }/>
           <Route path="/brands" element={

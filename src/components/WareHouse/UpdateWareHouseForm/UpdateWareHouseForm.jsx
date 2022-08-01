@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -6,7 +7,9 @@ const UpdateWareHouseForm = (props) => {
   const formRef = useRef(null);
   const [soldPrice, setSoldPrice] = useState(null);
   const [active, setActive] = useState(null);
-  
+  const [manufacturingDate, setManufacturingDate] = useState(null)
+  const [expireIn, setExpireIn] = useState(null)
+
   function handleClose ()  {
     if(onCloseUpdateform)
       onCloseUpdateform()
@@ -21,7 +24,8 @@ const UpdateWareHouseForm = (props) => {
     if(activeWareHouse) {
       setSoldPrice(activeWareHouse.soldPrice)
       setActive(activeWareHouse.active)
-      console.log(activeWareHouse)
+      setManufacturingDate(activeWareHouse.manufacturingDate)
+      setManufacturingDate(activeWareHouse.expireIn)
     }
 
   },[activeWareHouse])
@@ -35,6 +39,30 @@ const UpdateWareHouseForm = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} >
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Ngày nhập hàng</Form.Label>
+              <Form.Control
+                type="date"
+                name="manufacturingDate"
+                value={manufacturingDate}
+                onChange={(e) => {
+                  setManufacturingDate(e.target.value);
+                  setExpireIn(moment(e.target.value).add(1,'days').format('YYYY-MM-DD'))
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>ngày hết hạn</Form.Label>
+              <Form.Control
+                type="date"
+                name="expireIn"
+                value={expireIn}
+                onChange={(e) => {
+                  setExpireIn(e.target.value);
+                }}
+                min={moment(manufacturingDate).add(1,'days').format('YYYY-MM-DD')}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Giá bán</Form.Label>
               <Form.Control

@@ -11,6 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { exportOrderAPI, wareHouseAPI } from '../../axios/exeAPI';
 import { Dropdown } from 'react-bootstrap';
+import {useSelector} from 'react-redux'
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +36,7 @@ const options = {
 };
 
 function DashBoard() {
+  const token = useSelector(state => state.token)
   const [chartData, setChartData] = useState(null)
   const [years, setYears] = useState([])
   const [activeYear, setActiveYear] = useState('2022')
@@ -46,7 +48,7 @@ function DashBoard() {
   useEffect(() => {
     async function getStatisticData() {
       try {
-        const res = await exportOrderAPI.getRevenue()
+        const res = await exportOrderAPI.getRevenue(token)
         const statistic = res.data
         const arrYear = Object.keys(statistic)
         const year = arrYear[0]

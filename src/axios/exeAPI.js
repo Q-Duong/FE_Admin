@@ -131,6 +131,11 @@ const wareHouseAPI = {
       wareHouse,
       { headers: { 'content-type': `application/json` } }
     ),
+  getInventory: (token) => axi.get(`/wareHouse/inventory`,{
+    headers: {
+      "x-access-token": token
+    }
+  })
 }
 
 const importOrderAPI = {
@@ -147,7 +152,11 @@ const exportOrderAPI = {
 
   create: (data) =>
     axi.post(`/exportOrder`, data),
-  getRevenue: () => axi.get('/exportOrder/revenue')
+  getRevenue: (token) => axi.get('/exportOrder/revenue',{
+    headers: {
+      "x-access-token": token
+    }
+  })
 
 }
 

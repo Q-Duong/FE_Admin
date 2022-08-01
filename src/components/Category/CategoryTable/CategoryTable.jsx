@@ -19,45 +19,46 @@ import MyPagination from '../../Pagination/Pagination';
 
 function CategoryTable() {
     const [categories, setCategories] =
-        useState([{_id:"123",name:"???",image: "???"}]);
-    const [activeCategory, setactiveCategory] = 
-        useState({_id:"123",name:"???",image: "???"});
+        useState([{ _id: "123", name: "???", image: "???" }]);
+    const [activeCategory, setactiveCategory] =
+        useState({ _id: "123", name: "???", image: "???" });
     const [paginationOptions, setPaginationOptions] = useState({})
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
     const [activePage, setActivePage] = useState(1)
 
-    function handleUpdateFormClose ()  {
+    function handleUpdateFormClose() {
         setShowUpdateForm(false)
-      };
+    };
 
     function handleUpdateFormShow(category) {
         setactiveCategory(category)
         setShowUpdateForm(true)
     };
 
-    function handleCreateFormClose ()  {
+    function handleCreateFormClose() {
         setShowCreateForm(false)
-      };
+    };
 
     function handleCreateFormShow() {
         setShowCreateForm(true)
     };
 
-    function handleDeleteFormClose ()  {
+    function handleDeleteFormClose() {
         setShowDeleteForm(false)
-      };
+    };
 
     function handleDeleteFormShow(category) {
         setactiveCategory(category)
         setShowDeleteForm(true)
     };
-        
-    async function handleUpdatedCategory(formRef){
+
+    async function handleUpdatedCategory(formRef) {
         const updateForm = formRef.current
         const updateFormData = new FormData(updateForm)
-        updateFormData.append('_id',activeCategory._id)
+        updateFormData.append('_id', activeCategory._id)
+        updateFormData.forEach((value, key) => { console.log(value) })
         const response = await categoryAPI.update(updateFormData);
         const updatedCategory = response.data;
         let tempCategories = [...categories];
@@ -66,7 +67,7 @@ function CategoryTable() {
         setShowUpdateForm(false)
     }
 
-    async function handleCreateCategory(formRef){
+    async function handleCreateCategory(formRef) {
         const createForm = formRef.current
         const createFormData = new FormData(createForm)
         const response = await categoryAPI.create(createFormData);
@@ -87,84 +88,84 @@ function CategoryTable() {
     };
 
     function handlePageChange(newPage) {
-        if(newPage > 0)
+        if (newPage > 0)
             setActivePage(newPage)
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         async function getCategories() {
             const categories = await categoryAPI.getPaginate(activePage);
             setCategories(categories.data.docs);
-            setPaginationOptions({...categories.data})
+            setPaginationOptions({ ...categories.data })
         }
         getCategories()
-        
-    },[activePage])
-    
+
+    }, [activePage])
+
     return (
         <>
-        <div className="Table">
-            <h3>Danh mục sản phẩm</h3>
-            <ProtectedRoute permission={"create_categories"}>
-                <Button variant="primary" onClick={handleCreateFormShow}>
-                    Thêm
-                </Button>
-            </ProtectedRoute>
-            <TableContainer
-                component={Paper}
-                style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
-                className="a"
-            >
-                <Table sx={{ minWidth: 650 }} aria-label="simple table" >
-                    <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Tên danh mục</TableCell>
-                        <TableCell align="left">Logo</TableCell>
-                        <TableCell align="left">Tác động</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody style={{ color: "white" }}>
-                        {categories.map((category) => (
-                            <TableRow
-                                key={category._id}
-                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                            >
-                            <TableCell align="left">{category.name}</TableCell>
-                            <TableCell align="left"><img className="imageCategory" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${category.image}`} /></TableCell>
-
-                            <TableCell align="left" className="Details">
-                                <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Hành động
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <ProtectedRoute permission={"update_categories"}>
-                                        <Dropdown.Item onClick={() => {handleUpdateFormShow(category)}}>
-                                            Cập nhật
-                                        </Dropdown.Item>
-                                    </ProtectedRoute>
-                                    <ProtectedRoute permission={"delete_categories"}>
-                                        <Dropdown.Item onClick={() => {handleDeleteFormShow(category)}}>
-                                            Xóa
-                                        </Dropdown.Item>
-                                    </ProtectedRoute>
-                                </Dropdown.Menu>
-                                </Dropdown>
-                            </TableCell>
+            <div className="Table">
+                <h3>Danh mục sản phẩm</h3>
+                <ProtectedRoute permission={"create_categories"}>
+                    <Button variant="primary" onClick={handleCreateFormShow}>
+                        Thêm
+                    </Button>
+                </ProtectedRoute>
+                <TableContainer
+                    component={Paper}
+                    style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+                    className="a"
+                >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Tên danh mục</TableCell>
+                                <TableCell align="left">Logo</TableCell>
+                                <TableCell align="left">Tác động</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange}/>
-            </TableContainer>
-        </div>
+                        </TableHead>
+                        <TableBody style={{ color: "white" }}>
+                            {categories.map((category) => (
+                                <TableRow
+                                    key={category._id}
+                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                >
+                                    <TableCell align="left">{category.name}</TableCell>
+                                    <TableCell align="left"><img className="imageCategory" src={`https://res.cloudinary.com/anhtuanpham1507/image/upload/v1616603933/${category.image}`} /></TableCell>
+
+                                    <TableCell align="left" className="Details">
+                                        <Dropdown>
+                                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                                Hành động
+                                            </Dropdown.Toggle>
+
+                                            <Dropdown.Menu>
+                                                <ProtectedRoute permission={"update_categories"}>
+                                                    <Dropdown.Item onClick={() => { handleUpdateFormShow(category) }}>
+                                                        Cập nhật
+                                                    </Dropdown.Item>
+                                                </ProtectedRoute>
+                                                <ProtectedRoute permission={"delete_categories"}>
+                                                    <Dropdown.Item onClick={() => { handleDeleteFormShow(category) }}>
+                                                        Xóa
+                                                    </Dropdown.Item>
+                                                </ProtectedRoute>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <MyPagination paginationOptions={paginationOptions} onPageChange={handlePageChange} />
+                </TableContainer>
+            </div>
             <CreateCategoryForm
                 isShow={showCreateForm}
                 onCreateCategory={handleCreateCategory}
                 onCloseCreateform={handleCreateFormClose}
             />
-            <UpdateCategoryForm 
+            <UpdateCategoryForm
                 activeCategory={activeCategory}
                 isShow={showUpdateForm}
                 onUpdateCategory={handleUpdatedCategory}
