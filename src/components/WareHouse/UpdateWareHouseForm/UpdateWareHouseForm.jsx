@@ -1,6 +1,7 @@
+import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import moment from 'moment';
+
 
 const UpdateWareHouseForm = (props) => {
   const {activeWareHouse, onUpdateWareHouse, isShow, onCloseUpdateform} = props;
@@ -9,7 +10,9 @@ const UpdateWareHouseForm = (props) => {
   const [expireIn, setExpireIn] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
   const [active, setActive] = useState(null);
-  
+  const [manufacturingDate, setManufacturingDate] = useState(null)
+
+
   function handleClose ()  {
     if(onCloseUpdateform)
       onCloseUpdateform()
@@ -24,9 +27,8 @@ const UpdateWareHouseForm = (props) => {
     if(activeWareHouse) {
       setSoldPrice(activeWareHouse.soldPrice)
       setActive(activeWareHouse.active)
-      setCreatedAt(activeWareHouse.createdAt)
-      setExpireIn(activeWareHouse.expireIn)
-      console.log(activeWareHouse)
+      setManufacturingDate(activeWareHouse.manufacturingDate)
+      setManufacturingDate(activeWareHouse.expireIn)
     }
 
   },[activeWareHouse])
@@ -40,6 +42,30 @@ const UpdateWareHouseForm = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} >
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Ngày nhập hàng</Form.Label>
+              <Form.Control
+                type="date"
+                name="manufacturingDate"
+                value={manufacturingDate}
+                onChange={(e) => {
+                  setManufacturingDate(e.target.value);
+                  setExpireIn(moment(e.target.value).add(1,'days').format('YYYY-MM-DD'))
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>ngày hết hạn</Form.Label>
+              <Form.Control
+                type="date"
+                name="expireIn"
+                value={expireIn}
+                onChange={(e) => {
+                  setExpireIn(e.target.value);
+                }}
+                min={moment(manufacturingDate).add(1,'days').format('YYYY-MM-DD')}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Giá bán</Form.Label>
               <Form.Control

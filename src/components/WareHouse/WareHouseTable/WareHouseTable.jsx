@@ -201,7 +201,7 @@ function WareHouseTable() {
                                 >
                                     <TableCell align="left">{wareHouse._id}</TableCell>
                                     <TableCell align="left">{wareHouse.product.name}</TableCell>
-                                    <TableCell align="left">{formatDate(wareHouse.createdAt)}</TableCell>
+                                    <TableCell align="left">{formatDate(wareHouse.manufacturingDate)}</TableCell>
                                     <TableCell align="left">{formatDate(wareHouse.expireIn)}</TableCell>
                                     <TableCell align="left">{numberWithCommas(wareHouse.stockPrice)}</TableCell>
                                     <TableCell align="left">{wareHouse.soldPrice > 0 ? numberWithCommas(wareHouse.soldPrice) : 'chưa có giá bán'}</TableCell>

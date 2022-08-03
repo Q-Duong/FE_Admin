@@ -90,7 +90,7 @@ function CreateImportOrderDetail(props) {
                                 type="date"
                                 name="manufacturingDate"
                                 value={manufacturingDate}
-                                onChange={(e) => setManufacturingDate(e.target.value)}
+                                onChange={(e) => {setManufacturingDate(e.target.value); setExpireIn(moment(e.target.value).add(1,'days').format('YYYY-MM-DD'))}}
                         />
                     </Form.Group>
 

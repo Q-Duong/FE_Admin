@@ -4,10 +4,6 @@ import { Button, Form, Modal } from "react-bootstrap";
 const UpdateCustomerForm = (props) => {
   const {activeCustomer, onUpdateCustomer, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
-  const [name, setName] = useState(activeCustomer.name);
-  const [email, setEmail] = useState(activeCustomer.email);
-  const [phone, setPhone] = useState(activeCustomer.phone);
-  const [address, setAddress] = useState(activeCustomer.address);
   const [active, setActive] = useState(activeCustomer.active);
   
   function handleClose ()  {
@@ -21,11 +17,7 @@ const UpdateCustomerForm = (props) => {
   }
 
   useEffect(() => {
-    setName(activeCustomer.name)
-    setEmail(activeCustomer.email)
-    setPhone(activeCustomer.phone)
-    setAddress(activeCustomer.address)
-    setActive(activeCustomer.active)
+    setActive(activeCustomer.name)
   },[activeCustomer])
 
   return (
@@ -37,58 +29,6 @@ const UpdateCustomerForm = (props) => {
         <Modal.Body>
           <Form ref={formRef} enctype="multipart/form-data">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Tên khách hàng</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="Tên khách hàng"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>SĐT</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                placeholder="SĐT"
-                value={phone}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Địa chỉ</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                placeholder="Địa chỉ"
-                value={address}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Tình trạng</Form.Label>
               <Form.Control
                 type="text"
@@ -96,7 +36,7 @@ const UpdateCustomerForm = (props) => {
                 placeholder="Tình trạng"
                 value={active}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setActive(e.target.value);
                 }}
                 autoFocus
               />
