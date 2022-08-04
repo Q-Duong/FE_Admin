@@ -79,34 +79,8 @@ const UpdateWareHouseForm = (props) => {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Ngày sản xuất</Form.Label>
-              <Form.Control
-                type="date"
-                name="createdAt"
-                placeholder="Giá bán"
-                value={createdAt}
-                onChange={(e) => {
-                  setCreatedAt(e.target.value);
-                }}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Ngày het han</Form.Label>
-              <Form.Control
-                type="date"
-                name="expireIn"
-                placeholder="Giá bán"
-                value={expireIn}
-                onChange={(e) => {
-                  setExpireIn(e.target.value);
-                }}
-                disabled = {createdAt === null ? true : false}
-                min={moment(createdAt).add(1,'days').format('YYYY-MM-DD')}
-                autoFocus
-              />
-            </Form.Group>
+           
+            
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Trạng thái</Form.Label>
               <select name="active" class="form-control m-bot15">
