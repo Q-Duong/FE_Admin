@@ -13,15 +13,13 @@ const UpdateProductForm = (props) => {
   // const [products, setProducts] =
   //       useState([{_id:"123",name:"???",image: "???"}]);
   const formRef = useRef(null);
-  const [category, setCategory] = useState(activeProduct.categoryId);
-  const [brand, setBrand] = useState(activeProduct.brandId);
-  const [categoryID, setCategoryId] = useState(activeProduct.category);
+  const [category, setCategory] = useState(activeProduct.category._id);
+  const [brand, setBrand] = useState(activeProduct.brand._id);
   const [name, setName] = useState(activeProduct.name);
   const [unit, setUnit] = useState(activeProduct.unit);
   const [status, setStatus] = useState(activeProduct.status);
   const [description, setDescription] = useState(activeProduct.description);
 
-  var selected = (categoryID === category) ? 'selected' : 'false';
   
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -49,8 +47,8 @@ const UpdateProductForm = (props) => {
   },[])
 
   useEffect(() => {
-    setCategory(activeProduct.categoryId)
-    setBrand(activeProduct.brandId)
+    setCategory(activeProduct.category._id)
+    setBrand(activeProduct.brand._id)
     setName(activeProduct.name)
     setUnit(activeProduct.unit)
     setStatus(activeProduct.status)
@@ -70,16 +68,16 @@ const UpdateProductForm = (props) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Danh mục</Form.Label>
               <select name="categoryId" class="form-control m-bot15">
-                  {categories.map((category) => (
-                      <option value={category._id}>{category.name}</option>
+                  {categories.map((c) => (
+                      <option selected={c._id === category} value={c._id}>{c.name}</option>
                   ))}
               </select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Thương hiệu</Form.Label>
               <select name="brandId" class="form-control m-bot15">
-                  {brands.map((brand) => (
-                      <option value={brand._id}>{brand.name}</option>
+                  {brands.map((b) => (
+                      <option selected={b._id === brand} value={b._id}>{b.name}</option>
                   ))}
               </select>
             </Form.Group>

@@ -25,7 +25,7 @@ const UpdateWareHouseForm = (props) => {
       setSoldPrice(activeWareHouse.soldPrice)
       setActive(activeWareHouse.active)
       setManufacturingDate(activeWareHouse.manufacturingDate)
-      setManufacturingDate(activeWareHouse.expireIn)
+      setExpireIn(activeWareHouse.expireIn)
     }
 
   },[activeWareHouse])
@@ -44,7 +44,7 @@ const UpdateWareHouseForm = (props) => {
               <Form.Control
                 type="date"
                 name="manufacturingDate"
-                value={manufacturingDate}
+                value={moment(manufacturingDate).format('YYYY-MM-DD')}
                 onChange={(e) => {
                   setManufacturingDate(e.target.value);
                   setExpireIn(moment(e.target.value).add(1,'days').format('YYYY-MM-DD'))
@@ -56,7 +56,7 @@ const UpdateWareHouseForm = (props) => {
               <Form.Control
                 type="date"
                 name="expireIn"
-                value={expireIn}
+                value={moment(expireIn).format('YYYY-MM-DD')}
                 onChange={(e) => {
                   setExpireIn(e.target.value);
                 }}
