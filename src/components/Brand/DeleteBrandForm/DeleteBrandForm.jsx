@@ -20,7 +20,7 @@ function DeleteBrandForm(props) {
           <Modal.Title>Xóa thương hiệu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Brand: {activeBrand.name}</p>
+          <p>Bạn có chắc muốn xóa: {activeBrand.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

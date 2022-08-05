@@ -2,13 +2,16 @@ import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
+
 const UpdateWareHouseForm = (props) => {
   const {activeWareHouse, onUpdateWareHouse, isShow, onCloseUpdateform} = props;
   const formRef = useRef(null);
   const [soldPrice, setSoldPrice] = useState(null);
+  const [expireIn, setExpireIn] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
   const [active, setActive] = useState(null);
   const [manufacturingDate, setManufacturingDate] = useState(null)
-  const [expireIn, setExpireIn] = useState(null)
+
 
   function handleClose ()  {
     if(onCloseUpdateform)
@@ -76,6 +79,8 @@ const UpdateWareHouseForm = (props) => {
                 autoFocus
               />
             </Form.Group>
+           
+            
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Trạng thái</Form.Label>
               <select name="active" class="form-control m-bot15">

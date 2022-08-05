@@ -20,7 +20,7 @@ function DeleteSupplierForm(props) {
           <Modal.Title>Xóa nhà cung cấp</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Supplier: {activeSupplier.name}</p>
+          <p>bạn có chắc muốn xóa nhà cung cấp: {activeSupplier.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

@@ -24,12 +24,12 @@ const UpdateEmployeeForm = (props) => {
     <>                  
       <Modal show={isShow} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Employee</Modal.Title>
+          <Modal.Title>Cập nhật nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form ref={formRef} enctype="multipart/form-data">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Tên</Form.Label>
               <Form.Control
                 type="text"
                 name="employeeName"
@@ -42,7 +42,7 @@ const UpdateEmployeeForm = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Hình ảnh </Form.Label>
               <Form.Control
                 type="file"
                 name="myFile"
@@ -52,10 +52,10 @@ const UpdateEmployeeForm = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng 
           </Button>
           <Button variant="primary" onClick={handleUpdatedEmployee}>
-            Save Changes
+            Lưu thay đổi
           </Button>
         </Modal.Footer>
       </Modal>

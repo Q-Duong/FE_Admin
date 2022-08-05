@@ -20,7 +20,7 @@ function DeleteEmployeeForm(props) {
           <Modal.Title>Xóa nhân viên</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Employee: {activeEmployee.name}</p>
+          <p>Bạn có chắc muốn xóa nhân viên: {activeEmployee.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

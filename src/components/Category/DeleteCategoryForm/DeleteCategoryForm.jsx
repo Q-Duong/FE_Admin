@@ -20,7 +20,7 @@ function DeleteCategoryForm(props) {
           <Modal.Title>Xóa danh mục</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure to delete Category: {activeCategory.name}</p>
+          <p>Bạn có chắc muốn xóa danh mục: {activeCategory.name}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
