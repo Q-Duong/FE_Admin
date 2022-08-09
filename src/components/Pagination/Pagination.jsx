@@ -15,9 +15,11 @@ function MyPagination(props) {
   const [endPage, setEndPage] = useState(5)
 
   useEffect(() => {
-    const tempStartPage = totalPages <= 5 ? 1 : totalPages - 2
+    const tempStartPage = totalPages <= 5 ? 1 : totalPages - page <=3  ? page - (4 - (totalPages - page))  : page
+    const tempEndPage =  totalPages <= 5 ? totalPages : page + 4 > totalPages ? totalPages : page +4
+    console.log(totalPages - page)
     setStartPage(tempStartPage)
-    setEndPage(totalPages)
+    setEndPage(tempEndPage)
   }, [page, totalPages])
 
   function handlePageChange(newPage) {

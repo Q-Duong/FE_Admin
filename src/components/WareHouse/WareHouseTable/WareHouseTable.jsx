@@ -14,7 +14,6 @@ import Paper from "@mui/material/Paper";
 import "./WareHouseTable.css";
 import numberWithCommas from '../../../utils/numberWithCommas';
 import formatDate from '../../../utils/formatDate';
-import ProtectedRoute from '../../ProtectedRoute/ProtectedRoute';
 import { Button, Col, Dropdown, Row, Form } from 'react-bootstrap';
 import MyPagination from '../../Pagination/Pagination';
 
@@ -44,7 +43,6 @@ function WareHouseTable() {
 
     function handleDeleteFormShow(wareHouse) {
         setactiveWareHouse(wareHouse)
-        console.log(wareHouse)
         setShowDeleteForm(true)
     };
 
@@ -116,6 +114,8 @@ function WareHouseTable() {
             setWareHouses(wareHouses.data.docs);
             setactiveWareHouse(wareHouses.data.docs[0])
             setPaginationOptions({ ...wareHouses.data })
+            if(activePage != wareHouses.data.page)
+                setActivePage(wareHouses.data.page)
         }
         getWareHouses()
     }, [activePage,filterOptions])
